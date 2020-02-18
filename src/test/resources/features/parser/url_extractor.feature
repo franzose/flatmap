@@ -32,4 +32,4 @@ Feature: URL extraction from the HTML documents
       | /qux |
       | /doo |
     When I pass the documents to the extractor
-    Then I must get a combined URL list
+    Then I must get a combined list of URLs

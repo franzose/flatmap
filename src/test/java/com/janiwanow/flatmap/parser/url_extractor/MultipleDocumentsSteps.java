@@ -36,7 +36,7 @@ public class MultipleDocumentsSteps {
         extractedURLs = URLExtractor.extract(documents.keySet(), ".links-container > a");
     }
 
-    @Then("I must get a combined URL list")
+    @Then("I must get a combined list of URLs")
     public void itShouldReturnCombinedListOfURLs() throws MalformedURLException {
         var expectedSize = documents.values().stream().mapToLong(Collection::size).sum();
 
