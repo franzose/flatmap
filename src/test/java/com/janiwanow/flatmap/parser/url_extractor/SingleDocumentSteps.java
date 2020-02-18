@@ -21,8 +21,8 @@ public class SingleDocumentSteps {
     private URL href;
     private Set<URL> extractedURLs;
 
-    @Given("we fetched an HTML document from {string}")
-    public void anHtmlDocument(String href) throws MalformedURLException {
+    @Given("I fetched an HTML document from {string}")
+    public void createDocument(String href) throws MalformedURLException {
         this.href = new URL(href);
 
         document = new Document(href);
@@ -33,8 +33,8 @@ public class SingleDocumentSteps {
             .attr("class", "bar");
     }
 
-    @And("it contains a list of links")
-    public void itContainsListOfLinks(DataTable links) {
+    @And("it contains the following links")
+    public void addLinks(DataTable links) {
         var container = document.selectFirst(".foo > .bar");
 
         for (var url : links.asList()) {
@@ -44,13 +44,13 @@ public class SingleDocumentSteps {
         }
     }
 
-    @When("the extractor takes the document")
-    public void theExtractorTakesTheDocument() {
+    @When("I pass the document to the extractor")
+    public void extractURLs() {
         extractedURLs = URLExtractor.extract(document, ".foo > .bar > a");
     }
 
-    @Then("it should return a list of absolute URLs of the following paths")
-    public void itShouldReturnListOfURLs(DataTable paths) {
+    @Then("I must get absolute URLs of these paths")
+    public void ensureExtractionIsCorrect(DataTable paths) {
         var pathList = paths.asList();
 
         assertEquals(pathList.size(), extractedURLs.size());

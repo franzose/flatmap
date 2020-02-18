@@ -4,8 +4,8 @@ Feature: URL extraction from the HTML documents
   I should be able to grab URLs from the HTML documents
 
   Scenario Outline: Extraction from a single document
-    Given we fetched an HTML document from "<URL>"
-    And it contains a list of links
+    Given I fetched an HTML document from "<URL>"
+    And it contains the following links
       | /foo |
       | /bar |
       | /bar |
@@ -13,8 +13,8 @@ Feature: URL extraction from the HTML documents
       | /qux |
       | /doo |
       | javascript:void(0) |
-    When the extractor takes the document
-    Then it should return a list of absolute URLs of the following paths
+    When I pass the document to the extractor
+    Then I must get absolute URLs of these paths
       | /foo |
       | /bar |
       | /qux |
