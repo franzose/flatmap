@@ -25,8 +25,8 @@ public class URLExtractor {
     /**
      * Extracts URLs from an HTML document.
      *
-     * @param document A document to extract URLs from
-     * @param selector A look-up CSS selector
+     * @param document The document to extract URLs from
+     * @param selector The look-up CSS selector to query against
      * @return a set of URLs extracted from the document
      */
     public static Set<URL> extract(Document document, String selector) {
@@ -43,7 +43,7 @@ public class URLExtractor {
      * Extracts URLs from multiple HTML documents into a single set.
      *
      * @param documents A set of documents to extract URLs from
-     * @param selector A look-up CSS selector
+     * @param selector The look-up CSS selector to query against
      * @return a set of URLs extracted from the documents
      */
     public static Set<URL> extract(Set<Document> documents, String selector) {
