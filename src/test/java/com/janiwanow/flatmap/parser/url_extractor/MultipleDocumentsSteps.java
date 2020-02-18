@@ -18,7 +18,7 @@ public class MultipleDocumentsSteps {
     private Map<Document, List<String>> documents = new HashMap<>();
     private Set<URL> extractedURLs;
 
-    @Given("the document fetched from {string} contains the following URLs")
+    @Given("I fetched an HTML document from {string} containing the following URLs")
     public void documentContainsURLs(String origin, DataTable paths) {
         var pathList = paths.asList();
         var document = new Document(origin);
@@ -31,12 +31,12 @@ public class MultipleDocumentsSteps {
         documents.put(document, pathList);
     }
 
-    @When("the extractor takes these documents")
+    @When("I pass the documents to the extractor")
     public void theExtractorTakesTheseDocuments() {
         extractedURLs = URLExtractor.extract(documents.keySet(), ".links-container > a");
     }
 
-    @Then("it should return a combined URL list")
+    @Then("I must get a combined URL list")
     public void itShouldReturnCombinedListOfURLs() throws MalformedURLException {
         var expectedSize = documents.values().stream().mapToLong(Collection::size).sum();
 

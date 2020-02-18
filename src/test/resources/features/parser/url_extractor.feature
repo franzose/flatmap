@@ -25,11 +25,11 @@ Feature: URL extraction from the HTML documents
       | https://example.com?page=999 |
 
   Scenario: Extraction from multiple documents
-    Given the document fetched from "https://example.com" contains the following URLs
+    Given I fetched an HTML document from "https://example.com" containing the following URLs
       | /foo |
       | /bar |
-    And the document fetched from "https://foobarqux.com" contains the following URLs
+    And I fetched an HTML document from "https://foobarqux.com" containing the following URLs
       | /qux |
       | /doo |
-    When the extractor takes these documents
-    Then it should return a combined URL list
+    When I pass the documents to the extractor
+    Then I must get a combined URL list
