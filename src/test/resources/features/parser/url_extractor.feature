@@ -1,4 +1,7 @@
 Feature: URL extraction from the HTML documents
+  In order to process apartment information
+  As a Developer
+  I should be able to grab URLs from the HTML documents
 
   Scenario Outline: Extraction from a single document
     Given we fetched an HTML document from "<URL>"
