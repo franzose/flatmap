@@ -37,6 +37,7 @@ public class JsoupConnection implements Connection {
     private Options options;
 
     public JsoupConnection(Options options) {
+        Objects.requireNonNull(options, "Connection options must not be null.");
         this.options = options;
     }
 
