@@ -30,6 +30,9 @@ public class URLExtractor {
      * @return a set of URLs extracted from the document
      */
     public static Set<URL> extract(Document document, String selector) {
+        Objects.requireNonNull(document, "Document must not be null.");
+        Objects.requireNonNull(selector, "Selector must not be null.");
+
         return document
             .select(selector)
             .eachAttr("abs:href")
@@ -47,6 +50,9 @@ public class URLExtractor {
      * @return a set of URLs extracted from the documents
      */
     public static Set<URL> extract(Set<Document> documents, String selector) {
+        Objects.requireNonNull(documents, "Document must not be null.");
+        Objects.requireNonNull(selector, "Selector must not be null.");
+
         return documents.stream()
             .flatMap(document -> extract(document, selector).stream())
             .collect(toSet());
