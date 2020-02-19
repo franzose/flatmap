@@ -63,8 +63,8 @@ public class JsoupConnection implements Connection {
 
         int attempts = 1;
 
-        LOG.debug("Started fetching from {}", url);
-        LOG.debug("Connection options: timeout {}ms, {} retries", options.timeout, options.retries);
+        LOG.info("Started fetching from {}", url);
+        LOG.info("Connection options: timeout {}ms, {} retries", options.timeout, options.retries);
 
         do {
             try {
@@ -73,7 +73,7 @@ public class JsoupConnection implements Connection {
                     .timeout(options.timeout)
                     .get();
 
-                LOG.debug("Finished fetching {}. Attempts: {}", url, attempts);
+                LOG.info("Finished fetching {}. Attempts: {}", url, attempts);
                 break;
             } catch (HttpStatusException e) {
                 LOG.warn("Failed to fetch {}\nStatus code: {}. Attempts: {}", url, e.getStatusCode(), attempts, e);
