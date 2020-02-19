@@ -6,6 +6,7 @@ import org.jsoup.nodes.Document;
 import java.io.IOException;
 import java.net.SocketTimeoutException;
 import java.net.URL;
+import java.util.Objects;
 import java.util.Optional;
 
 /**
@@ -51,9 +52,7 @@ public class JsoupConnection implements Connection {
      */
     @Override
     public Optional<Document> fetch(URL url) {
-        if (url == null) {
-            throw new IllegalArgumentException("URL must not be null.");
-        }
+        Objects.requireNonNull(url, "URL must not be null.");
 
         Document document = null;
 
