@@ -1,6 +1,8 @@
 package com.janiwanow.flatmap.parser;
 
 import org.jsoup.nodes.Document;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -22,6 +24,8 @@ import static java.util.stream.Collectors.toSet;
  */
 public class URLExtractor {
 
+    private static final Logger LOG = LoggerFactory.getLogger(URLExtractor.class);
+
     /**
      * Extracts URLs from an HTML document.
      *
@@ -33,13 +37,19 @@ public class URLExtractor {
         Objects.requireNonNull(document, "Document must not be null.");
         Objects.requireNonNull(selector, "Selector must not be null.");
 
-        return document
+        LOG.info("Starting extraction...\nLocation: {} CSS selector: \"{}\"", document.baseUri(), selector);
+
+        var urls = document
             .select(selector)
             .eachAttr("abs:href")
             .stream()
             .map(URLExtractor::toUrl)
             .filter(Objects::nonNull)
             .collect(toSet());
+
+        urls.forEach(url -> LOG.info("Extracted {}", url));
+
+        return urls;
     }
 
     /**
@@ -71,6 +81,7 @@ public class URLExtractor {
         try {
             return new URL(url);
         } catch (MalformedURLException e) {
+            LOG.info("Skipping malformed URL {}", url);
             return null;
         }
     }
