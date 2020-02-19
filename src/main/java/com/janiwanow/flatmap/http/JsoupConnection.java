@@ -1,7 +1,10 @@
 package com.janiwanow.flatmap.http;
 
+import org.jsoup.HttpStatusException;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.net.SocketTimeoutException;
@@ -34,6 +37,7 @@ public class JsoupConnection implements Connection {
         }
     }
 
+    private static final Logger LOG = LoggerFactory.getLogger(JsoupConnection.class);
     private Options options;
 
     public JsoupConnection(Options options) {
@@ -59,16 +63,26 @@ public class JsoupConnection implements Connection {
 
         int attempts = 1;
 
+        LOG.debug("Started fetching from {}", url);
+        LOG.debug("Connection options: timeout {}ms, {} retries", options.timeout, options.retries);
+
         do {
             try {
-                document = Jsoup.connect(url.toString()).timeout(options.timeout).get();
+                document = Jsoup.connect(url.toString())
+                    .ignoreHttpErrors(false)
+                    .timeout(options.timeout)
+                    .get();
+
+                LOG.debug("Finished fetching {}. Attempts: {}", url, attempts);
                 break;
+            } catch (HttpStatusException e) {
+                LOG.warn("Failed to fetch {}\nStatus code: {}. Attempts: {}", url, e.getStatusCode(), attempts, e);
             } catch (SocketTimeoutException e) {
-                // TODO: log timeout
+                LOG.warn("Connection to {} timed out. Attempts: {}", url, attempts, e);
             } catch (IOException e) {
-                // TODO: log IOException
+                LOG.warn("IOException while fetching {}. Attempts: {}", url, attempts, e);
             } catch (Throwable e) {
-                // TODO: log throwable
+                LOG.error("Unexpected exception while fetching {}. Attempts: {}", url, attempts, e);
             }
 
             attempts++;
