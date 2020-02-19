@@ -51,6 +51,10 @@ public class JsoupConnection implements Connection {
      */
     @Override
     public Optional<Document> fetch(URL url) {
+        if (url == null) {
+            throw new IllegalArgumentException("URL must not be null.");
+        }
+
         Document document = null;
 
         for (int tries = 1; tries <= options.retries; tries++) {
