@@ -16,8 +16,8 @@ import java.util.Optional;
  */
 public class JsoupConnection implements Connection {
     public static final class Options {
-        public static final int DEFAULT_RETRIES = 1;
-        public static final int DEFAULT_TIMEOUT = 1500;
+        public static final int MINIMUM_RETRIES = 1;
+        public static final int MINIMUM_TIMEOUT = 1500;
         public final int retries;
         public final int timeout;
 
@@ -28,8 +28,8 @@ public class JsoupConnection implements Connection {
          * @param timeout connection timeout
          */
         public Options(int retries, int timeout) {
-            this.retries = Math.max(retries, DEFAULT_RETRIES);
-            this.timeout = Math.max(timeout, DEFAULT_TIMEOUT);
+            this.retries = Math.max(retries, MINIMUM_RETRIES);
+            this.timeout = Math.max(timeout, MINIMUM_TIMEOUT);
         }
     }
 
