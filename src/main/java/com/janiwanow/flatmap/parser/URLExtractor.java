@@ -12,7 +12,7 @@ import static java.util.stream.Collectors.toSet;
 /**
  * URL extractor.
  *
- * <p>It's sole purpose is to extract URLs from the HTML documents. Extractor accepts
+ * <p>Its sole purpose is to extract URLs from the HTML documents. Extractor accepts
  * instances of Jsoup's {@link Document} and returns sets of {@link URL} instances back.
  * Note that the extractor <i>always</i> returns absolute form of the URLs using
  * Document's built-in {@code abs:href} notation. This is by design since
