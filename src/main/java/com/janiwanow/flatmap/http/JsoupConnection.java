@@ -40,7 +40,7 @@ public class JsoupConnection implements Connection {
     /**
      * Fetches an HTML document from the given URL.
      *
-     * Does as much retries as defined by the connection {@link Options}.
+     * In case of failures, does as much retries as defined by the connection {@link Options}.
      * Exceptions are swallowed to avoid breaking the normal program flow.
      *
      * @param url The URL to fetch the document from
