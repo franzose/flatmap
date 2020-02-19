@@ -57,7 +57,9 @@ public class JsoupConnection implements Connection {
 
         Document document = null;
 
-        for (int tries = 1; tries <= options.retries; tries++) {
+        int attempts = 1;
+
+        do {
             try {
                 document = Jsoup.connect(url.toString()).timeout(options.timeout).get();
                 break;
@@ -65,8 +67,12 @@ public class JsoupConnection implements Connection {
                 // TODO: log timeout
             } catch (IOException e) {
                 // TODO: log IOException
+            } catch (Throwable e) {
+                // TODO: log throwable
             }
-        }
+
+            attempts++;
+        } while (attempts <= options.retries);
 
         return Optional.ofNullable(document);
     }
