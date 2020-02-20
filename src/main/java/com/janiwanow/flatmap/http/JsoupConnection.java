@@ -80,7 +80,7 @@ public class JsoupConnection implements Connection {
             } catch (SocketTimeoutException e) {
                 LOG.warn("Connection to {} timed out. Attempts: {}", url, attempts, e);
             } catch (IOException e) {
-                LOG.warn("IOException while fetching {}. Attempts: {}", url, attempts, e);
+                LOG.warn("Connection error while fetching {}. Attempts: {}", url, attempts, e);
             } catch (Throwable e) {
                 LOG.error("Unexpected exception while fetching {}. Attempts: {}", url, attempts, e);
             }
