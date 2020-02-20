@@ -18,7 +18,13 @@ public class WireMockPathToURL {
      * @throws MalformedURLException in case of an improper URL string
      */
     public static URL toAbsoluteURL(String path) throws MalformedURLException {
-        // @TODO: get scheme and host from config
-        return new URL(String.format("http://localhost:%d%s", wireMockConfig().portNumber(), path));
+        var config = wireMockConfig();
+
+        return new URL(String.format(
+            "http://%s:%d%s",
+            config.bindAddress(),
+            config.portNumber(),
+            path
+        ));
     }
 }
