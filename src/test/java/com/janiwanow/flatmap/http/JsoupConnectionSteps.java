@@ -20,16 +20,16 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class JsoupConnectionSteps {
     private static final String SUCCESS_MESSAGE = "JsoupConnection!";
+    private static final int RETRIES = 3;
+    private static final int TIMEOUT = 1500;
     private ListAppender<ILoggingEvent> appender;
     private JsoupConnection connection;
-    private int retries = 3;
-    private int timeout = 1500;
     private URL url;
     private String path;
 
     @Given("I configured JsoupConnection")
     public void configureConnection() {
-        connection = new JsoupConnection(new JsoupConnection.Options(retries, timeout));
+        connection = new JsoupConnection(new JsoupConnection.Options(RETRIES, TIMEOUT));
     }
 
     @When("I requested {string} using JsoupConnection")
@@ -60,7 +60,7 @@ public class JsoupConnectionSteps {
         stubFor(get(urlEqualTo(path))
             .willReturn(aResponse()
                 .withHeader("Content-Type", "text/html")
-                .withFixedDelay(timeout + 1000)));
+                .withFixedDelay(TIMEOUT + 1000)));
     }
 
     @And("the connection ended up with an error")
@@ -126,7 +126,7 @@ public class JsoupConnectionSteps {
     }
 
     private void assertLogMessages(Supplier<String> supplier) {
-        for (int attempt = 1; attempt <= retries; attempt++) {
+        for (int attempt = 1; attempt <= RETRIES; attempt++) {
             assertEquals(
                 String.format("%s Attempts: %d", supplier.get(), attempt),
                 appender.list.get(attempt + 1).getFormattedMessage()
