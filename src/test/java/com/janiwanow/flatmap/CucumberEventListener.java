@@ -10,8 +10,13 @@ public class CucumberEventListener implements ConcurrentEventListener {
 
     @Override
     public void setEventPublisher(EventPublisher publisher) {
+        // Run before ALL tests
         publisher.registerHandlerFor(TestRunStarted.class, event -> server.start());
+
+        // Run after EACH feature
         publisher.registerHandlerFor(TestCaseFinished.class, event -> WireMock.reset());
+
+        // Run after ALL tests
         publisher.registerHandlerFor(TestRunFinished.class, event -> server.stop());
     }
 }
