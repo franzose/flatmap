@@ -23,23 +23,6 @@ public class DocumentFetcher {
     }
 
     /**
-     * Fetches the documents from the given URLs.
-     *
-     * @param urls a set of URLs to fetch the documents from
-     * @return a set of fetched HTML documents
-     */
-    public Set<Document> fetch(Set<URL> urls) {
-        Objects.requireNonNull(urls, "URLs must not be null.");
-
-        return urls.stream()
-            .map(this::fetchAsync)
-            .map(CompletableFuture::join)
-            .filter(Optional::isPresent)
-            .map(Optional::get)
-            .collect(toSet());
-    }
-
-    /**
      * Schedules fetching of an HTML document from the given URL.
      *
      * @param url The URL to fetch the document from
@@ -61,5 +44,22 @@ public class DocumentFetcher {
         Objects.requireNonNull(urls, "URLs must not be null.");
 
         return CompletableFuture.supplyAsync(() -> fetch(urls));
+    }
+
+    /**
+     * Fetches the documents from the given URLs.
+     *
+     * @param urls a set of URLs to fetch the documents from
+     * @return a set of fetched HTML documents
+     */
+    public Set<Document> fetch(Set<URL> urls) {
+        Objects.requireNonNull(urls, "URLs must not be null.");
+
+        return urls.stream()
+            .map(this::fetchAsync)
+            .map(CompletableFuture::join)
+            .filter(Optional::isPresent)
+            .map(Optional::get)
+            .collect(toSet());
     }
 }
