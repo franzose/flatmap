@@ -38,7 +38,7 @@ public class JsoupConnectionSteps {
         this.path = path;
     }
 
-    @And("the server response was OK")
+    @When("the response is OK")
     public void prepareOkResponseStub() {
         stubFor(get(urlEqualTo(path))
             .willReturn(aResponse()
@@ -46,7 +46,7 @@ public class JsoupConnectionSteps {
                 .withBody(SUCCESS_MESSAGE)));
     }
 
-    @And("the server response was not OK")
+    @When("the response is not OK")
     public void prepareNotOkResponseStub() {
         stubFor(get(urlEqualTo(path))
             .willReturn(aResponse()
@@ -55,7 +55,7 @@ public class JsoupConnectionSteps {
                 .withBody("Forbidden!")));
     }
 
-    @And("the connection timed out")
+    @When("the connection times out")
     public void prepareTimeoutConnectionStub() {
         stubFor(get(urlEqualTo(path))
             .willReturn(aResponse()
@@ -63,7 +63,7 @@ public class JsoupConnectionSteps {
                 .withFixedDelay(TIMEOUT + 1000)));
     }
 
-    @And("the connection ended up with an error")
+    @When("the connection ends up with an error")
     public void prepareConnectionErrorStub() {
         stubFor(get(urlEqualTo(path))
             .willReturn(aResponse()
