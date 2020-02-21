@@ -46,7 +46,7 @@ public class DocumentFetcher {
     public CompletableFuture<Set<Document>> fetchAsync(Set<URL> urls) {
         Objects.requireNonNull(urls, "URLs must not be null.");
 
-        return CompletableFuture.supplyAsync(() -> fetch(urls));
+        return CompletableFuture.supplyAsync(() -> fetchAll(urls));
     }
 
     /**
@@ -55,7 +55,7 @@ public class DocumentFetcher {
      * @param urls a set of URLs to fetch the documents from
      * @return a set of fetched HTML documents
      */
-    public Set<Document> fetch(Set<URL> urls) {
+    public Set<Document> fetchAll(Set<URL> urls) {
         Objects.requireNonNull(urls, "URLs must not be null.");
 
         return urls.stream()
