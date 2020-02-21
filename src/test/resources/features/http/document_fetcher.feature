@@ -5,7 +5,7 @@ Feature: Fetching HTML documents using DocumentFetcher
 
   Scenario: Fetching a document asynchronously
     Given I scheduled a request to "https://example.com"
-    When the document was fetched successfully
+    When the document is fetched
     Then I must get that HTML document
 
   Scenario: Fetching multiple documents asynchronously

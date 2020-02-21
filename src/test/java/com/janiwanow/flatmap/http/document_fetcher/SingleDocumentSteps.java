@@ -26,8 +26,8 @@ public class SingleDocumentSteps {
             .fetchAsync(new URL(url));
     }
 
-    @When("the document was fetched successfully")
-    public void fetchSuccessfully() {
+    @When("the document is fetched")
+    public void fetch() {
         future.join()
             .ifPresentOrElse(
                 doc -> fetched = doc,
