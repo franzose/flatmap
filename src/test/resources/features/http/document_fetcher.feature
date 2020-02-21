@@ -7,3 +7,11 @@ Feature: Fetching HTML documents using DocumentFetcher
     Given I scheduled a request to "https://example.com"
     When fetching completed successfully
     Then I must get that HTML document
+
+  Scenario: Fetching multiple documents asynchronously
+    Given I scheduled multiple fetching requests
+      | https://example.com |
+      | https://foobarqux.com |
+      | https://parampampam.ru |
+    When fetching completed successfully
+    Then I must get those HTML documents
