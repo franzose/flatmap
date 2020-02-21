@@ -13,5 +13,11 @@ Feature: Fetching HTML documents using DocumentFetcher
       | https://example.com |
       | https://foobarqux.com |
       | https://parampampam.ru |
-    When the documents were fetched successfully
+    When the documents are fetched
     Then I must get those HTML documents
+
+  Scenario: Skipping empty responses
+    Given There are 2 URLs not responding
+    And I scheduled 4 fetching requests
+    When the documents are fetched
+    Then I must get only 2 HTML documents
