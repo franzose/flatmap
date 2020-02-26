@@ -16,7 +16,7 @@ import static java.util.stream.Collectors.toSet;
  * Unlike the basic connection, this fetcher provides an ability to fetch
  * the HTML documents asynchronously thanks to using {@link CompletableFuture}.
  */
-public class DocumentFetcher {
+public final class DocumentFetcher {
     private final Connection connection;
 
     public DocumentFetcher(Connection connection) {

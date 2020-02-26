@@ -22,7 +22,7 @@ import static java.util.stream.Collectors.toSet;
  *
  * <p>The current implementation silently ignores any invalid URL.
  */
-public class URLExtractor {
+public final class URLExtractor {
 
     private static final Logger LOG = LoggerFactory.getLogger(URLExtractor.class);
 

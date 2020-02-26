@@ -18,7 +18,7 @@ import java.util.Optional;
  * As stated in the class name, the current implementation relies on {@link org.jsoup.Connection}
  * to fetch the HTML documents and has built-in support for retries in case of failures.
  */
-public class JsoupConnection implements Connection {
+public final class JsoupConnection implements Connection {
     public static final class Options {
         public static final int MINIMUM_RETRIES = 1;
         public static final int MINIMUM_TIMEOUT = 1500;
