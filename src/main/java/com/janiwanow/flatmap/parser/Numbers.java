@@ -1,5 +1,7 @@
 package com.janiwanow.flatmap.parser;
 
+import java.util.Objects;
+
 /**
  * A simple utility class to retrieve numbers from strings.
  */
@@ -11,6 +13,8 @@ public class Numbers {
      * @return parsed integer
      */
     public static int parseInt(String str) {
+        Objects.requireNonNull(str, "String must not be null.");
+
         return Integer.parseInt(str.replaceAll("[^0-9]", ""));
     }
 
@@ -21,6 +25,8 @@ public class Numbers {
      * @return parsed double
      */
     public static double parseDouble(String str) {
+        Objects.requireNonNull(str, "String must not be null.");
+
         return Double.parseDouble(str
             .replaceAll(",+", ".")
             .replaceAll("[^0-9.]", "")
