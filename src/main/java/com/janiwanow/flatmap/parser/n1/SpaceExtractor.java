@@ -10,7 +10,7 @@ import java.util.function.Function;
 /**
  * Apartment area details extractor.
  */
-final class SpaceExtractor {
+public final class SpaceExtractor {
     /**
      * Extracts apartment area details.
      *
@@ -18,7 +18,7 @@ final class SpaceExtractor {
      * @param roomsExtractor An implementation of the extractor
      * @return extracted area details under the title "Space"
      */
-    static Space extract(Document document, Function<Document, Integer> roomsExtractor) {
+    public static Space extract(Document document, Function<Document, Integer> roomsExtractor) {
         Objects.requireNonNull(document, "Document must not be null.");
 
         var texts = document.select(".offer-card-factoids .text").eachText();
