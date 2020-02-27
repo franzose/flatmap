@@ -5,7 +5,7 @@ import java.util.Objects;
 /**
  * A simple utility class to retrieve numbers from strings.
  */
-public class Numbers {
+public final class Numbers {
     /**
      * Tries to parse an integer from the given string.
      *
