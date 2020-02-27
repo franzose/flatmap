@@ -12,6 +12,16 @@ import java.util.function.Function;
  */
 public final class SpaceExtractor {
     /**
+     * Extracts apartment area details and uses the default rooms extractor.
+     *
+     * @param document N1 offer page like https://novosibirsk.n1.ru/view/33016674/
+     * @return extracted area details under the title "Space"
+     */
+    public static Space extract(Document document) {
+        return extract(document, RoomsExtractor::extract);
+    }
+
+    /**
      * Extracts apartment area details.
      *
      * @param document N1 offer page like https://novosibirsk.n1.ru/view/33016674/
