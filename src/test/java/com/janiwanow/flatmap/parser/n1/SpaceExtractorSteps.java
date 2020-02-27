@@ -17,12 +17,6 @@ public class SpaceExtractorSteps {
     @Given("the following apartment area information")
     public void setUpDocument(DataTable data) {
         document = new Document("");
-        document
-            .appendElement("div")
-            .addClass("offer-card-header")
-            .appendElement("div")
-            .addClass("deal-title")
-            .text("продам 3-к");
 
         var factoids = document.appendElement("div").addClass("offer-card-factoids");
 
@@ -35,7 +29,7 @@ public class SpaceExtractorSteps {
 
     @When("I pass the document to the space extractor")
     public void extractAreaInformation() {
-        space = SpaceExtractor.extract(document);
+        space = SpaceExtractor.extract(document, document -> 4);
     }
 
     @Then("I must get {int} square meters of the total area")
