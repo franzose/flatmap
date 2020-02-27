@@ -6,9 +6,9 @@ public final class ApartmentInfo {
     public final URL url;
     public final String address;
     public final Space space;
-    public final double price;
+    public final Price price;
 
-    public ApartmentInfo(URL url, String address, Space space, double price) {
+    public ApartmentInfo(URL url, String address, Space space, Price price) {
         this.url = url;
         this.address = address;
         this.price = price;
