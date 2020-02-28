@@ -18,21 +18,21 @@ import static com.github.tomakehurst.wiremock.client.WireMock.*;
 import static com.janiwanow.flatmap.WireMockPathToURL.toAbsoluteURL;
 import static org.junit.jupiter.api.Assertions.*;
 
-public class JsoupConnectionSteps {
-    private static final String SUCCESS_MESSAGE = "JsoupConnection!";
+public class JsoupHttpConnectionSteps {
+    private static final String SUCCESS_MESSAGE = "JsoupHttpConnection!";
     private static final int RETRIES = 5;
     private static final int TIMEOUT = 3000;
     private ListAppender<ILoggingEvent> appender;
-    private JsoupConnection connection;
+    private JsoupHttpConnection connection;
     private URL url;
     private String path;
 
-    @Given("I configured JsoupConnection")
+    @Given("I configured JsoupHttpConnection")
     public void configureConnection() {
-        connection = JsoupConnection.builder().retries(RETRIES).timeout(TIMEOUT).build();
+        connection = JsoupHttpConnection.builder().retries(RETRIES).timeout(TIMEOUT).build();
     }
 
-    @When("I requested {string} using JsoupConnection")
+    @When("I requested {string} using JsoupHttpConnection")
     public void requestUrl(String path) throws MalformedURLException {
         this.url = toAbsoluteURL(path);
         this.path = path;
@@ -107,19 +107,19 @@ public class JsoupConnectionSteps {
 
     @And("I should see a log message that the connection timed out")
     public void ensureThereIsConnectionTimedOutLogMessage() {
-        assertLogMessages(() -> String.format("Connection to %s timed out.", url));
+        assertLogMessages(() -> String.format("HttpConnection to %s timed out.", url));
     }
 
     @And("I should see a log message about the connection error")
     public void ensureThereIsConnectionErrorLogMessage() {
-        assertLogMessages(() -> String.format("Connection error while fetching %s.", url));
+        assertLogMessages(() -> String.format("HttpConnection error while fetching %s.", url));
     }
 
     private static ListAppender<ILoggingEvent> getAppender() {
         ListAppender<ILoggingEvent> appender = new ListAppender<>();
         appender.start();
 
-        var logger = (Logger) LoggerFactory.getLogger(JsoupConnection.class);
+        var logger = (Logger) LoggerFactory.getLogger(JsoupHttpConnection.class);
         logger.addAppender(appender);
 
         return appender;

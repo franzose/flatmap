@@ -18,18 +18,18 @@ import java.util.Optional;
  * As stated in the class name, the current implementation relies on {@link org.jsoup.Connection}
  * to fetch the HTML documents and has built-in support for retries in case of failures.
  */
-public final class JsoupConnection implements Connection {
-    private static final Logger LOG = LoggerFactory.getLogger(JsoupConnection.class);
+public final class JsoupHttpConnection implements HttpConnection {
+    private static final Logger LOG = LoggerFactory.getLogger(JsoupHttpConnection.class);
     public static final int MINIMUM_RETRIES = 1;
     public static final int MINIMUM_TIMEOUT = 1500;
     private int retries;
     private int timeout;
 
     public static class Builder {
-        private JsoupConnection connection;
+        private JsoupHttpConnection connection;
 
         public Builder() {
-            connection = new JsoupConnection();
+            connection = new JsoupHttpConnection();
         }
 
         public Builder retries(int retries) {
@@ -42,7 +42,7 @@ public final class JsoupConnection implements Connection {
             return this;
         }
 
-        public JsoupConnection build() {
+        public JsoupHttpConnection build() {
             var result = connection;
             connection = null;
 
@@ -54,7 +54,7 @@ public final class JsoupConnection implements Connection {
         return new Builder();
     }
 
-    public JsoupConnection() {
+    public JsoupHttpConnection() {
         this.retries = MINIMUM_RETRIES;
         this.timeout = MINIMUM_TIMEOUT;
     }
@@ -78,7 +78,7 @@ public final class JsoupConnection implements Connection {
         int attempts = 1;
 
         LOG.info("Started fetching from {}", url);
-        LOG.info("Connection options: timeout {}ms, {} retries", timeout, retries);
+        LOG.info("HttpConnection options: timeout {}ms, {} retries", timeout, retries);
 
         do {
             try {
@@ -92,9 +92,9 @@ public final class JsoupConnection implements Connection {
             } catch (HttpStatusException e) {
                 LOG.warn("Failed to fetch {}\nStatus code: {}. Attempts: {}", url, e.getStatusCode(), attempts, e);
             } catch (SocketTimeoutException e) {
-                LOG.warn("Connection to {} timed out. Attempts: {}", url, attempts, e);
+                LOG.warn("HttpConnection to {} timed out. Attempts: {}", url, attempts, e);
             } catch (IOException e) {
-                LOG.warn("Connection error while fetching {}. Attempts: {}", url, attempts, e);
+                LOG.warn("HttpConnection error while fetching {}. Attempts: {}", url, attempts, e);
             } catch (Throwable e) {
                 LOG.error("Unexpected exception while fetching {}. Attempts: {}", url, attempts, e);
             }

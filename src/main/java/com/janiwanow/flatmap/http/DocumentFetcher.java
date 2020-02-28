@@ -17,10 +17,10 @@ import static java.util.stream.Collectors.toSet;
  * the HTML documents asynchronously thanks to using {@link CompletableFuture}.
  */
 public final class DocumentFetcher {
-    private final Connection connection;
+    private final HttpConnection connection;
 
-    public DocumentFetcher(Connection connection) {
-        Objects.requireNonNull(connection, "Connection must not be null.");
+    public DocumentFetcher(HttpConnection connection) {
+        Objects.requireNonNull(connection, "HttpConnection must not be null.");
 
         this.connection = connection;
     }

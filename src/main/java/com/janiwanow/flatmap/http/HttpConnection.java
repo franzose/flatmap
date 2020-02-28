@@ -9,7 +9,7 @@ import java.util.Optional;
  * Common interface for connections aimed at fetching HTML documents by the given URLs.
  */
 @FunctionalInterface
-public interface Connection {
+public interface HttpConnection {
     /**
      * Tries to fetch an HTML document from the given URL.
      *
