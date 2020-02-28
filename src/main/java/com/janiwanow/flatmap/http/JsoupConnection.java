@@ -19,36 +19,50 @@ import java.util.Optional;
  * to fetch the HTML documents and has built-in support for retries in case of failures.
  */
 public final class JsoupConnection implements Connection {
-    public static final class Options {
-        public static final int MINIMUM_RETRIES = 1;
-        public static final int MINIMUM_TIMEOUT = 1500;
-        public final int retries;
-        public final int timeout;
+    private static final Logger LOG = LoggerFactory.getLogger(JsoupConnection.class);
+    public static final int MINIMUM_RETRIES = 1;
+    public static final int MINIMUM_TIMEOUT = 1500;
+    private int retries;
+    private int timeout;
 
-        /**
-         * Constructs connection options.
-         *
-         * @param retries number of retries before giving up
-         * @param timeout connection timeout
-         */
-        public Options(int retries, int timeout) {
-            this.retries = Math.max(retries, MINIMUM_RETRIES);
-            this.timeout = Math.max(timeout, MINIMUM_TIMEOUT);
+    public static class Builder {
+        private JsoupConnection connection;
+
+        public Builder() {
+            connection = new JsoupConnection();
+        }
+
+        public Builder retries(int retries) {
+            connection.retries = Math.max(retries, MINIMUM_RETRIES);
+            return this;
+        }
+
+        public Builder timeout(int timeout) {
+            connection.timeout = Math.max(timeout, MINIMUM_TIMEOUT);
+            return this;
+        }
+
+        public JsoupConnection build() {
+            var result = connection;
+            connection = null;
+
+            return result;
         }
     }
 
-    private static final Logger LOG = LoggerFactory.getLogger(JsoupConnection.class);
-    private Options options;
+    public static Builder builder() {
+        return new Builder();
+    }
 
-    public JsoupConnection(Options options) {
-        Objects.requireNonNull(options, "Connection options must not be null.");
-        this.options = options;
+    public JsoupConnection() {
+        this.retries = MINIMUM_RETRIES;
+        this.timeout = MINIMUM_TIMEOUT;
     }
 
     /**
      * Fetches an HTML document from the given URL.
      *
-     * In case of failures, does as much retries as defined by the connection {@link Options}.
+     * In case of failures, does as much retries as defined by the connection options.
      * Exceptions are swallowed to avoid breaking the normal program flow.
      *
      * @param url The URL to fetch the document from
@@ -64,13 +78,13 @@ public final class JsoupConnection implements Connection {
         int attempts = 1;
 
         LOG.info("Started fetching from {}", url);
-        LOG.info("Connection options: timeout {}ms, {} retries", options.timeout, options.retries);
+        LOG.info("Connection options: timeout {}ms, {} retries", timeout, retries);
 
         do {
             try {
                 document = Jsoup.connect(url.toString())
                     .ignoreHttpErrors(false)
-                    .timeout(options.timeout)
+                    .timeout(timeout)
                     .get();
 
                 LOG.info("Finished fetching {}. Attempts: {}", url, attempts);
@@ -86,7 +100,7 @@ public final class JsoupConnection implements Connection {
             }
 
             attempts++;
-        } while (attempts <= options.retries);
+        } while (attempts <= retries);
 
         return Optional.ofNullable(document);
     }

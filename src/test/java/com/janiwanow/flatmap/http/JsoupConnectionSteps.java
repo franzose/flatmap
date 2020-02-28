@@ -20,8 +20,8 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class JsoupConnectionSteps {
     private static final String SUCCESS_MESSAGE = "JsoupConnection!";
-    private static final int RETRIES = 3;
-    private static final int TIMEOUT = 1500;
+    private static final int RETRIES = 5;
+    private static final int TIMEOUT = 3000;
     private ListAppender<ILoggingEvent> appender;
     private JsoupConnection connection;
     private URL url;
@@ -29,7 +29,7 @@ public class JsoupConnectionSteps {
 
     @Given("I configured JsoupConnection")
     public void configureConnection() {
-        connection = new JsoupConnection(new JsoupConnection.Options(RETRIES, TIMEOUT));
+        connection = JsoupConnection.builder().retries(RETRIES).timeout(TIMEOUT).build();
     }
 
     @When("I requested {string} using JsoupConnection")
