@@ -59,10 +59,10 @@ public final class ApartmentInfoExtractor {
 
         try {
             return new ApartmentInfo(
-                    new URL(document.baseUri()),
-                    addressExtractor.apply(document),
-                    spaceExtractor.apply(document),
-                    priceExtractor.apply(document)
+                new URL(document.baseUri()),
+                addressExtractor.apply(document),
+                spaceExtractor.apply(document),
+                priceExtractor.apply(document)
             );
         } catch (MalformedURLException e) {
             throw new RuntimeException(e);
