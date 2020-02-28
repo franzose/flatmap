@@ -47,6 +47,7 @@ public final class URLExtractor {
             .filter(Objects::nonNull)
             .collect(toSet());
 
+        LOG.info("URLs extracted: {}", urls.size());
         urls.forEach(url -> LOG.info("Extracted {}", url));
 
         return urls;
