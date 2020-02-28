@@ -8,7 +8,10 @@ import org.jsoup.nodes.Document;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Objects;
+import java.util.Set;
 import java.util.function.Function;
+
+import static java.util.stream.Collectors.toSet;
 
 /**
  * Apartment information details extractor.
@@ -50,16 +53,31 @@ public final class ApartmentInfoExtractor {
      *
      * @param document HTML document to parse
      * @return extracted information details
-     * @throws MalformedURLException if the {@link Document#baseUri()} returns an invalid value for {@link URL}
      */
-    public ApartmentInfo extract(Document document) throws MalformedURLException {
+    public ApartmentInfo extract(Document document) {
         Objects.requireNonNull(document, "Document must not be null.");
 
-        return new ApartmentInfo(
-            new URL(document.baseUri()),
-            addressExtractor.apply(document),
-            spaceExtractor.apply(document),
-            priceExtractor.apply(document)
-        );
+        try {
+            return new ApartmentInfo(
+                    new URL(document.baseUri()),
+                    addressExtractor.apply(document),
+                    spaceExtractor.apply(document),
+                    priceExtractor.apply(document)
+            );
+        } catch (MalformedURLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    /**
+     * Extracts apartment information details from the given HTML documents.
+     *
+     * @param documents HTML documents to parse
+     * @return extracted information details
+     */
+    public Set<ApartmentInfo> extract(Set<Document> documents) {
+        Objects.requireNonNull(documents, "Documents must not be null.");
+
+        return documents.stream().map(this::extract).collect(toSet());
     }
 }
