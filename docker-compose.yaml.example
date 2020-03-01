@@ -1,0 +1,16 @@
+version: '3.1'
+services:
+  database:
+    image: postgres:latest
+    ports:
+      - 5555:5432
+    volumes:
+      - ./data/db:/var/lib/postgresql/data
+    environment:
+      POSTGRES_DB: flatmap
+      POSTGRES_USER: flatmap
+      POSTGRES_PASSWORD: flatmap
+  db_admin:
+    image: adminer
+    ports:
+      - 8080:8080
