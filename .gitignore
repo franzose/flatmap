@@ -5,4 +5,5 @@
 gradle-app.setting
 !gradle-wrapper.jar
 .gradletasknamecache
+.env
 docker-compose.yaml
