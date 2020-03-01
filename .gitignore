@@ -1,6 +1,8 @@
 .idea/
 .gradle
+/data/
 /build/
 gradle-app.setting
 !gradle-wrapper.jar
 .gradletasknamecache
+docker-compose.yaml
