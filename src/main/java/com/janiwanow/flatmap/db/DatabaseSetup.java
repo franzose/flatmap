@@ -11,7 +11,7 @@ import java.sql.SQLException;
 /**
  * Utility used to setup database tables.
  */
-public class DatabaseSetup {
+public final class DatabaseSetup {
     private static final Logger LOG = LoggerFactory.getLogger(DatabaseSetup.class);
     private static final String CHECK_TABLES_QUERY;
 

@@ -13,7 +13,7 @@ import static com.janiwanow.flatmap.util.Env.ENV;
 /**
  * Database connection factory.
  */
-public class ConnectionFactory {
+public final class ConnectionFactory {
     /**
      * Environment variables required to establish a new database connection.
      */

@@ -6,7 +6,7 @@ import static com.janiwanow.flatmap.db.DatabaseSetup.createTablesIfNotCreated;
 /**
  * The entry point of the console application.
  */
-public class EntryPoint {
+public final class EntryPoint {
     public static void main(String[] args) {
         try (var connection = connect()) {
             createTablesIfNotCreated(connection);
