@@ -21,7 +21,7 @@ public final class Env {
      * @throws EnvVariablesMissingException if any of the required environment variables is missing
      */
     public static void ensureVarsAreSet(Set<String> requiredVarNames) {
-        Objects.requireNonNull(requiredVarNames, "Required keys must not be null.");
+        Objects.requireNonNull(requiredVarNames, "Required variable names must not be null.");
 
         var allEnvVarNames = ENV.entries().stream().map(DotenvEntry::getKey).collect(toSet());
         var missingVarNames = requiredVarNames.stream().dropWhile(allEnvVarNames::contains).collect(toSet());
