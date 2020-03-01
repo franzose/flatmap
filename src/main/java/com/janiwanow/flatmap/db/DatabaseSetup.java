@@ -24,7 +24,7 @@ public class DatabaseSetup {
     }
 
     /**
-     * Creates database tables is they haven't been created yet.
+     * Creates database tables if they haven't been created yet.
      *
      * @param connection a database connection
      * @throws SQLException in case of any failure during execution of the SQL queries
