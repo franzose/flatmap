@@ -12,7 +12,7 @@ import java.util.Objects;
 /**
  * Utility to work with files located at the "resources" directory.
  */
-public class ResourceFile {
+public final class ResourceFile {
     private static final Logger LOG = LoggerFactory.getLogger(ResourceFile.class);
 
     /**
