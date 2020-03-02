@@ -1,5 +1,7 @@
 package com.janiwanow.flatmap.db;
 
+import com.beust.jcommander.Parameters;
+import com.janiwanow.flatmap.cli.Command;
 import com.janiwanow.flatmap.util.ResourceFile;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,8 +13,9 @@ import java.sql.SQLException;
 /**
  * Utility used to setup database tables.
  */
-public final class DatabaseSetup {
-    private static final Logger LOG = LoggerFactory.getLogger(DatabaseSetup.class);
+@Parameters(commandNames = "db:setup", commandDescription = "Sets up database tables and data")
+public final class SetupDatabaseCommand implements Command {
+    private static final Logger LOG = LoggerFactory.getLogger(SetupDatabaseCommand.class);
     private static final String CHECK_TABLES_QUERY;
 
     static {
@@ -23,28 +26,34 @@ public final class DatabaseSetup {
         }
     }
 
+    private final Connection connection;
+
+    public SetupDatabaseCommand(Connection connection) {
+        this.connection = connection;
+    }
+
     /**
      * Creates database tables if they haven't been created yet.
-     *
-     * @param connection a database connection
-     * @throws SQLException in case of any failure during execution of the SQL queries
-     * @throws IOException in case of a failure of reading the necessary resource files
      */
-    public static void createTablesIfNotCreated(Connection connection) throws SQLException, IOException {
-        if (tablesShouldBeCreated(connection)) {
-            createTables(connection);
+    @Override
+    public void execute() {
+        try {
+            if (tablesShouldBeCreated()) {
+                createTables();
+            }
+        } catch (Throwable e) {
+            throw new RuntimeException(e);
         }
     }
 
     /**
      * Checks whether required database tables should be created.
      *
-     * @param connection a database connection
      * @return <code>true</code> if any of the database tables is missing,
      *         <code>false</code> if all database tables exist
      * @throws SQLException in case of any failure during execution of the SQL queries
      */
-    private static boolean tablesShouldBeCreated(Connection connection) throws SQLException {
+    private boolean tablesShouldBeCreated() throws SQLException {
         LOG.info("Let's check if the installation is required...");
 
         try (
@@ -67,11 +76,10 @@ public final class DatabaseSetup {
     /**
      * Creates database tables required for the application to function.
      *
-     * @param connection a database connection
      * @throws SQLException in case of any failure during execution of the SQL queries
      * @throws IOException in case of a failure of reading the resource file
      */
-    private static void createTables(Connection connection) throws SQLException, IOException {
+    private void createTables() throws SQLException, IOException {
         LOG.info("Start creating database tables...");
 
         var queries = ResourceFile.readToString("setup_required_tables.sql").split(";");

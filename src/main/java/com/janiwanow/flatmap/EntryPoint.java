@@ -1,19 +1,24 @@
 package com.janiwanow.flatmap;
 
-import static com.janiwanow.flatmap.db.ConnectionFactory.connect;
-import static com.janiwanow.flatmap.db.DatabaseSetup.createTablesIfNotCreated;
+import com.janiwanow.flatmap.cli.Application;
+import com.janiwanow.flatmap.db.ConnectionFactory;
+import com.janiwanow.flatmap.db.SetupDatabaseCommand;
+
+import java.sql.SQLException;
+import java.util.Set;
 
 /**
  * The entry point of the console application.
  */
 public final class EntryPoint {
-    public static void main(String[] args) {
-        try (var connection = connect()) {
-            createTablesIfNotCreated(connection);
+    public static void main(String[] args) throws SQLException {
+        try (var connection = ConnectionFactory.connect()) {
+            var app = new Application(Set.of(
+                new SetupDatabaseCommand(connection)
+                // more to come
+            ));
 
-            // TODO: parsing, persisting, exporting to JSON for the frontend
-        } catch (Throwable e) {
-            e.printStackTrace();
+            app.run(args);
         }
     }
 }
