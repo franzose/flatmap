@@ -1,8 +1,7 @@
-package com.janiwanow.flatmap.http;
+package com.janiwanow.flatmap.parser;
 
 import com.janiwanow.flatmap.data.ApartmentInfo;
-import com.janiwanow.flatmap.parser.ApartmentInfoExtractor;
-import com.janiwanow.flatmap.parser.URLExtractor;
+import com.janiwanow.flatmap.http.DocumentFetcher;
 import org.jsoup.nodes.Document;
 
 import java.net.URL;
