@@ -1,4 +1,4 @@
-package com.janiwanow.flatmap.parser.n1;
+package com.janiwanow.flatmap.parser.impl.n1;
 
 import com.janiwanow.flatmap.data.Price;
 import com.janiwanow.flatmap.parser.Numbers;
