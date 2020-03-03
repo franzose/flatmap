@@ -3,7 +3,6 @@ package com.janiwanow.flatmap.cli;
 import com.beust.jcommander.JCommander;
 import com.beust.jcommander.MissingCommandException;
 
-import java.lang.reflect.Type;
 import java.util.Objects;
 import java.util.Set;
 
@@ -20,10 +19,7 @@ public final class Application {
         Objects.requireNonNull(commands, "Console commands must not be null.");
 
         var builder = JCommander.newBuilder();
-        commands.forEach(command -> {
-            command.setApplication(this);
-            builder.addCommand(command);
-        });
+        commands.forEach(builder::addCommand);
         commander = builder.build();
     }
 
@@ -46,31 +42,6 @@ public final class Application {
         } catch (MissingCommandException e) {
             throw new CommandNotFoundException(e);
         }
-    }
-
-    /**
-     * Runs a command by its type.
-     *
-     * @param type command type
-     * @throws CommandNotFoundException if there is no command of the given type
-     */
-    public void run(Type type) throws CommandNotFoundException {
-        Objects.requireNonNull(type, "Command type must not be null.");
-
-        var command = commander
-            .getCommands()
-            .values()
-            .stream()
-            .flatMap(j -> j.getObjects().stream())
-            .filter(cmd -> cmd instanceof Command && cmd.getClass().getTypeName().equals(type.getTypeName()))
-            .map(o -> (Command) o)
-            .findFirst();
-
-        if (command.isEmpty()) {
-            throw new CommandNotFoundException(type);
-        }
-
-        command.get().execute();
     }
 
     /**
