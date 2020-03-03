@@ -4,6 +4,7 @@ import com.beust.jcommander.JCommander;
 import com.beust.jcommander.MissingCommandException;
 
 import java.lang.reflect.Type;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -16,6 +17,8 @@ public final class Application {
      * @param commands a set of commands which this application is able to handle
      */
     public Application(Set<Command> commands) {
+        Objects.requireNonNull(commands, "Console commands must not be null.");
+
         var builder = JCommander.newBuilder();
         commands.forEach(command -> {
             command.setApplication(this);
@@ -30,6 +33,8 @@ public final class Application {
      * @param args CLI arguments
      */
     public void run(String... args) throws CommandNotFoundException {
+        Objects.requireNonNull(args, "CLI arguments must not be null.");
+
         try {
             commander.parse(args);
 
@@ -50,6 +55,8 @@ public final class Application {
      * @throws CommandNotFoundException if there is no command of the given type
      */
     public void run(Type type) throws CommandNotFoundException {
+        Objects.requireNonNull(type, "Command type must not be null.");
+
         var command = commander
             .getCommands()
             .values()

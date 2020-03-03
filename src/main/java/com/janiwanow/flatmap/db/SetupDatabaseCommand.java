@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.Objects;
 
 /**
  * Command used to setup database tables.
@@ -29,6 +30,7 @@ public final class SetupDatabaseCommand extends AbstractCommand {
     private final Connection connection;
 
     public SetupDatabaseCommand(Connection connection) {
+        Objects.requireNonNull(connection, "SQL connection must not be null.");
         this.connection = connection;
     }
 
