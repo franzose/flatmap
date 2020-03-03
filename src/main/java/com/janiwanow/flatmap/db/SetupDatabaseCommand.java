@@ -11,7 +11,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 
 /**
- * Utility used to setup database tables.
+ * Command used to setup database tables.
  */
 @Parameters(commandNames = "db:setup", commandDescription = "Sets up database tables and data")
 public final class SetupDatabaseCommand implements Command {
