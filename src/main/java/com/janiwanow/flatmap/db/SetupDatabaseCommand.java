@@ -1,7 +1,7 @@
 package com.janiwanow.flatmap.db;
 
 import com.beust.jcommander.Parameters;
-import com.janiwanow.flatmap.cli.Command;
+import com.janiwanow.flatmap.cli.AbstractCommand;
 import com.janiwanow.flatmap.util.ResourceFile;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,7 +14,7 @@ import java.sql.SQLException;
  * Command used to setup database tables.
  */
 @Parameters(commandNames = "db:setup", commandDescription = "Sets up database tables and data")
-public final class SetupDatabaseCommand implements Command {
+public final class SetupDatabaseCommand extends AbstractCommand {
     private static final Logger LOG = LoggerFactory.getLogger(SetupDatabaseCommand.class);
     private static final String CHECK_TABLES_QUERY;
 

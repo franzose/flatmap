@@ -2,16 +2,14 @@ package com.janiwanow.flatmap.cli;
 
 import com.beust.jcommander.JCommander;
 import com.beust.jcommander.MissingCommandException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
+import java.lang.reflect.Type;
 import java.util.Set;
 
 /**
  * Console application.
  */
 public final class Application {
-    private static final Logger LOG = LoggerFactory.getLogger(Application.class);
     private JCommander commander;
 
     /**
@@ -19,7 +17,10 @@ public final class Application {
      */
     public Application(Set<Command> commands) {
         var builder = JCommander.newBuilder();
-        commands.forEach(builder::addCommand);
+        commands.forEach(command -> {
+            command.setApplication(this);
+            builder.addCommand(command);
+        });
         commander = builder.build();
     }
 
@@ -28,7 +29,7 @@ public final class Application {
      *
      * @param args CLI arguments
      */
-    public void run(String... args) {
+    public void run(String... args) throws CommandNotFoundException {
         try {
             commander.parse(args);
 
@@ -38,8 +39,31 @@ public final class Application {
             // this statement is unreachable anyway
             getCommand().execute();
         } catch (MissingCommandException e) {
-            LOG.warn("Console command \"{}\" not found.", e.getUnknownCommand(), e);
+            throw new CommandNotFoundException(e);
         }
+    }
+
+    /**
+     * Runs a command by its type.
+     *
+     * @param type command type
+     * @throws CommandNotFoundException if there is no command of the given type
+     */
+    public void run(Type type) throws CommandNotFoundException {
+        var command = commander
+            .getCommands()
+            .values()
+            .stream()
+            .flatMap(j -> j.getObjects().stream())
+            .filter(cmd -> cmd instanceof Command && cmd.getClass().getTypeName().equals(type.getTypeName()))
+            .map(o -> (Command) o)
+            .findFirst();
+
+        if (command.isEmpty()) {
+            throw new CommandNotFoundException(type);
+        }
+
+        command.get().execute();
     }
 
     /**
