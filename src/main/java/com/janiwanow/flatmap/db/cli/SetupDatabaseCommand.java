@@ -1,4 +1,4 @@
-package com.janiwanow.flatmap.db;
+package com.janiwanow.flatmap.db.cli;
 
 import com.beust.jcommander.Parameters;
 import com.janiwanow.flatmap.cli.Command;

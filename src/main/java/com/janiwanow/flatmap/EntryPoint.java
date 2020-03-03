@@ -3,8 +3,8 @@ package com.janiwanow.flatmap;
 import com.janiwanow.flatmap.cli.Application;
 import com.janiwanow.flatmap.cli.CommandNotFoundException;
 import com.janiwanow.flatmap.db.ConnectionFactory;
-import com.janiwanow.flatmap.db.PurgeDatabaseCommand;
-import com.janiwanow.flatmap.db.SetupDatabaseCommand;
+import com.janiwanow.flatmap.db.cli.PurgeDatabaseCommand;
+import com.janiwanow.flatmap.db.cli.SetupDatabaseCommand;
 
 import java.sql.SQLException;
 import java.util.Set;
