@@ -3,6 +3,7 @@ package com.janiwanow.flatmap;
 import com.janiwanow.flatmap.cli.Application;
 import com.janiwanow.flatmap.cli.CommandNotFoundException;
 import com.janiwanow.flatmap.db.ConnectionFactory;
+import com.janiwanow.flatmap.db.PurgeDatabaseCommand;
 import com.janiwanow.flatmap.db.SetupDatabaseCommand;
 
 import java.sql.SQLException;
@@ -15,7 +16,8 @@ public final class EntryPoint {
     public static void main(String[] args) throws SQLException, CommandNotFoundException {
         try (var connection = ConnectionFactory.connect()) {
             var app = new Application(Set.of(
-                new SetupDatabaseCommand(connection)
+                new SetupDatabaseCommand(connection),
+                new PurgeDatabaseCommand(connection)
                 // more to come
             ));
 
