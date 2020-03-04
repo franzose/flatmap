@@ -8,8 +8,8 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.jsoup.nodes.Document;
 
-import java.net.MalformedURLException;
-import java.net.URL;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.Set;
 
 import static java.util.stream.Collectors.toList;
@@ -18,12 +18,12 @@ import static org.junit.Assert.assertTrue;
 
 public class SingleDocumentSteps {
     private Document document;
-    private URL href;
-    private Set<URL> extractedURLs;
+    private URI href;
+    private Set<URI> extractedURLs;
 
     @Given("I fetched an HTML document from {string}")
-    public void createDocument(String href) throws MalformedURLException {
-        this.href = new URL(href);
+    public void createDocument(String href) throws URISyntaxException {
+        this.href = new URI(href);
 
         document = new Document(href);
         document

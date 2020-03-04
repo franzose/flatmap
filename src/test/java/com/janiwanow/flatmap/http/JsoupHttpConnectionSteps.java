@@ -10,8 +10,8 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.slf4j.LoggerFactory;
 
-import java.net.MalformedURLException;
-import java.net.URL;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.function.Supplier;
 
 import static com.github.tomakehurst.wiremock.client.WireMock.*;
@@ -24,7 +24,7 @@ public class JsoupHttpConnectionSteps {
     private static final int TIMEOUT = 3000;
     private ListAppender<ILoggingEvent> appender;
     private JsoupHttpConnection connection;
-    private URL url;
+    private URI url;
     private String path;
 
     @Given("I configured JsoupHttpConnection")
@@ -33,7 +33,7 @@ public class JsoupHttpConnectionSteps {
     }
 
     @When("I requested {string} using JsoupHttpConnection")
-    public void requestUrl(String path) throws MalformedURLException {
+    public void requestUrl(String path) throws URISyntaxException {
         this.url = toAbsoluteURL(path);
         this.path = path;
     }

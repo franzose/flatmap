@@ -5,8 +5,8 @@ import com.janiwanow.flatmap.data.Price;
 import com.janiwanow.flatmap.data.Space;
 import org.jsoup.nodes.Document;
 
-import java.net.MalformedURLException;
-import java.net.URL;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.Objects;
 import java.util.Set;
 import java.util.function.Function;
@@ -59,12 +59,12 @@ public final class ApartmentInfoExtractor {
 
         try {
             return new ApartmentInfo(
-                new URL(document.baseUri()),
+                new URI(document.baseUri()),
                 addressExtractor.apply(document),
                 spaceExtractor.apply(document),
                 priceExtractor.apply(document)
             );
-        } catch (MalformedURLException e) {
+        } catch (URISyntaxException e) {
             throw new RuntimeException(e);
         }
     }

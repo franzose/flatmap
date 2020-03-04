@@ -2,7 +2,7 @@ package com.janiwanow.flatmap.http;
 
 import org.jsoup.nodes.Document;
 
-import java.net.URL;
+import java.net.URI;
 import java.util.Optional;
 
 /**
@@ -21,5 +21,5 @@ public interface HttpConnection {
      * @return optional containing the fetched document or
      *         empty optional in case of connection errors
      */
-    Optional<Document> fetch(URL url);
+    Optional<Document> fetch(URI url);
 }

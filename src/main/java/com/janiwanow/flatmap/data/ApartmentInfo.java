@@ -1,12 +1,12 @@
 package com.janiwanow.flatmap.data;
 
-import java.net.URL;
+import java.net.URI;
 
 /**
  * Data class representing basic apartment information details.
  */
 public final class ApartmentInfo {
-    public final URL url;
+    public final URI url;
     public final String address;
     public final Space space;
     public final Price price;
@@ -17,7 +17,7 @@ public final class ApartmentInfo {
      * @param space Apartment area details
      * @param price Rental or purchase price
      */
-    public ApartmentInfo(URL url, String address, Space space, Price price) {
+    public ApartmentInfo(URI url, String address, Space space, Price price) {
         this.url = url;
         this.address = address;
         this.price = price;

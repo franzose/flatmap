@@ -2,7 +2,7 @@ package com.janiwanow.flatmap.http;
 
 import org.jsoup.nodes.Document;
 
-import java.net.URL;
+import java.net.URI;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
@@ -31,7 +31,7 @@ public final class DocumentFetcher {
      * @param url The URL to fetch the document from
      * @return future ready to fetch the document
      */
-    public CompletableFuture<Optional<Document>> fetchAsync(URL url) {
+    public CompletableFuture<Optional<Document>> fetchAsync(URI url) {
         Objects.requireNonNull(url, "URL must not be null.");
 
         return CompletableFuture.supplyAsync(() -> connection.fetch(url));
@@ -43,7 +43,7 @@ public final class DocumentFetcher {
      * @param urls a set of URLs to fetch the documents from
      * @return future ready to fetch the documents
      */
-    public CompletableFuture<Set<Document>> fetchAsync(Set<URL> urls) {
+    public CompletableFuture<Set<Document>> fetchAsync(Set<URI> urls) {
         Objects.requireNonNull(urls, "URLs must not be null.");
 
         return CompletableFuture.supplyAsync(() -> fetchAll(urls));
@@ -55,7 +55,7 @@ public final class DocumentFetcher {
      * @param urls a set of URLs to fetch the documents from
      * @return a set of fetched HTML documents
      */
-    public Set<Document> fetchAll(Set<URL> urls) {
+    public Set<Document> fetchAll(Set<URI> urls) {
         Objects.requireNonNull(urls, "URLs must not be null.");
 
         return urls.stream()

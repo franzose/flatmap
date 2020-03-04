@@ -4,7 +4,8 @@ import org.jsoup.nodes.Document;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.Objects;
 import java.util.Set;
@@ -33,7 +34,7 @@ public final class URLExtractor {
      * @param selector The look-up CSS selector to query against
      * @return a set of URLs extracted from the document
      */
-    public static Set<URL> extract(Document document, String selector) {
+    public static Set<URI> extract(Document document, String selector) {
         Objects.requireNonNull(document, "Document must not be null.");
         Objects.requireNonNull(selector, "Selector must not be null.");
 
@@ -43,7 +44,7 @@ public final class URLExtractor {
             .select(selector)
             .eachAttr("abs:href")
             .stream()
-            .map(URLExtractor::toUrl)
+            .map(URLExtractor::toURI)
             .filter(Objects::nonNull)
             .collect(toSet());
 
@@ -60,7 +61,7 @@ public final class URLExtractor {
      * @param selector The look-up CSS selector to query against
      * @return a set of URLs extracted from the documents
      */
-    public static Set<URL> extract(Set<Document> documents, String selector) {
+    public static Set<URI> extract(Set<Document> documents, String selector) {
         Objects.requireNonNull(documents, "Document must not be null.");
         Objects.requireNonNull(selector, "Selector must not be null.");
 
@@ -78,10 +79,10 @@ public final class URLExtractor {
      * @param url A full URL or a relative path
      * @return a valid URL, null otherwise
      */
-    private static URL toUrl(String url) {
+    private static URI toURI(String url) {
         try {
-            return new URL(url);
-        } catch (MalformedURLException e) {
+            return new URI(url);
+        } catch (URISyntaxException e) {
             LOG.info("Skipping malformed URL {}", url);
             return null;
         }

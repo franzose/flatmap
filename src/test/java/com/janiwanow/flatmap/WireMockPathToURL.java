@@ -1,7 +1,7 @@
 package com.janiwanow.flatmap;
 
-import java.net.MalformedURLException;
-import java.net.URL;
+import java.net.URI;
+import java.net.URISyntaxException;
 
 import static com.github.tomakehurst.wiremock.core.WireMockConfiguration.wireMockConfig;
 
@@ -15,12 +15,12 @@ public class WireMockPathToURL {
      *
      * @param path relative path
      * @return absolute URL
-     * @throws MalformedURLException in case of an improper URL string
+     * @throws URISyntaxException in case of an improper URL string
      */
-    public static URL toAbsoluteURL(String path) throws MalformedURLException {
+    public static URI toAbsoluteURL(String path) throws URISyntaxException {
         var config = wireMockConfig();
 
-        return new URL(String.format(
+        return new URI(String.format(
             "http://%s:%d%s",
             config.bindAddress(),
             config.portNumber(),

@@ -8,7 +8,7 @@ import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.net.SocketTimeoutException;
-import java.net.URL;
+import java.net.URI;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -70,7 +70,7 @@ public final class JsoupHttpConnection implements HttpConnection {
      *         empty optional in case of a failure
      */
     @Override
-    public Optional<Document> fetch(URL url) {
+    public Optional<Document> fetch(URI url) {
         Objects.requireNonNull(url, "URL must not be null.");
 
         Document document = null;

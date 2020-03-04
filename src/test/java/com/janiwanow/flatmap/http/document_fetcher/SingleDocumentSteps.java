@@ -6,8 +6,8 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.jsoup.nodes.Document;
 
-import java.net.MalformedURLException;
-import java.net.URL;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 
@@ -20,10 +20,10 @@ public class SingleDocumentSteps {
     private CompletableFuture<Optional<Document>> future;
 
     @Given("I scheduled a request to {string}")
-    public void setUpFetcher(String url) throws MalformedURLException {
+    public void setUpFetcher(String url) throws URISyntaxException {
         original = new Document(url);
         future = new DocumentFetcher(connectionUrl -> Optional.of(original))
-            .fetchAsync(new URL(url));
+            .fetchAsync(new URI(url));
     }
 
     @When("the document is fetched")

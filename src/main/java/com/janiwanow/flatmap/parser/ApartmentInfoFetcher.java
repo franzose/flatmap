@@ -4,7 +4,7 @@ import com.janiwanow.flatmap.data.ApartmentInfo;
 import com.janiwanow.flatmap.http.DocumentFetcher;
 import org.jsoup.nodes.Document;
 
-import java.net.URL;
+import java.net.URI;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Optional;
@@ -51,7 +51,7 @@ public final class ApartmentInfoFetcher {
      * @param offerListURL URL of the offer list to process the offers from
      * @return apartment information details extracted from the dedicated offer pages
      */
-    public Set<ApartmentInfo> fetch(URL offerListURL) {
+    public Set<ApartmentInfo> fetch(URI offerListURL) {
         Objects.requireNonNull(offerListURL, "URL must not be null.");
 
         return process(fetcher.fetchAsync(offerListURL).thenApply(extractURLsOptionally()));
@@ -63,7 +63,7 @@ public final class ApartmentInfoFetcher {
      * @param offerListURLs URLs of the offer lists to process the offers from
      * @return apartment information details extracted from the dedicated offer pages
      */
-    public Set<ApartmentInfo> fetchAll(Set<URL> offerListURLs) {
+    public Set<ApartmentInfo> fetchAll(Set<URI> offerListURLs) {
         Objects.requireNonNull(offerListURLs, "URLs must not be null.");
 
         return process(fetcher.fetchAsync(offerListURLs).thenApply(extractURLs()));
@@ -74,7 +74,7 @@ public final class ApartmentInfoFetcher {
      *
      * @return offer URLs for further processing
      */
-    private Function<Optional<Document>, Set<URL>> extractURLsOptionally() {
+    private Function<Optional<Document>, Set<URI>> extractURLsOptionally() {
         return document -> document.map(d -> URLExtractor.extract(d, offerPageLinkSelector)).orElseGet(HashSet::new);
     }
 
@@ -83,7 +83,7 @@ public final class ApartmentInfoFetcher {
      *
      * @return offer URLs for further processing
      */
-    private Function<Set<Document>, Set<URL>> extractURLs() {
+    private Function<Set<Document>, Set<URI>> extractURLs() {
         return documents -> URLExtractor.extract(documents, offerPageLinkSelector);
     }
 
@@ -93,7 +93,7 @@ public final class ApartmentInfoFetcher {
      * @param future incomplete future containing previously fetched offer page URLs
      * @return apartment information details extracted from the dedicated offer pages
      */
-    private Set<ApartmentInfo> process(CompletableFuture<Set<URL>> future) {
+    private Set<ApartmentInfo> process(CompletableFuture<Set<URI>> future) {
         return future.thenApply(fetcher::fetchAll).thenApply(extractor::extract).join();
     }
 }

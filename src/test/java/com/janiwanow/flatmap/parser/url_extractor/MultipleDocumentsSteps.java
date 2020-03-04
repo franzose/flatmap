@@ -7,8 +7,8 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.jsoup.nodes.Document;
 
-import java.net.MalformedURLException;
-import java.net.URL;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.*;
 
 import static org.junit.Assert.assertEquals;
@@ -16,7 +16,7 @@ import static org.junit.Assert.assertTrue;
 
 public class MultipleDocumentsSteps {
     private Map<Document, List<String>> documents = new HashMap<>();
-    private Set<URL> extractedURLs;
+    private Set<URI> extractedURLs;
 
     @Given("I fetched an HTML document from {string} containing the following URLs")
     public void documentContainsURLs(String origin, DataTable paths) {
@@ -37,16 +37,16 @@ public class MultipleDocumentsSteps {
     }
 
     @Then("I must get a combined list of URLs")
-    public void itShouldReturnCombinedListOfURLs() throws MalformedURLException {
+    public void itShouldReturnCombinedListOfURLs() throws URISyntaxException {
         var expectedSize = documents.values().stream().mapToLong(Collection::size).sum();
 
         assertEquals(expectedSize, extractedURLs.size());
 
         for (Map.Entry<Document, List<String>> entry : documents.entrySet()) {
-            var origin = Origin.getOrigin(new URL(entry.getKey().baseUri()));
+            var origin = Origin.getOrigin(new URI(entry.getKey().baseUri()));
 
             for (String path : entry.getValue()) {
-                assertTrue(extractedURLs.contains(new URL(origin + path)));
+                assertTrue(extractedURLs.contains(new URI(origin + path)));
             }
         }
     }
