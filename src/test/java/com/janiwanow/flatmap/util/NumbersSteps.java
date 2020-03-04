@@ -1,4 +1,4 @@
-package com.janiwanow.flatmap.parser;
+package com.janiwanow.flatmap.util;
 
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.When;
