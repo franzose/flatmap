@@ -9,7 +9,7 @@ import java.util.Set;
 /**
  * Builder aimed at producing valid N1 URLs.
  */
-public class N1URLs {
+public final class N1URLs {
     /**
      * Pattern used to build the final URL.
      *
