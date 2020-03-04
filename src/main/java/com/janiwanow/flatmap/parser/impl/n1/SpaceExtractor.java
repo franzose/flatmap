@@ -30,6 +30,7 @@ public final class SpaceExtractor {
      */
     public static Space extract(Document document, Function<Document, Integer> roomsExtractor) {
         Objects.requireNonNull(document, "Document must not be null.");
+        Objects.requireNonNull(roomsExtractor, "Rooms extractor must not be null.");
 
         var texts = document.select(".offer-card-factoids .text").eachText();
 
