@@ -1,6 +1,7 @@
 package com.janiwanow.flatmap.data;
 
 import java.net.URI;
+import java.util.Objects;
 
 /**
  * Data class representing basic apartment information details.
@@ -18,6 +19,11 @@ public final class ApartmentInfo {
      * @param price Rental or purchase price
      */
     public ApartmentInfo(URI url, String address, Space space, Price price) {
+        Objects.requireNonNull(url, "URL must not be null.");
+        Objects.requireNonNull(address, "Address must not be null.");
+        Objects.requireNonNull(space, "Space must not be null.");
+        Objects.requireNonNull(price, "Price must not be null.");
+
         this.url = url;
         this.address = address;
         this.price = price;

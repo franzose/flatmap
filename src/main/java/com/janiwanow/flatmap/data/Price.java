@@ -1,6 +1,7 @@
 package com.janiwanow.flatmap.data;
 
 import java.util.Currency;
+import java.util.Objects;
 
 /**
  * Apartment price, either purchase or rental.
@@ -14,6 +15,7 @@ public final class Price {
      * @param value price amount
      */
     public Price(Currency currency, double value) {
+        Objects.requireNonNull(currency, "Currency must not be null.");
         this.currency = currency;
         this.amount = Math.max(0, value);
     }

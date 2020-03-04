@@ -16,9 +16,12 @@ public final class Space {
      * @param rooms Number of rooms in the apartment
      */
     public Space(double total, double living, double kitchen, int rooms) {
-        this.total = total;
-        this.living = living;
-        this.kitchen = kitchen;
-        this.rooms = rooms;
+        // 0.0 is assumed as lack of data
+        // i.e. when a parser didn't manage to get
+        // the information from an offer page
+        this.total = Math.max(0.0, total);
+        this.living = Math.max(0.0, living);
+        this.kitchen = Math.max(0.0, kitchen);
+        this.rooms = Math.max(1, rooms);
     }
 }
