@@ -20,6 +20,11 @@ public final class ParseWebsitesCommand implements Command {
     private final HttpConnection httpConnection;
     private final Set<WebsiteParser> parsers;
 
+    /**
+     * websiteId is used to allow users to parse specific websites and not everything.
+     *
+     * @see WebsiteParser#supports(String)
+     */
     @Parameter()
     private String websiteId = "";
 
@@ -33,6 +38,18 @@ public final class ParseWebsitesCommand implements Command {
         this.parsers = parsers;
     }
 
+    /**
+     * Parses websites to gather apartment information.
+     *
+     * <p>Under the hood, the process is relatively simple:
+     * <ol>
+     *     <li>Take all available parsers
+     *     <li>Filter out parsers by the websiteId if the user wants to parse a specific website
+     *     <li>Parse websites using the rest of the parsers
+     *     <li>Just in case, ensure fetched apartment data is unique
+     *     <li>Dispatch an event to let subscribers decide what to do next
+     * </ol>
+     */
     @Override
     public void execute() {
         var info = parsers
@@ -48,6 +65,18 @@ public final class ParseWebsitesCommand implements Command {
         }
     }
 
+    /**
+     * Decides whether the given parser can be used.
+     *
+     * <p>By default, websiteId is empty which means that the command
+     * should use all available {@link WebsiteParser} implementations.
+     *
+     * <p>If websiteId is present, i.e. the user wants to parse a particular website,
+     * we should make sure the given parser supports this website.
+     *
+     * @param parser a parser in the list
+     * @return "true" if the parser is supported, "false" otherwise
+     */
     private boolean filterByWebsiteId(WebsiteParser parser) {
         return (
             websiteId.isEmpty() ||

@@ -11,7 +11,10 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Objects;
 
-@Parameters(commandNames = "db:purge")
+/**
+ * Command used to drop all database tables.
+ */
+@Parameters(commandNames = "db:purge", commandDescription = "Used to drop all database tables")
 public class PurgeDatabaseCommand implements Command {
     private static final Logger LOG = LoggerFactory.getLogger(PurgeDatabaseCommand.class);
     private static final String DROP_TABLES_QUERY;
