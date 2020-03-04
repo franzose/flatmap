@@ -6,13 +6,10 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.jsoup.nodes.Document;
 
-import java.util.List;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class AddressExtractorSteps {
     private Document document;
-    //private List<String> addressComponents;
     private String actualAddress;
 
     @Given("there is a Sakh.com offer page with the following apartment address components")
