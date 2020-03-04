@@ -2,12 +2,12 @@ package com.janiwanow.flatmap.db.cli;
 
 import com.beust.jcommander.Parameters;
 import com.janiwanow.flatmap.cli.Command;
+import com.janiwanow.flatmap.db.ConnectionFactory;
 import com.janiwanow.flatmap.util.ResourceFile;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
-import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Objects;
 
@@ -27,11 +27,11 @@ public final class SetupDatabaseCommand implements Command {
         }
     }
 
-    private final Connection connection;
+    private final ConnectionFactory factory;
 
-    public SetupDatabaseCommand(Connection connection) {
-        Objects.requireNonNull(connection, "SQL connection must not be null.");
-        this.connection = connection;
+    public SetupDatabaseCommand(ConnectionFactory factory) {
+        Objects.requireNonNull(factory, "SQL connection factory must not be null.");
+        this.factory = factory;
     }
 
     /**
@@ -59,7 +59,8 @@ public final class SetupDatabaseCommand implements Command {
         LOG.info("Let's check if the installation is required...");
 
         try (
-            var stmt = connection.createStatement();
+            var conn = factory.getConnection();
+            var stmt = conn.createStatement();
             var result = stmt.executeQuery(CHECK_TABLES_QUERY)
         ) {
             result.next();
@@ -86,9 +87,11 @@ public final class SetupDatabaseCommand implements Command {
 
         var queries = ResourceFile.readToString("setup_required_tables.sql").split(";");
 
-        for (var query : queries) {
-            try (var stmt = connection.prepareStatement(query)) {
-                stmt.executeUpdate();
+        try (var conn = factory.getConnection()) {
+            for (var query : queries) {
+                try (var stmt = conn.prepareStatement(query)) {
+                    stmt.executeUpdate();
+                }
             }
         }
 

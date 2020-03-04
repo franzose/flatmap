@@ -2,12 +2,12 @@ package com.janiwanow.flatmap.db.cli;
 
 import com.beust.jcommander.Parameters;
 import com.janiwanow.flatmap.cli.Command;
+import com.janiwanow.flatmap.db.ConnectionFactory;
 import com.janiwanow.flatmap.util.ResourceFile;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
-import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Objects;
 
@@ -27,18 +27,21 @@ public class PurgeDatabaseCommand implements Command {
         }
     }
 
-    private final Connection connection;
+    private final ConnectionFactory factory;
 
-    public PurgeDatabaseCommand(Connection connection) {
-        Objects.requireNonNull(connection, "SQL connection must not be null.");
-        this.connection = connection;
+    public PurgeDatabaseCommand(ConnectionFactory factory) {
+        Objects.requireNonNull(factory, "SQL connection factory must not be null.");
+        this.factory = factory;
     }
 
     @Override
     public void execute() {
         LOG.info("Start purging database...");
 
-        try (var stmt = connection.createStatement()) {
+        try (
+            var conn = factory.getConnection();
+            var stmt = conn.createStatement()
+        ) {
             stmt.executeUpdate(DROP_TABLES_QUERY);
 
             LOG.info("Database has been purged successfully.");
