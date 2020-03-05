@@ -23,7 +23,7 @@ public class JsoupHttpConnectionSteps {
     private static final int RETRIES = 5;
     private static final int TIMEOUT = 3000;
     private ListAppender<ILoggingEvent> appender;
-    private JsoupHttpConnection connection;
+    private HttpConnection connection;
     private URI url;
     private String path;
 

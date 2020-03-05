@@ -9,6 +9,8 @@ import org.slf4j.LoggerFactory;
 import java.io.IOException;
 import java.net.SocketTimeoutException;
 import java.net.URI;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -24,25 +26,35 @@ public final class JsoupHttpConnection implements HttpConnection {
     public static final int MINIMUM_TIMEOUT = 1500;
     private int retries;
     private int timeout;
+    private Map<String, String> cookies = new HashMap<>();
 
-    public static class Builder {
+    public static class Builder implements HttpConnectionBuilder {
         private JsoupHttpConnection connection;
 
         public Builder() {
             connection = new JsoupHttpConnection();
         }
 
-        public Builder retries(int retries) {
+        @Override
+        public HttpConnectionBuilder retries(int retries) {
             connection.retries = Math.max(retries, MINIMUM_RETRIES);
             return this;
         }
 
-        public Builder timeout(int timeout) {
+        @Override
+        public HttpConnectionBuilder timeout(int timeout) {
             connection.timeout = Math.max(timeout, MINIMUM_TIMEOUT);
             return this;
         }
 
-        public JsoupHttpConnection build() {
+        @Override
+        public HttpConnectionBuilder cookies(Map<String, String> cookies) {
+            connection.cookies.putAll(cookies);
+            return this;
+        }
+
+        @Override
+        public HttpConnection build() {
             var result = connection;
             connection = null;
 
@@ -85,6 +97,7 @@ public final class JsoupHttpConnection implements HttpConnection {
                 document = Jsoup.connect(url.toString())
                     .ignoreHttpErrors(false)
                     .timeout(timeout)
+                    .cookies(cookies)
                     .get();
 
                 LOG.info("Finished fetching {}. Attempts: {}", url, attempts);
