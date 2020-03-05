@@ -4,10 +4,13 @@ import com.janiwanow.flatmap.data.ApartmentInfo;
 import com.janiwanow.flatmap.data.Price;
 import com.janiwanow.flatmap.data.Space;
 import org.jsoup.nodes.Document;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.Set;
 import java.util.function.Function;
 
@@ -34,6 +37,7 @@ import static java.util.stream.Collectors.toSet;
  * </pre>
  */
 public final class ApartmentInfoExtractor {
+    private static final Logger LOG = LoggerFactory.getLogger(ApartmentInfoExtractor.class);
     private final Function<Document, String> addressExtractor;
     private final Function<Document, Space> spaceExtractor;
     private final Function<Document, Price> priceExtractor;
@@ -51,21 +55,31 @@ public final class ApartmentInfoExtractor {
     /**
      * Extracts apartment information details from the HTML document.
      *
+     * <p>There may be a case when the HTML document is incomplete or empty.
+     * This may lead to NPE since extractors, for the sake of simplicity,
+     * are not forced to do any checks for {@link NullPointerException}.
+     *
+     * <p>Instead, we catch it here and return an empty {@link Optional}.
+     * At the moment, this is just enough.
+     *
      * @param document HTML document to parse
      * @return extracted information details
      */
-    public ApartmentInfo extract(Document document) {
+    public Optional<ApartmentInfo> extract(Document document) {
         Objects.requireNonNull(document, "Document must not be null.");
 
         try {
-            return new ApartmentInfo(
+            return Optional.of(new ApartmentInfo(
                 new URI(document.baseUri()),
                 addressExtractor.apply(document),
                 spaceExtractor.apply(document),
                 priceExtractor.apply(document)
-            );
+            ));
         } catch (URISyntaxException e) {
             throw new RuntimeException(e);
+        } catch (NullPointerException e) {
+            LOG.info("Could not extract apartment information from {}.", document.baseUri(), e);
+            return Optional.empty();
         }
     }
 
@@ -78,6 +92,11 @@ public final class ApartmentInfoExtractor {
     public Set<ApartmentInfo> extract(Set<Document> documents) {
         Objects.requireNonNull(documents, "Documents must not be null.");
 
-        return documents.stream().map(this::extract).collect(toSet());
+        return documents
+            .stream()
+            .map(this::extract)
+            .filter(Optional::isPresent)
+            .map(Optional::get)
+            .collect(toSet());
     }
 }
