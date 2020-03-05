@@ -56,7 +56,7 @@ public final class JsoupHttpConnection implements HttpConnection {
         @Override
         public HttpConnection build() {
             var result = connection;
-            connection = null;
+            connection = new JsoupHttpConnection();
 
             return result;
         }
