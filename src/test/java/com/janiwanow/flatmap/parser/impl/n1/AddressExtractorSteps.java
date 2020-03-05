@@ -12,7 +12,7 @@ public class AddressExtractorSteps {
     private Document document;
     private String actualAddress;
 
-    @Given("there is an N1 offer page with the following apartment address components")
+    @Given("there is an N1 offer page with the following property address components")
     public void setUpDocument(DataTable data) {
         document = new Document("");
 
@@ -31,7 +31,7 @@ public class AddressExtractorSteps {
         actualAddress = AddressExtractor.extract(document);
     }
 
-    @Then("I must get {string} as the N1 apartment address")
+    @Then("I must get {string} as the N1 property address")
     public void ensureAddressIsValid(String expectedAddress) {
         assertEquals(expectedAddress, actualAddress);
     }

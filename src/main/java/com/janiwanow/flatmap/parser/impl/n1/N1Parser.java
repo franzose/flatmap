@@ -1,10 +1,10 @@
 package com.janiwanow.flatmap.parser.impl.n1;
 
-import com.janiwanow.flatmap.data.ApartmentInfo;
+import com.janiwanow.flatmap.data.PropertyDetails;
 import com.janiwanow.flatmap.http.DocumentFetcher;
 import com.janiwanow.flatmap.http.HttpConnection;
-import com.janiwanow.flatmap.parser.ApartmentInfoExtractor;
-import com.janiwanow.flatmap.parser.ApartmentInfoFetcher;
+import com.janiwanow.flatmap.parser.PropertyDetailsExtractor;
+import com.janiwanow.flatmap.parser.PropertyDetailsFetcher;
 import com.janiwanow.flatmap.parser.WebsiteParser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,20 +27,20 @@ public final class N1Parser implements WebsiteParser {
     }
 
     /**
-     * Retrieves HTML from a bunch of URLs and parses it to a set of apartment information.
+     * Retrieves HTML from a bunch of URLs and parses it to a set of property details.
      *
      * @param connection an HTTP connection to use for parsing
-     * @return a set of apartment information
+     * @return a set of property details
      */
     @Override
-    public Set<ApartmentInfo> parse(HttpConnection connection) {
+    public Set<PropertyDetails> parse(HttpConnection connection) {
         Objects.requireNonNull(connection, "HTTP connection must not be null.");
-        LOG.info("Starting to fetch apartment information from N1...");
+        LOG.info("Starting to fetch properties from N1...");
 
         var urls = new N1URLs(cities).getURLs(pages);
         var apartments = getFetcher(connection).fetchAll(urls);
 
-        LOG.info("Finished fetching apartment information.");
+        LOG.info("Finished fetching properties.");
 
         return apartments;
     }
@@ -51,10 +51,10 @@ public final class N1Parser implements WebsiteParser {
      * @param connection an http connection instance
      * @return fetcher which will do the job
      */
-    private ApartmentInfoFetcher getFetcher(HttpConnection connection) {
-        return new ApartmentInfoFetcher(
+    private PropertyDetailsFetcher getFetcher(HttpConnection connection) {
+        return new PropertyDetailsFetcher(
             new DocumentFetcher(connection),
-            new ApartmentInfoExtractor(
+            new PropertyDetailsExtractor(
                 AddressExtractor::extract,
                 SpaceExtractor::extract,
                 PriceExtractor::extract

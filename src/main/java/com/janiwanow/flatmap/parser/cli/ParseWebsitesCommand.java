@@ -3,7 +3,7 @@ package com.janiwanow.flatmap.parser.cli;
 import com.beust.jcommander.Parameter;
 import com.beust.jcommander.Parameters;
 import com.janiwanow.flatmap.cli.Command;
-import com.janiwanow.flatmap.data.ApartmentInfo;
+import com.janiwanow.flatmap.data.PropertyDetails;
 import com.janiwanow.flatmap.event.EventDispatcher;
 import com.janiwanow.flatmap.http.HttpConnection;
 import com.janiwanow.flatmap.parser.WebsiteParser;
@@ -12,9 +12,9 @@ import java.util.Collection;
 import java.util.Set;
 
 /**
- * Console command to parse websites and get apartment information from them.
+ * Console command to parse websites and get property details from them.
  */
-@Parameters(commandNames = "parse", commandDescription = "Parses websites to get apartment information")
+@Parameters(commandNames = "parse", commandDescription = "Parses websites to get property details")
 public final class ParseWebsitesCommand implements Command {
     private final EventDispatcher dispatcher;
     private final HttpConnection httpConnection;
@@ -39,14 +39,14 @@ public final class ParseWebsitesCommand implements Command {
     }
 
     /**
-     * Parses websites to gather apartment information.
+     * Parses websites to gather property details.
      *
      * <p>Under the hood, the process is relatively simple:
      * <ol>
      *     <li>Take all available parsers
      *     <li>Filter out parsers by the websiteId if the user wants to parse a specific website
      *     <li>Parse websites using the rest of the parsers
-     *     <li>Just in case, ensure fetched apartment data is unique
+     *     <li>Just in case, ensure fetched data is unique
      *     <li>Dispatch an event to let subscribers decide what to do next
      * </ol>
      */
@@ -58,10 +58,10 @@ public final class ParseWebsitesCommand implements Command {
             .map(parser -> parser.parse(httpConnection))
             .flatMap(Collection::stream)
             .distinct()
-            .toArray(ApartmentInfo[]::new);
+            .toArray(PropertyDetails[]::new);
 
         if (info.length > 0) {
-            dispatcher.dispatch(new ApartmentInfoParsed(info));
+            dispatcher.dispatch(new PropertyDetailsParsed(info));
         }
     }
 

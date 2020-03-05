@@ -1,10 +1,10 @@
 Feature: Extraction of apartment area details from the offer page
-  In order to gather meaningful apartment information
+  In order to gather meaningful property details
   As a Developer
-  I should be able to get apartment area details
+  I should be able to get property are details
 
   Scenario: Extraction
-    Given the following apartment area information
+    Given the following property area information
       | 146 м² |
       | 78 м²  |
       | 18 м²  |

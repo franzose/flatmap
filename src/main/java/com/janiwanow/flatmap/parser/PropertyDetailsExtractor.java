@@ -1,6 +1,6 @@
 package com.janiwanow.flatmap.parser;
 
-import com.janiwanow.flatmap.data.ApartmentInfo;
+import com.janiwanow.flatmap.data.PropertyDetails;
 import com.janiwanow.flatmap.data.Price;
 import com.janiwanow.flatmap.data.Space;
 import org.jsoup.nodes.Document;
@@ -17,7 +17,7 @@ import java.util.function.Function;
 import static java.util.stream.Collectors.toSet;
 
 /**
- * Apartment information details extractor.
+ * Property details extractor.
  *
  * <p>This extractor gathers data by delegating extraction to several
  * dedicated extractors, one for each peace of information. Thus,
@@ -28,7 +28,7 @@ import static java.util.stream.Collectors.toSet;
  *
  * <pre>
  * <code>
- *     var extractor = new ApartmentInfoExtractor(
+ *     var extractor = new PropertyDetailsExtractor(
  *         AddressExtractor::extract,
  *         SpaceExtractor::extract,
  *         PriceExtractor::extract
@@ -36,13 +36,13 @@ import static java.util.stream.Collectors.toSet;
  * </code>
  * </pre>
  */
-public final class ApartmentInfoExtractor {
-    private static final Logger LOG = LoggerFactory.getLogger(ApartmentInfoExtractor.class);
+public final class PropertyDetailsExtractor {
+    private static final Logger LOG = LoggerFactory.getLogger(PropertyDetailsExtractor.class);
     private final Function<Document, String> addressExtractor;
     private final Function<Document, Space> spaceExtractor;
     private final Function<Document, Price> priceExtractor;
 
-    public ApartmentInfoExtractor(
+    public PropertyDetailsExtractor(
         Function<Document, String> addressExtractor,
         Function<Document, Space> spaceExtractor,
         Function<Document, Price> priceExtractor
@@ -53,7 +53,7 @@ public final class ApartmentInfoExtractor {
     }
 
     /**
-     * Extracts apartment information details from the HTML document.
+     * Extracts property details from the HTML document.
      *
      * <p>There may be a case when the HTML document is incomplete or empty.
      * This may lead to NPE since extractors, for the sake of simplicity,
@@ -65,11 +65,11 @@ public final class ApartmentInfoExtractor {
      * @param document HTML document to parse
      * @return extracted information details
      */
-    public Optional<ApartmentInfo> extract(Document document) {
+    public Optional<PropertyDetails> extract(Document document) {
         Objects.requireNonNull(document, "Document must not be null.");
 
         try {
-            return Optional.of(new ApartmentInfo(
+            return Optional.of(new PropertyDetails(
                 new URI(document.baseUri()),
                 addressExtractor.apply(document),
                 spaceExtractor.apply(document),
@@ -78,18 +78,18 @@ public final class ApartmentInfoExtractor {
         } catch (URISyntaxException e) {
             throw new RuntimeException(e);
         } catch (NullPointerException e) {
-            LOG.info("Could not extract apartment information from {}.", document.baseUri(), e);
+            LOG.info("Could not extract property details from {}.", document.baseUri(), e);
             return Optional.empty();
         }
     }
 
     /**
-     * Extracts apartment information details from the given HTML documents.
+     * Extracts property details from the given HTML documents.
      *
      * @param documents HTML documents to parse
-     * @return extracted information details
+     * @return extracted property details
      */
-    public Set<ApartmentInfo> extract(Set<Document> documents) {
+    public Set<PropertyDetails> extract(Set<Document> documents) {
         Objects.requireNonNull(documents, "Documents must not be null.");
 
         return documents

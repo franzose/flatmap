@@ -1,5 +1,5 @@
 Feature: URL extraction from the HTML documents
-  In order to process apartment information
+  In order to process property details
   As a Developer
   I should be able to grab URLs from the HTML documents
 

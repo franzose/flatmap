@@ -1,6 +1,6 @@
 package com.janiwanow.flatmap.parser;
 
-import com.janiwanow.flatmap.data.ApartmentInfo;
+import com.janiwanow.flatmap.data.PropertyDetails;
 import com.janiwanow.flatmap.data.Price;
 import com.janiwanow.flatmap.data.Space;
 import io.cucumber.java.en.Given;
@@ -13,18 +13,18 @@ import java.util.Random;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class ApartmentInfoExtractorSteps {
+public class PropertyDetailsExtractorSteps {
     private static final String ADDRESS = "Nowhere City, Abandonded str. 30";
     private static final Space SPACE = new Space(30, 20, 10, 1);
     private static final Price PRICE = Price.inDollars(1000_000);
     private Document document;
-    private ApartmentInfoExtractor extractor;
-    private Optional<ApartmentInfo> info;
+    private PropertyDetailsExtractor extractor;
+    private Optional<PropertyDetails> details;
 
     @Given("there is an HTML document of the {string} offer page")
     public void setUpDocument(String url) {
         document = new Document(url);
-        extractor = new ApartmentInfoExtractor(
+        extractor = new PropertyDetailsExtractor(
             document -> ADDRESS,
             document -> SPACE,
             document -> PRICE
@@ -36,7 +36,7 @@ public class ApartmentInfoExtractorSteps {
         document = new Document("https://example.com");
 
         var random = new Random();
-        extractor = new ApartmentInfoExtractor(
+        extractor = new PropertyDetailsExtractor(
             document -> {
                 if (random.nextBoolean()) {
                     throw new NullPointerException();
@@ -58,22 +58,22 @@ public class ApartmentInfoExtractorSteps {
         );
     }
 
-    @When("I pass the HTML document to the apartment information extractor")
+    @When("I pass the HTML document to the property details extractor")
     public void extract() {
-        info = extractor.extract(document);
+        details = extractor.extract(document);
     }
 
-    @Then("I must get a valid apartment information")
-    public void ensureApartmentInfoIsValid() {
-        assertTrue(info.isPresent());
-        var data = info.get();
+    @Then("I must get valid property details")
+    public void ensurePropertyDetailsAreValid() {
+        assertTrue(details.isPresent());
+        var data = details.get();
         assertEquals(ADDRESS, data.address);
         assertSame(SPACE, data.space);
         assertSame(PRICE, data.price);
     }
 
-    @Then("I must get an empty apartment information")
-    public void ensureApartmentInfoIsEmpty() {
-        assertTrue(info.isEmpty());
+    @Then("I must get empty property details")
+    public void ensurePropertyDetailsAreEmpty() {
+        assertTrue(details.isEmpty());
     }
 }

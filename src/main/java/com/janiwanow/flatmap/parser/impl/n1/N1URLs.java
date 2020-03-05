@@ -37,7 +37,7 @@ public final class N1URLs {
     );
 
     /**
-     * A set of cities from which we want to get the apartment information.
+     * A set of cities from which we want to get the property details.
      *
      * <p>Unlike the offer and property types, cities are made dynamic intentionally.
      * The formers are hardly to change in the future, while cities might change

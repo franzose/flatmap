@@ -14,7 +14,7 @@ public class SpaceExtractorSteps {
     private Document document;
     private Space space;
 
-    @Given("the following apartment area information")
+    @Given("the following property area information")
     public void setUpDocument(DataTable data) {
         document = new Document("");
 

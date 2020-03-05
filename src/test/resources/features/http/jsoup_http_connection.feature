@@ -1,5 +1,5 @@
 Feature: Fetching HTML documents using Jsoup HTTP connection
-  In order to process apartment information
+  In order to process property details
   As a Developer
   I should be able to fetch HTML documents using Jsoup HTTP connection
 

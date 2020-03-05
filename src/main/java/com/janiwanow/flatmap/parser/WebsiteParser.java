@@ -1,6 +1,6 @@
 package com.janiwanow.flatmap.parser;
 
-import com.janiwanow.flatmap.data.ApartmentInfo;
+import com.janiwanow.flatmap.data.PropertyDetails;
 import com.janiwanow.flatmap.http.HttpConnection;
 
 import java.util.Set;
@@ -8,21 +8,21 @@ import java.util.Set;
 /**
  * Website parser.
  *
- * <p>Instances of this interface are assumed to act as {@link ApartmentInfoFetcher} wrappers,
+ * <p>Instances of this interface are assumed to act as {@link PropertyDetailsFetcher} wrappers,
  * however they are not forced to do that and thus can implement parsing logic on their own.
  *
  * <p>The idea behind WebsiteParser and its derivatives is to encapsulate any setup required
- * to actually fetch apartment information. Setup may include determining which URLs
+ * to actually fetch property details. Setup may include determining which URLs
  * to request, which CSS selectors to use etc.
  */
 public interface WebsiteParser {
     /**
-     * Utilizes the given HTTP connection to retrieve information about the apartments.
+     * Utilizes the given HTTP connection to retrieve information about the properties.
      *
      * @param connection an HTTP connection to use for parsing
-     * @return a set of apartment information details
+     * @return a set of property details
      */
-    Set<ApartmentInfo> parse(HttpConnection connection);
+    Set<PropertyDetails> parse(HttpConnection connection);
 
     /**
      * Checks whether this parser is able to parse the website with given ID.

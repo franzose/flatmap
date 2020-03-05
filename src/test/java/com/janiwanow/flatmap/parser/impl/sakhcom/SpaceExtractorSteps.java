@@ -13,7 +13,7 @@ public class SpaceExtractorSteps {
     private Document document;
     private Space actualSpace;
 
-    @Given("the {string} as apartment area on Sakh.com")
+    @Given("the {string} as property area on Sakh.com")
     public void setUpDocument(String area) {
         document = new Document("");
         document
@@ -24,7 +24,7 @@ public class SpaceExtractorSteps {
             .text(area);
     }
 
-    @When("I pass the document to the Sakh.com apartment space extractor")
+    @When("I pass the document to the Sakh.com space extractor")
     public void extractSpace() {
         actualSpace = SpaceExtractor.extract(document, d -> 4);
     }

@@ -14,7 +14,7 @@ public class PriceExtractorSteps {
     private Document document;
     private Price actualPrice;
 
-    @Given("there is an N1 offer page where apartment price is {string}")
+    @Given("there is an N1 offer page where property price is {string}")
     public void setUpDocument(String priceAsString) {
         document = new Document("");
         document
@@ -30,7 +30,7 @@ public class PriceExtractorSteps {
         actualPrice = PriceExtractor.extract(document);
     }
 
-    @Then("I must get {double} as the apartment price")
+    @Then("I must get {double} as the property price")
     public void ensureThePriceIsValid(double expectedPrice) {
         assertEquals(expectedPrice, actualPrice.amount);
         assertEquals(Currency.getInstance("RUB"), actualPrice.currency);

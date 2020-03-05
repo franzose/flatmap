@@ -1,6 +1,6 @@
 package com.janiwanow.flatmap.parser;
 
-import com.janiwanow.flatmap.data.ApartmentInfo;
+import com.janiwanow.flatmap.data.PropertyDetails;
 import com.janiwanow.flatmap.http.DocumentFetcher;
 import org.jsoup.nodes.Document;
 
@@ -13,29 +13,29 @@ import java.util.concurrent.CompletableFuture;
 import java.util.function.Function;
 
 /**
- * A service to gather apartment information details from the offer pages.
+ * A service to gather property details from the offer pages.
  *
  * <p>Gathering is done in the following steps:
  * <ol>
  *     <li>Fetch HTML of the offer list page</li>
  *     <li>Retrieve all URLs pointing to the offer pages</li>
  *     <li>Fetch those offer pages</li>
- *     <li>Grab apartment information from each offer page</li>
+ *     <li>Grab the details from each offer page</li>
  * </ol>
  */
-public final class ApartmentInfoFetcher {
+public final class PropertyDetailsFetcher {
     private final DocumentFetcher fetcher;
-    private final ApartmentInfoExtractor extractor;
+    private final PropertyDetailsExtractor extractor;
     private final String offerPageLinkSelector;
 
     /**
-     * Constructs ApartmentInfoFetcher.
+     * Constructs PropertyDetailsFetcher.
      *
      * @param fetcher Fetcher instance to download HTML documents for processing
      * @param extractor Extractor instance to grab necessary apartment details
      * @param offerPageLinkSelector Selector to search offer page links by
      */
-    public ApartmentInfoFetcher(DocumentFetcher fetcher, ApartmentInfoExtractor extractor, String offerPageLinkSelector) {
+    public PropertyDetailsFetcher(DocumentFetcher fetcher, PropertyDetailsExtractor extractor, String offerPageLinkSelector) {
         Objects.requireNonNull(fetcher, "Fetcher must not be null.");
         Objects.requireNonNull(extractor, "Extractor must not be null.");
         Objects.requireNonNull(offerPageLinkSelector, "Selector must not be null.");
@@ -46,24 +46,24 @@ public final class ApartmentInfoFetcher {
     }
 
     /**
-     * Fetches information about the apartments from the given offer list.
+     * Fetches property details from the given offer list.
      *
      * @param offerListURL URL of the offer list to process the offers from
-     * @return apartment information details extracted from the dedicated offer pages
+     * @return property details extracted from the dedicated offer pages
      */
-    public Set<ApartmentInfo> fetch(URI offerListURL) {
+    public Set<PropertyDetails> fetch(URI offerListURL) {
         Objects.requireNonNull(offerListURL, "URL must not be null.");
 
         return process(fetcher.fetchAsync(offerListURL).thenApply(extractURLsOptionally()));
     }
 
     /**
-     * Fetches information about the apartments from the given offer lists.
+     * Fetches property details from the given offer lists.
      *
      * @param offerListURLs URLs of the offer lists to process the offers from
-     * @return apartment information details extracted from the dedicated offer pages
+     * @return property details extracted from the dedicated offer pages
      */
-    public Set<ApartmentInfo> fetchAll(Set<URI> offerListURLs) {
+    public Set<PropertyDetails> fetchAll(Set<URI> offerListURLs) {
         Objects.requireNonNull(offerListURLs, "URLs must not be null.");
 
         return process(fetcher.fetchAsync(offerListURLs).thenApply(extractURLs()));
@@ -88,12 +88,12 @@ public final class ApartmentInfoFetcher {
     }
 
     /**
-     * Fetches the HTML documents from the given URLs and then extracts apartment information from them.
+     * Fetches the HTML documents from the given URLs and then extracts property details from them.
      *
      * @param future incomplete future containing previously fetched offer page URLs
-     * @return apartment information details extracted from the dedicated offer pages
+     * @return property details extracted from the dedicated offer pages
      */
-    private Set<ApartmentInfo> process(CompletableFuture<Set<URI>> future) {
+    private Set<PropertyDetails> process(CompletableFuture<Set<URI>> future) {
         return future.thenApply(fetcher::fetchAll).thenApply(extractor::extract).join();
     }
 }

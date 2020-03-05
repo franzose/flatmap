@@ -12,7 +12,7 @@ public class AddressExtractorSteps {
     private Document document;
     private String actualAddress;
 
-    @Given("there is a Sakh.com offer page with the following apartment address components")
+    @Given("there is a Sakh.com offer page with the following property address components")
     public void setUpDocument(DataTable data) {
         var addressComponents = data.asList();
 
@@ -29,11 +29,11 @@ public class AddressExtractorSteps {
     }
 
     @When("I pass the document to the Sakh.com address extractor")
-    public void extractApartmentAddress() {
+    public void extractAddress() {
         actualAddress = AddressExtractor.extract(document);
     }
 
-    @Then("I must get {string} as the Sakh.com apartment address")
+    @Then("I must get {string} as the Sakh.com property address")
     public void ensureAddressIsValid(String expectedAddress) {
         assertEquals(expectedAddress, actualAddress);
     }

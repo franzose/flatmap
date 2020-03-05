@@ -4,9 +4,9 @@ import java.net.URI;
 import java.util.Objects;
 
 /**
- * Data class representing basic apartment information details.
+ * Data class representing basic property details.
  */
-public final class ApartmentInfo {
+public final class PropertyDetails {
     public final URI url;
     public final String address;
     public final Space space;
@@ -14,11 +14,11 @@ public final class ApartmentInfo {
 
     /**
      * @param url URL of the original offer page from which the information was taken
-     * @param address Apartment address
-     * @param space Apartment area details
+     * @param address Property address
+     * @param space Property area details
      * @param price Rental or purchase price
      */
-    public ApartmentInfo(URI url, String address, Space space, Price price) {
+    public PropertyDetails(URI url, String address, Space space, Price price) {
         Objects.requireNonNull(url, "URL must not be null.");
         Objects.requireNonNull(address, "Address must not be null.");
         Objects.requireNonNull(space, "Space must not be null.");
