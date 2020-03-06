@@ -35,26 +35,10 @@ public class PropertyDetailsExtractorSteps {
     public void setUpAnIncompleteDocument() {
         document = new Document("https://example.com");
 
-        var random = new Random();
         extractor = new PropertyDetailsExtractor(
-            document -> {
-                if (random.nextBoolean()) {
-                    throw new NullPointerException();
-                }
-                return ADDRESS;
-            },
-            document -> {
-                if (random.nextBoolean()) {
-                    throw new NullPointerException();
-                }
-                return SPACE;
-            },
-            document -> {
-                if (random.nextBoolean()) {
-                    throw new NullPointerException();
-                }
-                return PRICE;
-            }
+            document -> { throw new NullPointerException(); },
+            document -> SPACE,
+            document -> PRICE
         );
     }
 
