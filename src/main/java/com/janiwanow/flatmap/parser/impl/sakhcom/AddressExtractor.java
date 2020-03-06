@@ -20,7 +20,15 @@ public final class AddressExtractor {
         var heading = document.selectFirst("#offer > h4");
         var street = heading.selectFirst(".text");
 
-        heading.selectFirst("a").remove();
+        if (street == null) {
+            return document.selectFirst("#offer > h4 + h4").text();
+        }
+
+        var link = heading.selectFirst("a");
+
+        if (link != null) {
+            link.remove();
+        }
 
         return String.format("%s %s", heading.text(), street.text());
     }

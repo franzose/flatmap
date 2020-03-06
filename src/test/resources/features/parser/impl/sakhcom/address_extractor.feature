@@ -9,3 +9,8 @@ Feature: Extraction of the apartment address from the offer page
       | улица Хабаровская, 42   |
     When I pass the document to the Sakh.com address extractor
     Then I must get "Южно-Сахалинск, 1 мкр., улица Хабаровская, 42" as the Sakh.com property address
+
+  Scenario: Extraction
+    Given there is a Sakh.com offer page where address is "Южно-Сахалинск, 1 мкр., улица Хабаровская, 42"
+    When I pass the document to the Sakh.com address extractor
+    Then I must get "Южно-Сахалинск, 1 мкр., улица Хабаровская, 42" as the Sakh.com property address

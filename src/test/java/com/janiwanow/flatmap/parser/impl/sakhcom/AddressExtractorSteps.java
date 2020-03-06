@@ -28,6 +28,17 @@ public class AddressExtractorSteps {
             ));
     }
 
+    @Given("there is a Sakh.com offer page where address is {string}")
+    public void setUpDocument(String address) {
+        document = new Document("");
+        var offer = document
+            .appendElement("div")
+            .attr("id", "offer");
+
+        offer.appendElement("h4");
+        offer.appendElement("h4").text(address);
+    }
+
     @When("I pass the document to the Sakh.com address extractor")
     public void extractAddress() {
         actualAddress = AddressExtractor.extract(document);
