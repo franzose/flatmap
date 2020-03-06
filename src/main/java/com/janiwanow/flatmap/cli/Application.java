@@ -31,6 +31,12 @@ public final class Application {
     public void run(String... args) throws CommandNotFoundException {
         Objects.requireNonNull(args, "CLI arguments must not be null.");
 
+        if (args.length == 0) {
+            System.out.println("Running the application without arguments is not supported.");
+            commander.usage();
+            return;
+        }
+
         try {
             commander.parse(args);
 
