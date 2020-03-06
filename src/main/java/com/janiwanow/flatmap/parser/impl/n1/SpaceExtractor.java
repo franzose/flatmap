@@ -33,11 +33,12 @@ public final class SpaceExtractor {
         Objects.requireNonNull(roomsExtractor, "Rooms extractor must not be null.");
 
         var texts = document.select(".offer-card-factoids .text").eachText();
+        var size = texts.size();
 
         return new Space(
-            Numbers.parseDouble(texts.get(0)),
-            Numbers.parseDouble(texts.get(1)),
-            Numbers.parseDouble(texts.get(2)),
+            size >= 1 ? Numbers.parseDouble(texts.get(0)) : 0.0,
+            size >= 2 ? Numbers.parseDouble(texts.get(1)) : 0.0,
+            size >= 3 ? Numbers.parseDouble(texts.get(2)) : 0.0,
             roomsExtractor.apply(document)
         );
     }
