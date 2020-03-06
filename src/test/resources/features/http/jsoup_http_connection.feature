@@ -15,16 +15,13 @@ Feature: Fetching HTML documents using Jsoup HTTP connection
     Given I requested "/not_ok" using JsoupHttpConnection
     When the response is not OK
     Then I should not get any document
-    And I should see a log message that the response was not OK
 
   Scenario: Connection timed out
     Given I requested "/time_out" using JsoupHttpConnection
     When the connection times out
     Then I should not get any document
-    And I should see a log message that the connection timed out
 
   Scenario: Connection error
     Given I requested "/error" using JsoupHttpConnection
     When the connection ends up with an error
     Then I should not get any document
-    And I should see a log message about the connection error
