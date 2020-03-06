@@ -33,6 +33,9 @@ public final class ParseWebsitesCommand implements Command {
     @Parameter(names = {"--attempts", "--retries"})
     private int retries = Integer.parseInt(ENV.get("HTTP_CONNECTION_RETRIES", "3"));
 
+    @Parameter(names = {"--pages"})
+    private int pages = Integer.parseInt(ENV.get("PAGES", "20"));
+
     public ParseWebsitesCommand(
         EventDispatcher dispatcher,
         HttpConnectionBuilder http,
@@ -62,7 +65,7 @@ public final class ParseWebsitesCommand implements Command {
         var info = parsers
             .stream()
             .filter(this::filterByWebsiteId)
-            .map(parser -> parser.parse(conn))
+            .map(parser -> parser.parse(conn, pages))
             .flatMap(Collection::stream)
             .distinct()
             .toArray(PropertyDetails[]::new);

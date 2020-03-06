@@ -22,22 +22,21 @@ public final class SakhcomParser implements WebsiteParser {
     private static final Logger LOG = LoggerFactory.getLogger(SakhcomParser.class);
     private final HttpConnectionBuilder http;
     private final Set<String> cities;
-    private final int pages;
 
-    public SakhcomParser(HttpConnectionBuilder http, Set<String> cities, int pages) {
+    public SakhcomParser(HttpConnectionBuilder http, Set<String> cities) {
         this.http = http;
         this.cities = cities;
-        this.pages = pages;
     }
 
     /**
      * Retrieves HTML from a bunch of URLs and parses it to a set of property details.
      *
      * @param connection an HTTP connection to use for parsing
+     * @param pages number of pages to go through
      * @return a set of property details
      */
     @Override
-    public Set<PropertyDetails> parse(HttpConnection connection) {
+    public Set<PropertyDetails> parse(HttpConnection connection, int pages) {
         Objects.requireNonNull(connection, "HTTP connection must not be null.");
         LOG.info("Starting to fetch apartment information from sakh.com...");
 

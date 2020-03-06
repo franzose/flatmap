@@ -18,22 +18,21 @@ import java.util.Set;
 public final class N1Parser implements WebsiteParser {
     private static final Logger LOG = LoggerFactory.getLogger(N1Parser.class);
     private final Set<String> cities;
-    private final int pages;
 
-    public N1Parser(Set<String> cities, int pages) {
+    public N1Parser(Set<String> cities) {
         Objects.requireNonNull(cities, "Cities must not be null.");
         this.cities = cities;
-        this.pages = Math.max(1, pages);
     }
 
     /**
      * Retrieves HTML from a bunch of URLs and parses it to a set of property details.
      *
      * @param connection an HTTP connection to use for parsing
+     * @param pages number of pages to go through
      * @return a set of property details
      */
     @Override
-    public Set<PropertyDetails> parse(HttpConnection connection) {
+    public Set<PropertyDetails> parse(HttpConnection connection, int pages) {
         Objects.requireNonNull(connection, "HTTP connection must not be null.");
         LOG.info("Starting to fetch properties from N1...");
 
