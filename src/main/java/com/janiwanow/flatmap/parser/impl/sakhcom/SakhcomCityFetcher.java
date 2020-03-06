@@ -19,7 +19,7 @@ import java.util.function.Function;
  * to switch to another city on sakh.com. This website detects the chosen city
  * by the session cookie thus we need to send it along with the request.
  */
-public class SakhcomCityFetcher {
+public final class SakhcomCityFetcher {
     private final HttpConnectionBuilder http;
     private final Set<URI> urls;
     private final Function<HttpConnection, PropertyDetailsFetcher> function;
