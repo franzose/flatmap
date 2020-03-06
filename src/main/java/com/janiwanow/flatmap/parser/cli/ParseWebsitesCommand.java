@@ -8,7 +8,6 @@ import com.janiwanow.flatmap.event.EventDispatcher;
 import com.janiwanow.flatmap.http.HttpConnectionBuilder;
 import com.janiwanow.flatmap.parser.WebsiteParser;
 
-import java.util.Collection;
 import java.util.Set;
 
 import static com.janiwanow.flatmap.util.Env.ENV;
@@ -54,7 +53,6 @@ public final class ParseWebsitesCommand implements Command {
      *     <li>Take all available parsers
      *     <li>Filter out parsers by the websiteId if the user wants to parse a specific website
      *     <li>Parse websites using the rest of the parsers
-     *     <li>Just in case, ensure fetched data is unique
      *     <li>Dispatch an event to let subscribers decide what to do next
      * </ol>
      */
@@ -62,17 +60,11 @@ public final class ParseWebsitesCommand implements Command {
     public void execute() {
         var conn = http.retries(retries).build();
 
-        var info = parsers
+        parsers
             .stream()
             .filter(this::filterByWebsiteId)
             .map(parser -> parser.parse(conn, pages))
-            .flatMap(Collection::stream)
-            .distinct()
-            .toArray(PropertyDetails[]::new);
-
-        if (info.length > 0) {
-            dispatcher.dispatch(new PropertyDetailsParsed(info));
-        }
+            .forEach(this::dispatchEvent);
     }
 
     /**
@@ -93,5 +85,17 @@ public final class ParseWebsitesCommand implements Command {
             websiteId.isBlank() ||
             parser.supports(websiteId)
         );
+    }
+
+    /**
+     * Dispatches an event once a parser finished its job.
+     *
+     * @param details fetched property details
+     */
+    private void dispatchEvent(Set<PropertyDetails> details) {
+        if (details.size() > 0) {
+            var arg = details.toArray(new PropertyDetails[0]);
+            dispatcher.dispatch(new PropertyDetailsParsed(arg));
+        }
     }
 }
