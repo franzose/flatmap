@@ -25,8 +25,8 @@ public final class N1URLs {
 
     public static final Set<String> OFFER_TYPES = Set.of(
         "kupit",              // purchase
-        "snyat/dolgosrochno", // long-term rental
-        "snyat/posutochno"    // daily rental
+        "snyat/dolgosrochno", // long-term rent
+        "snyat/posutochno"    // daily rent
     );
 
     public static final Set<String> PROPERTY_TYPES = Set.of(
