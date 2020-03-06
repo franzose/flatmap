@@ -32,6 +32,9 @@ public final class ParseWebsitesCommand implements Command {
     @Parameter(names = {"--attempts", "--retries"})
     private int retries = Integer.parseInt(ENV.get("HTTP_CONNECTION_RETRIES", "3"));
 
+    @Parameter(names = "--timeout")
+    private int timeout = Integer.parseInt(ENV.get("HTTP_CONNECTION_TIMEOUT", "5000"));
+
     @Parameter(names = {"--pages"})
     private int pages = Integer.parseInt(ENV.get("PAGES", "20"));
 
@@ -58,7 +61,7 @@ public final class ParseWebsitesCommand implements Command {
      */
     @Override
     public void execute() {
-        var conn = http.retries(retries).build();
+        var conn = http.retries(retries).timeout(timeout).build();
 
         parsers
             .stream()
