@@ -80,6 +80,10 @@ public final class PropertyDetailsExtractor {
         } catch (NullPointerException e) {
             LOG.info("Could not extract property details from {}.", document.baseUri(), e);
             return Optional.empty();
+        } catch (NumberFormatException e) {
+            LOG.info("Could not extract property details from {}.", document.baseUri(), e);
+            LOG.debug(document.html());
+            return Optional.empty();
         }
     }
 
