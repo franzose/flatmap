@@ -11,6 +11,8 @@ import com.janiwanow.flatmap.parser.WebsiteParser;
 import java.util.Collection;
 import java.util.Set;
 
+import static com.janiwanow.flatmap.util.Env.ENV;
+
 /**
  * Console command to parse websites and get property details from them.
  */
@@ -29,7 +31,7 @@ public final class ParseWebsitesCommand implements Command {
     private String websiteId = "";
 
     @Parameter(names = {"--attempts", "--retries"})
-    private int retries = 3;
+    private int retries = Integer.parseInt(ENV.get("HTTP_CONNECTION_RETRIES", "3"));
 
     public ParseWebsitesCommand(
         EventDispatcher dispatcher,
