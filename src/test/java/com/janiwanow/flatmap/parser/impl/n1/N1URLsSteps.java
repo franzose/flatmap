@@ -20,7 +20,7 @@ public class N1URLsSteps {
     private int pages;
     private Set<URI> actualURLs;
 
-    @Given("I want to get URLs of the first {int} pages in the following cities")
+    @Given("I want to get N1 URLs of the first {int} pages in the following cities")
     public void setUpUtility(int pages, DataTable data) {
         this.pages = pages;
         cities = new HashSet<>(data.asList());
