@@ -5,7 +5,7 @@ import com.beust.jcommander.Parameters;
 import com.janiwanow.flatmap.cli.Command;
 import com.janiwanow.flatmap.data.PropertyDetails;
 import com.janiwanow.flatmap.event.EventDispatcher;
-import com.janiwanow.flatmap.http.HttpConnection;
+import com.janiwanow.flatmap.http.HttpConnectionBuilder;
 import com.janiwanow.flatmap.parser.WebsiteParser;
 
 import java.util.Collection;
@@ -17,7 +17,7 @@ import java.util.Set;
 @Parameters(commandNames = "parse", commandDescription = "Parses websites to get property details")
 public final class ParseWebsitesCommand implements Command {
     private final EventDispatcher dispatcher;
-    private final HttpConnection httpConnection;
+    private final HttpConnectionBuilder http;
     private final Set<WebsiteParser> parsers;
 
     /**
@@ -28,13 +28,16 @@ public final class ParseWebsitesCommand implements Command {
     @Parameter()
     private String websiteId = "";
 
+    @Parameter(names = {"--attempts", "--retries"})
+    private int retries = 3;
+
     public ParseWebsitesCommand(
         EventDispatcher dispatcher,
-        HttpConnection httpConnection,
+        HttpConnectionBuilder http,
         Set<WebsiteParser> parsers
     ) {
         this.dispatcher = dispatcher;
-        this.httpConnection = httpConnection;
+        this.http = http;
         this.parsers = parsers;
     }
 
@@ -52,10 +55,12 @@ public final class ParseWebsitesCommand implements Command {
      */
     @Override
     public void execute() {
+        var conn = http.retries(retries).build();
+
         var info = parsers
             .stream()
             .filter(this::filterByWebsiteId)
-            .map(parser -> parser.parse(httpConnection))
+            .map(parser -> parser.parse(conn))
             .flatMap(Collection::stream)
             .distinct()
             .toArray(PropertyDetails[]::new);
