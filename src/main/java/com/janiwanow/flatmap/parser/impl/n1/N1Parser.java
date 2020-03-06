@@ -38,11 +38,11 @@ public final class N1Parser implements WebsiteParser {
         LOG.info("Starting to fetch properties from N1...");
 
         var urls = new N1URLs(cities).getURLs(pages);
-        var apartments = getFetcher(connection).fetchAll(urls);
+        var details = getFetcher(connection).fetchAll(urls);
 
         LOG.info("Finished fetching properties.");
 
-        return apartments;
+        return details;
     }
 
     /**
