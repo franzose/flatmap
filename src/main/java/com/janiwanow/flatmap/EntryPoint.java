@@ -3,6 +3,7 @@ package com.janiwanow.flatmap;
 import com.janiwanow.flatmap.cli.Application;
 import com.janiwanow.flatmap.cli.CommandNotFoundException;
 import com.janiwanow.flatmap.db.HikariConnectionFactory;
+import com.janiwanow.flatmap.db.cli.PropertyDetailsListener;
 import com.janiwanow.flatmap.db.cli.PurgeDatabaseCommand;
 import com.janiwanow.flatmap.db.cli.SetupDatabaseCommand;
 import com.janiwanow.flatmap.event.EventDispatcher;
@@ -49,7 +50,10 @@ public final class EntryPoint {
     }
 
     private static EventDispatcher setUpEventDispatcher() {
-        // TODO: set up event listeners
-        return new GreenRobotEventDispatcher(EventBus.getDefault());
+        var eventBus = EventBus.getDefault();
+
+        eventBus.register(new PropertyDetailsListener(HikariConnectionFactory.getInstance()));
+
+        return new GreenRobotEventDispatcher(eventBus);
     }
 }
