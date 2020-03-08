@@ -32,8 +32,7 @@ public final class N1URLs {
     public static final Set<String> PROPERTY_TYPES = Set.of(
         "kvartiry", // apartment
         "komnaty",  // rooms
-        "doma",     // house, cottage, villa etc
-        "dachi"     // dacha
+        "doma"     // house, cottage, villa etc
     );
 
     /**
