@@ -17,17 +17,39 @@ public final class AddressExtractor {
     public static String extract(Document document) {
         Objects.requireNonNull(document, "Document must not be null.");
 
-        var heading = document.selectFirst("#offer > h4");
-        var street = heading.selectFirst(".text");
+        var headings = document.select("#offer > h4");
 
-        if (street == null) {
-            return document.selectFirst("#offer > h4 + h4").text();
+        if (headings == null) {
+            return "";
+        }
+
+        // This is for houses and dachas
+        if (headings.size() > 1) {
+            var heading = headings.last();
+
+            return heading == null ? "" : heading.text();
+        }
+
+        var heading = headings.first();
+
+        if (heading == null) {
+            return "";
         }
 
         var link = heading.selectFirst("a");
 
-        if (link != null) {
-            link.remove();
+        if (link == null) {
+            return heading.text();
+        }
+
+        // ".text" element might be wrapped in a link,
+        // so we grab the element first and only then remove the link
+        var street = heading.selectFirst(".text");
+
+        link.remove();
+
+        if (street == null) {
+            return heading.text();
         }
 
         return String.format("%s %s", heading.text(), street.text());

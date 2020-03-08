@@ -10,11 +10,13 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class AddressExtractorSteps {
     private Document document;
+    private String expectedAddress;
     private String actualAddress;
 
-    @Given("there is a Sakh.com offer page with the following property address components")
+    @Given("the following components of a property address on Sakh.com")
     public void setUpDocument(DataTable data) {
         var addressComponents = data.asList();
+        expectedAddress = String.join(" ", addressComponents);
 
         document = new Document("");
         document
@@ -22,21 +24,21 @@ public class AddressExtractorSteps {
             .attr("id", "offer")
             .appendElement("h4")
             .html(String.format(
-                "%s <a href=\"\"><span class=\"text\">%s</span><span>/ 15 объявлений</span></a>",
+                "%s <a href=\"#\"><span class=\"text\">%s</span><span>/ 15 объявлений</span></a>",
                 addressComponents.get(0),
                 addressComponents.get(1)
             ));
     }
 
-    @Given("there is a Sakh.com offer page where address is {string}")
-    public void setUpDocument(String address) {
-        document = new Document("");
-        var offer = document
-            .appendElement("div")
-            .attr("id", "offer");
+    @Given("just {string} as a Sakh.com property address")
+    public void setUpDocument(String expectedAddress) {
+        this.expectedAddress = expectedAddress;
 
+        document = new Document("");
+
+        var offer = document.appendElement("div").attr("id", "offer");
         offer.appendElement("h4");
-        offer.appendElement("h4").text(address);
+        offer.appendElement("h4").text(expectedAddress);
     }
 
     @When("I pass the document to the Sakh.com address extractor")
@@ -44,8 +46,8 @@ public class AddressExtractorSteps {
         actualAddress = AddressExtractor.extract(document);
     }
 
-    @Then("I must get {string} as the Sakh.com property address")
-    public void ensureAddressIsValid(String expectedAddress) {
+    @Then("I must get that very Sakh.com property address")
+    public void ensureAddressIsValid() {
         assertEquals(expectedAddress, actualAddress);
     }
 }
