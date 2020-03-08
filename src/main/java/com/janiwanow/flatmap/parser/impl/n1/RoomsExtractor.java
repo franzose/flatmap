@@ -40,14 +40,12 @@ public final class RoomsExtractor {
      * @return element if a number is found, empty otherwise
      */
     private static Optional<Element> getRoomsValue(Elements parameters) {
-        Element value = null;
-
         for (var name : parameters) {
             if (name.text().toLowerCase().startsWith("комнат")) {
-                value = name.nextElementSibling();
+                return Optional.of(name.nextElementSibling());
             }
         }
 
-        return Optional.ofNullable(value);
+        return Optional.empty();
     }
 }
