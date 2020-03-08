@@ -30,6 +30,10 @@ public final class RoomsExtractor {
             return 1;
         }
 
-        return Numbers.parseInt(text);
+        try {
+            return Numbers.parseInt(text);
+        } catch (NumberFormatException e) {
+            return 1;
+        }
     }
 }
