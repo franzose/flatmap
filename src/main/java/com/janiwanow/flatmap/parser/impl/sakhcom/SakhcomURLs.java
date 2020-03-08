@@ -37,8 +37,7 @@ public final class SakhcomURLs {
     public static final Set<String> PROPERTY_TYPES = Set.of(
         "flat",  // apartments
         "room",  // rooms
-        "house", // houses
-        "dacha"  // villa, cottage etc
+        "house" // houses, villas, cottages
     );
 
     public Set<URI> getURLs(int pages) {
