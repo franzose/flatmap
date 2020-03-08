@@ -8,23 +8,43 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.And;
 import org.jsoup.nodes.Document;
 
+import java.util.Optional;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class SpaceExtractorSteps {
     private Document document;
     private Space space;
 
-    @Given("the following property area information")
+    @Given("the following N1 property area information")
     public void setUpDocument(DataTable data) {
         document = new Document("");
+        document
+            .appendElement("div")
+            .addClass("card-living-content-params-list__name")
+            .text("Общая площадь");
 
-        var factoids = document.appendElement("div").addClass("offer-card-factoids");
+        document
+            .appendElement("div")
+            .text(data.column(0).get(0));
 
-        for (var value : data.asList()) {
-            factoids.appendElement("div").addClass("text").text(value);
-        }
+        document
+            .appendElement("div")
+            .addClass("card-living-content-params-list__name")
+            .text("Жилая площадь");
 
-        document.appendChild(factoids);
+        document
+            .appendElement("div")
+            .text(Optional.ofNullable(data.column(1).get(0)).orElse(""));
+
+        document
+            .appendElement("div")
+            .addClass("card-living-content-params-list__name")
+            .text("Кухня");
+
+        document
+            .appendElement("div")
+            .text(Optional.ofNullable(data.column(2).get(0)).orElse(""));
     }
 
     @When("I pass the document to the space extractor")
