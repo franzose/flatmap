@@ -5,6 +5,7 @@ import com.janiwanow.flatmap.util.Numbers;
 import org.jsoup.nodes.Document;
 
 import java.util.Objects;
+import java.util.Optional;
 import java.util.function.Function;
 import java.util.regex.Pattern;
 
@@ -20,7 +21,7 @@ public final class SpaceExtractor {
      * @param document offer page like https://dom.sakh.com/flat/sell/546472
      * @return extracted area details under the title "Space"
      */
-    public static Space extract(Document document) {
+    public static Optional<Space> extract(Document document) {
         return extract(document, RoomsExtractor::extract);
     }
 
@@ -31,7 +32,7 @@ public final class SpaceExtractor {
      * @param roomsExtractor An implementation of the extractor
      * @return extracted area details under the title "Space"
      */
-    public static Space extract(Document document, Function<Document, Integer> roomsExtractor) {
+    public static Optional<Space> extract(Document document, Function<Document, Integer> roomsExtractor) {
         Objects.requireNonNull(document, "Document must not be null.");
         Objects.requireNonNull(roomsExtractor, "Rooms extractor must not be null.");
 
@@ -54,7 +55,16 @@ public final class SpaceExtractor {
             }
         }
 
-        return new Space(total, living, kitchen, roomsExtractor.apply(document));
+        if (living == 0.0) {
+            living = total;
+        }
+
+        // It is likely a single bed offer, we don't need that
+        if (total == 0.0 && living == 0.0 && kitchen == 0.0) {
+            return Optional.empty();
+        }
+
+        return Optional.of(new Space(total, living, kitchen, roomsExtractor.apply(document)));
     }
 }
 

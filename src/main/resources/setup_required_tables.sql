@@ -4,7 +4,7 @@ CREATE TABLE IF NOT EXISTS property (
     address VARCHAR (512) NOT NULL,
     total_area NUMERIC (12, 2) NOT NULL CHECK (total_area > 0.0),
     living_space NUMERIC (12, 2) NOT NULL CHECK (living_space > 0.0),
-    kitchen_area NUMERIC (12, 2) NOT NULL CHECK (kitchen_area > 0.0),
+    kitchen_area NUMERIC (12, 2) NOT NULL CHECK (kitchen_area >= 0.0),
     rooms SMALLINT NOT NULL CHECK (rooms > 0),
     price_amount NUMERIC (20, 2) NOT NULL CHECK (price_amount > 0.0),
     price_currency VARCHAR (4) NOT NULL,

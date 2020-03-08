@@ -39,12 +39,12 @@ import static java.util.stream.Collectors.toSet;
 public final class PropertyDetailsExtractor {
     private static final Logger LOG = LoggerFactory.getLogger(PropertyDetailsExtractor.class);
     private final Function<Document, String> addressExtractor;
-    private final Function<Document, Space> spaceExtractor;
+    private final Function<Document, Optional<Space>> spaceExtractor;
     private final Function<Document, Price> priceExtractor;
 
     public PropertyDetailsExtractor(
         Function<Document, String> addressExtractor,
-        Function<Document, Space> spaceExtractor,
+        Function<Document, Optional<Space>> spaceExtractor,
         Function<Document, Price> priceExtractor
     ) {
         this.addressExtractor = addressExtractor;
@@ -69,19 +69,25 @@ public final class PropertyDetailsExtractor {
         Objects.requireNonNull(document, "Document must not be null.");
 
         try {
+            var space = spaceExtractor.apply(document);
+
+            // We don't need property details without
+            // the information about their area
+            if (space.isEmpty()) {
+                LOG.info("Could not extract space from {}, skipping...", document.baseUri());
+                return Optional.empty();
+            }
+
             return Optional.of(new PropertyDetails(
                 new URI(document.baseUri()),
                 addressExtractor.apply(document),
-                spaceExtractor.apply(document),
+                space.get(),
                 priceExtractor.apply(document)
             ));
         } catch (URISyntaxException e) {
             throw new RuntimeException(e);
-        } catch (NullPointerException e) {
-            LOG.info("Could not extract property details from {}.", document.baseUri(), e);
-            return Optional.empty();
-        } catch (NumberFormatException e) {
-            LOG.info("Could not extract property details from {}.", document.baseUri(), e);
+        } catch (NullPointerException | NumberFormatException e) {
+            LOG.info("Could not extract property details from {}", document.baseUri(), e);
             LOG.debug(document.html());
             return Optional.empty();
         }
