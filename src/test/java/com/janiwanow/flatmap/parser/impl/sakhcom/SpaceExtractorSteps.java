@@ -26,7 +26,7 @@ public class SpaceExtractorSteps {
 
     @When("I pass the document to the Sakh.com space extractor")
     public void extractSpace() {
-        actualSpace = SpaceExtractor.extract(document, d -> 4);
+        actualSpace = SpaceExtractor.extract(document, d -> 4).get();
     }
 
     @Then("I must get {double} square meters of the total area from Sakh.com")

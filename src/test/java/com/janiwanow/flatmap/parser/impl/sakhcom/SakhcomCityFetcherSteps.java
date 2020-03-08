@@ -15,6 +15,7 @@ import org.jsoup.nodes.Document;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.Optional;
 import java.util.Set;
 
 import static com.github.tomakehurst.wiremock.client.WireMock.*;
@@ -90,12 +91,12 @@ public class SakhcomCityFetcherSteps {
                 // whether "city" cookie is applied properly
                 new PropertyDetailsExtractor(
                     document -> document.selectFirst("#offer .address").text(),
-                    document -> new Space(
+                    document -> Optional.of(new Space(
                         Numbers.parseDouble(document.selectFirst("#offer .total-area").text()),
                         Numbers.parseDouble(document.selectFirst("#offer .living-space").text()),
                         Numbers.parseDouble(document.selectFirst("#offer .kitchen-area").text()),
                         Numbers.parseInt(document.selectFirst("#offer .rooms").text())
-                    ),
+                    )),
                     document -> Price.inRubles(Numbers.parseDouble(document.selectFirst("#offer .price").text()))
                 ),
                 ".offers > a"

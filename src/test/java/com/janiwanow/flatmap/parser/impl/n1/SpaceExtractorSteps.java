@@ -29,7 +29,7 @@ public class SpaceExtractorSteps {
 
     @When("I pass the document to the space extractor")
     public void extractAreaInformation() {
-        space = SpaceExtractor.extract(document, document -> 4);
+        space = SpaceExtractor.extract(document, document -> 4).get();
     }
 
     @Then("I must get {int} square meters of the total area")
