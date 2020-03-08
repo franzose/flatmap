@@ -22,8 +22,8 @@ import java.util.Optional;
  */
 public final class JsoupHttpConnection implements HttpConnection {
     private static final Logger LOG = LoggerFactory.getLogger(JsoupHttpConnection.class);
-    public static final int MINIMUM_RETRIES = 1;
-    public static final int MINIMUM_TIMEOUT = 1500;
+    public static final int MINIMUM_RETRIES = 3;
+    public static final int MINIMUM_TIMEOUT = 5000;
     private int retries;
     private int timeout;
     private Map<String, String> cookies = new HashMap<>();
