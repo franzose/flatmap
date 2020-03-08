@@ -18,6 +18,18 @@ public final class RoomsExtractor {
     public static int extract(Document document) {
         Objects.requireNonNull(document, "Document must not be null.");
 
-        return Numbers.parseInt(document.selectFirst("#offer > h3").text());
+        var heading = document.selectFirst("#offer > h1 + h3");
+
+        if (heading == null) {
+            return 1;
+        }
+
+        var text = heading.text();
+
+        if (text.isEmpty() || text.isBlank()) {
+            return 1;
+        }
+
+        return Numbers.parseInt(text);
     }
 }

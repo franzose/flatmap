@@ -11,14 +11,28 @@ public class RoomsExtractorSteps {
     private Document document;
     private int actual;
 
-    @Given("there is an Sakh.com offer page where rooms are {string}")
+    @Given("there is a Sakh.com offer page where rooms are {string}")
     public void setUpDocument(String rooms) {
         document = new Document("");
-        document
+
+        var offer = document
             .appendElement("div")
-            .attr("id", "offer")
-            .appendElement("h3")
-            .text(rooms);
+            .attr("id", "offer");
+
+        offer.appendElement("h1");
+        offer.appendElement("h3").text(rooms);
+    }
+
+    @Given("there is a Sakh.com offer page without room information")
+    public void setUpDocument() {
+        document = new Document("");
+
+        var offer = document
+            .appendElement("div")
+            .attr("id", "offer");
+
+        offer.appendElement("h1");
+        offer.appendElement("h3");
     }
 
     @When("I pass the document to the Sakh.com rooms extractor")
