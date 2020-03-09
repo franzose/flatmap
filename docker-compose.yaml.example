@@ -13,4 +13,4 @@ services:
   db_admin:
     image: adminer
     ports:
-      - 8080:8080
+      - 8081:8080
