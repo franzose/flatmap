@@ -9,10 +9,7 @@ import org.slf4j.LoggerFactory;
 import java.io.IOException;
 import java.net.SocketTimeoutException;
 import java.net.URI;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 
 /**
  * The default implementation of a connection fetching HTML documents.
@@ -22,6 +19,16 @@ import java.util.Optional;
  */
 public final class JsoupHttpConnection implements HttpConnection {
     private static final Logger LOG = LoggerFactory.getLogger(JsoupHttpConnection.class);
+    private static final List<String> USER_AGENTS = List.of(
+        "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:73.0) Gecko/20100101 Firefox/73.0",
+        "Mozilla/5.0 (X11; Linux x86_64; rv:73.0) Gecko/20100101 Firefox/73.0",
+        "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_3) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.1.1 Safari/605.1.15",
+        "Mozilla/5.0 (Windows NT 6.1; WOW64; Trident/7.0; rv:11.0) like Gecko",
+        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.140 Safari/537.36 Edge/18.17763",
+        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.132 Safari/537.36",
+        "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:60.8) Gecko/20100101 Firefox/60.8"
+    );
+
     public static final int MINIMUM_RETRIES = 3;
     public static final int MINIMUM_TIMEOUT = 5000;
     private int retries;
@@ -98,9 +105,11 @@ public final class JsoupHttpConnection implements HttpConnection {
         Document document = null;
 
         int attempts = 1;
+        var userAgent = getRandomUserAgent();
 
         LOG.info("Started fetching from {}", url);
-        LOG.info("HttpConnection options: timeout {}ms, {} retries", timeout, retries);
+        LOG.info("Retries: {}, timeout: {}ms, cookies: {}", retries, timeout, cookies);
+        LOG.info("User agent: {}", userAgent);
 
         do {
             try {
@@ -108,6 +117,7 @@ public final class JsoupHttpConnection implements HttpConnection {
                     .ignoreHttpErrors(false)
                     .timeout(timeout)
                     .cookies(cookies)
+                    .userAgent(userAgent)
                     .get();
 
                 LOG.info("Finished fetching {}. Attempts: {}", url, attempts);
@@ -126,6 +136,10 @@ public final class JsoupHttpConnection implements HttpConnection {
         } while (attempts <= retries);
 
         return Optional.ofNullable(document);
+    }
+
+    private String getRandomUserAgent() {
+        return USER_AGENTS.get(new Random().nextInt(USER_AGENTS.size()));
     }
 
     @Override
