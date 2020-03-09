@@ -1,9 +1,9 @@
 package com.janiwanow.flatmap.data;
 
 /**
- * Data class representing apartment area details including number of rooms.
+ * Data class representing property area details including number of rooms.
  */
-public final class Space {
+public final class Area {
     public final double total;
     public final double living;
     public final double kitchen;
@@ -11,11 +11,11 @@ public final class Space {
 
     /**
      * @param total Total apartment area, Sq m.
-     * @param living Living space, Sq m.
+     * @param living Living area, Sq m.
      * @param kitchen Kitchen area, Sq m.
-     * @param rooms Number of rooms in the apartment
+     * @param rooms Number of rooms in the property
      */
-    public Space(double total, double living, double kitchen, int rooms) {
+    public Area(double total, double living, double kitchen, int rooms) {
         // 0.0 is assumed as lack of data
         // i.e. when a parser didn't manage to get
         // the information from an offer page

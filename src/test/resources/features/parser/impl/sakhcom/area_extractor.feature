@@ -5,7 +5,7 @@ Feature: Extraction of apartment area details from the offer page
 
   Scenario Outline: Extraction
     Given the "<area>" as property area on Sakh.com
-    When I pass the document to the Sakh.com space extractor
+    When I pass the document to the Sakh.com area extractor
     Then I must get <total> square meters of the total area from Sakh.com
     And I must get <living> square meters of the living space from Sakh.com
     And I must get <kitchen> square meters of the kitchen area from Sakh.com

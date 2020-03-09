@@ -55,7 +55,7 @@ public final class N1Parser implements WebsiteParser {
             new DocumentFetcher(connection),
             new PropertyDetailsExtractor(
                 AddressExtractor::extract,
-                SpaceExtractor::extract,
+                AreaExtractor::extract,
                 PriceExtractor::extract
             ),
             ".offers-search .card-title > a"

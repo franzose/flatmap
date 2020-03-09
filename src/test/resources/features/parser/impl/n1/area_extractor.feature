@@ -1,4 +1,4 @@
-Feature: Extraction of apartment area details from the offer page
+Feature: Extraction of the property area details from the offer page
   In order to gather meaningful property details
   As a Developer
   I should be able to get property are details
@@ -6,7 +6,7 @@ Feature: Extraction of apartment area details from the offer page
   Scenario Outline: Extraction
     Given the following N1 property area information
       | <total> | <living> | <kitchen> |
-    When I pass the document to the space extractor
+    When I pass the document to the N1 area extractor
     Then I must get <expected_total> square meters of the total area
     And I must get <expected_living> square meters of the living space
     And I must get <expected_kitchen> square meters of the kitchen area

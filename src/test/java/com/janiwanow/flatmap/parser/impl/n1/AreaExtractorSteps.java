@@ -1,6 +1,6 @@
 package com.janiwanow.flatmap.parser.impl.n1;
 
-import com.janiwanow.flatmap.data.Space;
+import com.janiwanow.flatmap.data.Area;
 import io.cucumber.datatable.DataTable;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.When;
@@ -12,9 +12,9 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class SpaceExtractorSteps {
+public class AreaExtractorSteps {
     private Document document;
-    private Space space;
+    private Area area;
 
     @Given("the following N1 property area information")
     public void setUpDocument(DataTable data) {
@@ -47,23 +47,23 @@ public class SpaceExtractorSteps {
             .text(Optional.ofNullable(data.column(2).get(0)).orElse(""));
     }
 
-    @When("I pass the document to the space extractor")
+    @When("I pass the document to the N1 area extractor")
     public void extractAreaInformation() {
-        space = SpaceExtractor.extract(document, document -> 4).get();
+        area = AreaExtractor.extract(document, document -> 4).get();
     }
 
     @Then("I must get {int} square meters of the total area")
     public void ensureTotalAreaIsValid(int expectedTotalArea) {
-        assertEquals(expectedTotalArea, space.total);
+        assertEquals(expectedTotalArea, area.total);
     }
 
     @And("I must get {int} square meters of the living space")
     public void ensureLivingSpaceIsValid(int expectedLivingSpace) {
-        assertEquals(expectedLivingSpace, space.living);
+        assertEquals(expectedLivingSpace, area.living);
     }
 
     @And("I must get {int} square meters of the kitchen area")
     public void ensureKitchenAreaIsValid(int expectedKitchenArea) {
-        assertEquals(expectedKitchenArea, space.kitchen);
+        assertEquals(expectedKitchenArea, area.kitchen);
     }
 }

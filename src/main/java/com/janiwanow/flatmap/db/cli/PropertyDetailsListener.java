@@ -77,10 +77,10 @@ public class PropertyDetailsListener {
             stmt.setObject(idx * cols + 1, UUID.randomUUID());
             stmt.setString(idx * cols + 2, propertyDetails.url.toString());
             stmt.setString(idx * cols + 3, propertyDetails.address);
-            stmt.setDouble(idx * cols + 4, propertyDetails.space.total);
-            stmt.setDouble(idx * cols + 5, propertyDetails.space.living);
-            stmt.setDouble(idx * cols + 6, propertyDetails.space.kitchen);
-            stmt.setInt(idx * cols + 7, propertyDetails.space.rooms);
+            stmt.setDouble(idx * cols + 4, propertyDetails.area.total);
+            stmt.setDouble(idx * cols + 5, propertyDetails.area.living);
+            stmt.setDouble(idx * cols + 6, propertyDetails.area.kitchen);
+            stmt.setInt(idx * cols + 7, propertyDetails.area.rooms);
             stmt.setDouble(idx * cols + 8, propertyDetails.price.amount);
             stmt.setString(idx * cols + 9, propertyDetails.price.currency.getCurrencyCode());
         }

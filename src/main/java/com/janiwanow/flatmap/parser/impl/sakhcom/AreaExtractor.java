@@ -1,6 +1,6 @@
 package com.janiwanow.flatmap.parser.impl.sakhcom;
 
-import com.janiwanow.flatmap.data.Space;
+import com.janiwanow.flatmap.data.Area;
 import com.janiwanow.flatmap.util.Numbers;
 import org.jsoup.nodes.Document;
 
@@ -10,29 +10,29 @@ import java.util.function.Function;
 import java.util.regex.Pattern;
 
 /**
- * Apartment area details extractor.
+ * Property area details extractor.
  */
-public final class SpaceExtractor {
+public final class AreaExtractor {
     private static final Pattern PATTERN = Pattern.compile("((?:П|п)лощадь:\\s*\\d+)|(жилая:\\s*\\d+)|(кухня:\\s*\\d+)");
 
     /**
-     * Extracts apartment area details and uses the default rooms extractor.
+     * Extracts property area details and uses the default rooms extractor.
      *
      * @param document offer page like https://dom.sakh.com/flat/sell/546472
-     * @return extracted area details under the title "Space"
+     * @return extracted area details under the title "Area"
      */
-    public static Optional<Space> extract(Document document) {
+    public static Optional<Area> extract(Document document) {
         return extract(document, RoomsExtractor::extract);
     }
 
     /**
-     * Extracts apartment area details.
+     * Extracts property area details.
      *
      * @param document offer page like https://dom.sakh.com/flat/sell/546472
      * @param roomsExtractor An implementation of the extractor
-     * @return extracted area details under the title "Space"
+     * @return extracted area details under the title "Area"
      */
-    public static Optional<Space> extract(Document document, Function<Document, Integer> roomsExtractor) {
+    public static Optional<Area> extract(Document document, Function<Document, Integer> roomsExtractor) {
         Objects.requireNonNull(document, "Document must not be null.");
         Objects.requireNonNull(roomsExtractor, "Rooms extractor must not be null.");
 
@@ -64,7 +64,7 @@ public final class SpaceExtractor {
             return Optional.empty();
         }
 
-        return Optional.of(new Space(total, living, kitchen, roomsExtractor.apply(document)));
+        return Optional.of(new Area(total, living, kitchen, roomsExtractor.apply(document)));
     }
 }
 

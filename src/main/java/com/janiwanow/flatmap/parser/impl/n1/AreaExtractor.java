@@ -1,6 +1,6 @@
 package com.janiwanow.flatmap.parser.impl.n1;
 
-import com.janiwanow.flatmap.data.Space;
+import com.janiwanow.flatmap.data.Area;
 import com.janiwanow.flatmap.util.Numbers;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -11,27 +11,27 @@ import java.util.Optional;
 import java.util.function.Function;
 
 /**
- * Apartment area details extractor.
+ * Property area details extractor.
  */
-public final class SpaceExtractor {
+public final class AreaExtractor {
     /**
-     * Extracts apartment area details and uses the default rooms extractor.
+     * Extracts property area details and uses the default rooms extractor.
      *
      * @param document N1 offer page like https://novosibirsk.n1.ru/view/33016674/
-     * @return extracted area details under the title "Space"
+     * @return extracted area details under the title "Area"
      */
-    public static Optional<Space> extract(Document document) {
+    public static Optional<Area> extract(Document document) {
         return extract(document, RoomsExtractor::extract);
     }
 
     /**
-     * Extracts apartment area details.
+     * Extracts property area details.
      *
      * @param document N1 offer page like https://novosibirsk.n1.ru/view/33016674/
      * @param roomsExtractor An implementation of the extractor
-     * @return extracted area details under the title "Space"
+     * @return extracted area details under the title "Area"
      */
-    public static Optional<Space> extract(Document document, Function<Document, Integer> roomsExtractor) {
+    public static Optional<Area> extract(Document document, Function<Document, Integer> roomsExtractor) {
         Objects.requireNonNull(document, "Document must not be null.");
         Objects.requireNonNull(roomsExtractor, "Rooms extractor must not be null.");
 
@@ -54,7 +54,7 @@ public final class SpaceExtractor {
             living = total;
         }
 
-        return Optional.of(new Space(
+        return Optional.of(new Area(
             Numbers.parseDouble(total.get().text()),
             Numbers.parseDouble(living.get().text()),
             kitchen.isEmpty() ? 0.0 : Numbers.parseDouble(kitchen.get().text()),

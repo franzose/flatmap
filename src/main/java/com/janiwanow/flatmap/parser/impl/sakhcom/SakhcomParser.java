@@ -64,7 +64,7 @@ public final class SakhcomParser implements WebsiteParser {
             new DocumentFetcher(connection),
             new PropertyDetailsExtractor(
                 AddressExtractor::extract,
-                SpaceExtractor::extract,
+                AreaExtractor::extract,
                 PriceExtractor::extract
             ),
             ".offers > .item > .content > a"

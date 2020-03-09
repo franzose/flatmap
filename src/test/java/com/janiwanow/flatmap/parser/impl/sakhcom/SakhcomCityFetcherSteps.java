@@ -2,7 +2,7 @@ package com.janiwanow.flatmap.parser.impl.sakhcom;
 
 import com.janiwanow.flatmap.data.Price;
 import com.janiwanow.flatmap.data.PropertyDetails;
-import com.janiwanow.flatmap.data.Space;
+import com.janiwanow.flatmap.data.Area;
 import com.janiwanow.flatmap.http.DocumentFetcher;
 import com.janiwanow.flatmap.http.JsoupHttpConnection;
 import com.janiwanow.flatmap.parser.PropertyDetailsExtractor;
@@ -91,7 +91,7 @@ public class SakhcomCityFetcherSteps {
                 // whether "city" cookie is applied properly
                 new PropertyDetailsExtractor(
                     document -> document.selectFirst("#offer .address").text(),
-                    document -> Optional.of(new Space(
+                    document -> Optional.of(new Area(
                         Numbers.parseDouble(document.selectFirst("#offer .total-area").text()),
                         Numbers.parseDouble(document.selectFirst("#offer .living-space").text()),
                         Numbers.parseDouble(document.selectFirst("#offer .kitchen-area").text()),

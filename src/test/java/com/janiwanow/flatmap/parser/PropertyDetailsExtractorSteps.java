@@ -2,20 +2,19 @@ package com.janiwanow.flatmap.parser;
 
 import com.janiwanow.flatmap.data.PropertyDetails;
 import com.janiwanow.flatmap.data.Price;
-import com.janiwanow.flatmap.data.Space;
+import com.janiwanow.flatmap.data.Area;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.jsoup.nodes.Document;
 
 import java.util.Optional;
-import java.util.Random;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 public class PropertyDetailsExtractorSteps {
     private static final String ADDRESS = "Nowhere City, Abandonded str. 30";
-    private static final Space SPACE = new Space(30, 20, 10, 1);
+    private static final Area AREA = new Area(30, 20, 10, 1);
     private static final Price PRICE = Price.inDollars(1000_000);
     private Document document;
     private PropertyDetailsExtractor extractor;
@@ -26,7 +25,7 @@ public class PropertyDetailsExtractorSteps {
         document = new Document(url);
         extractor = new PropertyDetailsExtractor(
             document -> ADDRESS,
-            document -> Optional.of(SPACE),
+            document -> Optional.of(AREA),
             document -> PRICE
         );
     }
@@ -37,7 +36,7 @@ public class PropertyDetailsExtractorSteps {
 
         extractor = new PropertyDetailsExtractor(
             document -> { throw new NullPointerException(); },
-            document -> Optional.of(SPACE),
+            document -> Optional.of(AREA),
             document -> PRICE
         );
     }
@@ -52,7 +51,7 @@ public class PropertyDetailsExtractorSteps {
         assertTrue(details.isPresent());
         var data = details.get();
         assertEquals(ADDRESS, data.address);
-        assertSame(SPACE, data.space);
+        assertSame(AREA, data.area);
         assertSame(PRICE, data.price);
     }
 

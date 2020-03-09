@@ -1,6 +1,6 @@
 package com.janiwanow.flatmap.parser.impl.sakhcom;
 
-import com.janiwanow.flatmap.data.Space;
+import com.janiwanow.flatmap.data.Area;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -9,9 +9,9 @@ import org.jsoup.nodes.Document;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class SpaceExtractorSteps {
+public class AreaExtractorSteps {
     private Document document;
-    private Space actualSpace;
+    private Area actualArea;
 
     @Given("the {string} as property area on Sakh.com")
     public void setUpDocument(String area) {
@@ -24,23 +24,23 @@ public class SpaceExtractorSteps {
             .text(area);
     }
 
-    @When("I pass the document to the Sakh.com space extractor")
+    @When("I pass the document to the Sakh.com area extractor")
     public void extractSpace() {
-        actualSpace = SpaceExtractor.extract(document, d -> 4).get();
+        actualArea = AreaExtractor.extract(document, d -> 4).get();
     }
 
     @Then("I must get {double} square meters of the total area from Sakh.com")
     public void ensureTotalAreaIsValid(double expectedTotalArea) {
-        assertEquals(expectedTotalArea, actualSpace.total);
+        assertEquals(expectedTotalArea, actualArea.total);
     }
 
     @And("I must get {double} square meters of the living space from Sakh.com")
     public void ensureLivingSpaceIsValid(double expectedLivingSpace) {
-        assertEquals(expectedLivingSpace, actualSpace.living);
+        assertEquals(expectedLivingSpace, actualArea.living);
     }
 
     @And("I must get {double} square meters of the kitchen area from Sakh.com")
     public void ensureKitchenAreaIsValid(double expectedKitchenArea) {
-        assertEquals(expectedKitchenArea, actualSpace.kitchen);
+        assertEquals(expectedKitchenArea, actualArea.kitchen);
     }
 }

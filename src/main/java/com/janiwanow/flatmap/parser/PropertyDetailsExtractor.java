@@ -1,8 +1,8 @@
 package com.janiwanow.flatmap.parser;
 
+import com.janiwanow.flatmap.data.Area;
 import com.janiwanow.flatmap.data.PropertyDetails;
 import com.janiwanow.flatmap.data.Price;
-import com.janiwanow.flatmap.data.Space;
 import org.jsoup.nodes.Document;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,7 +30,7 @@ import static java.util.stream.Collectors.toSet;
  * <code>
  *     var extractor = new PropertyDetailsExtractor(
  *         AddressExtractor::extract,
- *         SpaceExtractor::extract,
+ *         AreaExtractor::extract,
  *         PriceExtractor::extract
  *     );
  * </code>
@@ -39,16 +39,16 @@ import static java.util.stream.Collectors.toSet;
 public final class PropertyDetailsExtractor {
     private static final Logger LOG = LoggerFactory.getLogger(PropertyDetailsExtractor.class);
     private final Function<Document, String> addressExtractor;
-    private final Function<Document, Optional<Space>> spaceExtractor;
+    private final Function<Document, Optional<Area>> areaExtractor;
     private final Function<Document, Price> priceExtractor;
 
     public PropertyDetailsExtractor(
         Function<Document, String> addressExtractor,
-        Function<Document, Optional<Space>> spaceExtractor,
+        Function<Document, Optional<Area>> areaExtractor,
         Function<Document, Price> priceExtractor
     ) {
         this.addressExtractor = addressExtractor;
-        this.spaceExtractor = spaceExtractor;
+        this.areaExtractor = areaExtractor;
         this.priceExtractor = priceExtractor;
     }
 
@@ -69,19 +69,19 @@ public final class PropertyDetailsExtractor {
         Objects.requireNonNull(document, "Document must not be null.");
 
         try {
-            var space = spaceExtractor.apply(document);
+            var area = areaExtractor.apply(document);
 
             // We don't need property details without
             // the information about their area
-            if (space.isEmpty()) {
-                LOG.info("Could not extract space from {}, skipping...", document.baseUri());
+            if (area.isEmpty()) {
+                LOG.info("Could not extract area from {}, skipping...", document.baseUri());
                 return Optional.empty();
             }
 
             return Optional.of(new PropertyDetails(
                 new URI(document.baseUri()),
                 addressExtractor.apply(document),
-                space.get(),
+                area.get(),
                 priceExtractor.apply(document)
             ));
         } catch (URISyntaxException e) {
