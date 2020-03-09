@@ -28,7 +28,7 @@ public final class SakhcomURLsSteps {
 
     @Then("I must get a set of valid sakh.com URLs")
     public void ensureAllURLsAreValid() throws URISyntaxException {
-        assertEquals(12 * pages, actualURLs.size());
+        assertEquals(9 * pages, actualURLs.size());
         assertTrue(actualURLs.contains(new URI("https://dom.sakh.com/flat/sell/list1")));
         assertTrue(actualURLs.contains(new URI("https://dom.sakh.com/flat/lease/list2?s[period]=посуточно")));
     }
