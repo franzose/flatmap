@@ -41,10 +41,7 @@ public final class EntryPoint {
             JsoupHttpConnection.builder(),
             Set.of(
                 new N1Parser(Set.of(ENV.get("N1_CITIES", "novosibirsk").split(separator))),
-                new SakhcomParser(
-                    JsoupHttpConnection.builder(),
-                    Set.of(ENV.get("SAKHCOM_CITIES", "ys").split(separator))
-                )
+                new SakhcomParser(Set.of(ENV.get("SAKHCOM_CITIES", "ys").split(separator)))
             )
         );
     }

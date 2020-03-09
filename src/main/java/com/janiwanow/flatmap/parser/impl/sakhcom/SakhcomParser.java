@@ -3,7 +3,6 @@ package com.janiwanow.flatmap.parser.impl.sakhcom;
 import com.janiwanow.flatmap.data.PropertyDetails;
 import com.janiwanow.flatmap.http.DocumentFetcher;
 import com.janiwanow.flatmap.http.HttpConnection;
-import com.janiwanow.flatmap.http.HttpConnectionBuilder;
 import com.janiwanow.flatmap.parser.PropertyDetailsExtractor;
 import com.janiwanow.flatmap.parser.PropertyDetailsFetcher;
 import com.janiwanow.flatmap.parser.WebsiteParser;
@@ -20,11 +19,9 @@ import static java.util.stream.Collectors.toSet;
  */
 public final class SakhcomParser implements WebsiteParser {
     private static final Logger LOG = LoggerFactory.getLogger(SakhcomParser.class);
-    private final HttpConnectionBuilder http;
     private final Set<String> cities;
 
-    public SakhcomParser(HttpConnectionBuilder http, Set<String> cities) {
-        this.http = http;
+    public SakhcomParser(Set<String> cities) {
         this.cities = cities;
     }
 
@@ -40,7 +37,12 @@ public final class SakhcomParser implements WebsiteParser {
         Objects.requireNonNull(connection, "HTTP connection must not be null.");
         LOG.info("Starting to fetch apartment information from sakh.com...");
 
-        var fetcher = new SakhcomCityFetcher(new SakhcomURLs().getURLs(pages), http, SakhcomParser::getFetcher);
+        var fetcher = new SakhcomCityFetcher(
+            new SakhcomURLs().getURLs(pages),
+            connection.newBuilder(),
+            SakhcomParser::getFetcher
+        );
+
         var details = cities
             .stream()
             .map(fetcher::fetchFromCity)

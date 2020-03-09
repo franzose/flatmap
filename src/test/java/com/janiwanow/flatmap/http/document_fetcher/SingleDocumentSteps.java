@@ -22,7 +22,7 @@ public class SingleDocumentSteps {
     @Given("I scheduled a request to {string}")
     public void setUpFetcher(String url) throws URISyntaxException {
         original = new Document(url);
-        future = new DocumentFetcher(connectionUrl -> Optional.of(original))
+        future = new DocumentFetcher(new FakeHttpConnection(u -> Optional.of(original)))
             .fetchAsync(new URI(url));
     }
 

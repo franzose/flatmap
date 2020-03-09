@@ -8,7 +8,6 @@ import java.util.Optional;
 /**
  * Common interface for connections aimed at fetching HTML documents by the given URLs.
  */
-@FunctionalInterface
 public interface HttpConnection {
     /**
      * Tries to fetch an HTML document from the given URL.
@@ -22,4 +21,11 @@ public interface HttpConnection {
      *         empty optional in case of connection errors
      */
     Optional<Document> fetch(URI url);
+
+    /**
+     * Creates a new HTTP connection builder providing the current connection options to it.
+     *
+     * @return a new builder inheriting the current connection options
+     */
+    HttpConnectionBuilder newBuilder();
 }

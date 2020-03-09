@@ -30,7 +30,8 @@ public class MultipleDocumentsSteps {
             .peek(url -> map.put(url, new Document(url.toString())))
             .collect(toSet());
 
-        future = new DocumentFetcher(url -> Optional.of(map.get(url))).fetchAsync(urls);
+        var conn = new FakeHttpConnection(url -> Optional.of(map.get(url)));
+        future = new DocumentFetcher(conn).fetchAsync(urls);
     }
 
     @Given("There are {int} URLs not responding")
@@ -48,7 +49,8 @@ public class MultipleDocumentsSteps {
             map.put(url, idx < failures ? null : new Document(url.toString()));
         }
 
-        future = new DocumentFetcher(url -> Optional.ofNullable(map.get(url))).fetchAsync(urls);
+        var conn = new FakeHttpConnection(url -> Optional.ofNullable(map.get(url)));
+        future = new DocumentFetcher(conn).fetchAsync(urls);
     }
 
     private static URI toURI(String url) {

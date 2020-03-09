@@ -25,3 +25,10 @@ Feature: Fetching HTML documents using Jsoup HTTP connection
     Given I requested "/error" using JsoupHttpConnection
     When the connection ends up with an error
     Then I should not get any document
+
+  Scenario: New connection builder
+    Given I set the following options for JsoupHttpConnection
+      | retries | timeout | cookies |
+      | 5       | 10000   | foo=bar |
+    When I create a new HTTP connection builder
+    Then it must inherit those HTTP connection options

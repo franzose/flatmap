@@ -60,6 +60,16 @@ public final class JsoupHttpConnection implements HttpConnection {
 
             return result;
         }
+
+        @Override
+        public String toString() {
+            return String.format(
+                "{retries:%d, timeout:%d, cookies:%s}",
+                connection.retries,
+                connection.timeout,
+                connection.cookies
+            );
+        }
     }
 
     public static Builder builder() {
@@ -116,5 +126,13 @@ public final class JsoupHttpConnection implements HttpConnection {
         } while (attempts <= retries);
 
         return Optional.ofNullable(document);
+    }
+
+    @Override
+    public HttpConnectionBuilder newBuilder() {
+        return builder()
+            .timeout(this.timeout)
+            .retries(this.retries)
+            .cookies(this.cookies);
     }
 }
