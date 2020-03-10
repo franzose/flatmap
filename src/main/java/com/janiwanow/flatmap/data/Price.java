@@ -31,4 +31,18 @@ public final class Price {
     public static Price inEuros(double value) {
         return new Price(Currency.getInstance("EUR"), value);
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Price price = (Price) o;
+        return Double.compare(price.amount, amount) == 0 &&
+            currency.equals(price.currency);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(amount, currency);
+    }
 }

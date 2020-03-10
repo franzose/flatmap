@@ -1,5 +1,7 @@
 package com.janiwanow.flatmap.data;
 
+import java.util.Objects;
+
 /**
  * Data class representing property area details including number of rooms.
  */
@@ -23,5 +25,21 @@ public final class Area {
         this.living = Math.max(0.0, living);
         this.kitchen = Math.max(0.0, kitchen);
         this.rooms = Math.max(1, rooms);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Area area = (Area) o;
+        return Double.compare(area.total, total) == 0 &&
+            Double.compare(area.living, living) == 0 &&
+            Double.compare(area.kitchen, kitchen) == 0 &&
+            rooms == area.rooms;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(total, living, kitchen, rooms);
     }
 }

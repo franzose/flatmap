@@ -29,4 +29,20 @@ public final class PropertyDetails {
         this.price = price;
         this.area = area;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        PropertyDetails that = (PropertyDetails) o;
+        return url.equals(that.url) &&
+            address.equals(that.address) &&
+            area.equals(that.area) &&
+            price.equals(that.price);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(url, address, area, price);
+    }
 }
