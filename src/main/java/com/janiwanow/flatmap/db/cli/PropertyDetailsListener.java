@@ -49,16 +49,25 @@ public class PropertyDetailsListener {
      * @param itemsNumber to generate a valid number of placeholders
      * @return an INSERT query
      */
-    private String buildInsertQuery(int itemsNumber) {
-        var queryBuilder = new StringBuilder();
-        queryBuilder
+    private static String buildInsertQuery(int itemsNumber) {
+        var queryBuilder = new StringBuilder()
             .append("INSERT INTO property (")
-            .append("id, offer_url, address, total_area, living_space, kitchen_area, rooms, price_amount, price_currency")
-            .append(") VALUES");
+            .append("id, offer_url, address, ")
+            .append("total_area, living_space, kitchen_area, rooms, ")
+            .append("price_amount, price_currency, last_checked_at")
+            .append(") VALUES ")
+            .append("(?, ?, ?, ?, ?, ?, ?, ?, ?, NOW()::timestamp),".repeat(itemsNumber));
 
-        queryBuilder.append("(?, ?, ?, ?, ?, ?, ?, ?, ?),".repeat(itemsNumber));
+        queryBuilder
+            .deleteCharAt(queryBuilder.length() - 1)
+            // By default, parsers do not differentiate new properties from
+            // the already visited ones, so we just ignore duplicates
+            // which may get in this listener because it is simpler
+            // to check data freshness/obsolescence in a separate
+            // command  rather than to make a workaround here
+            .append(" ON CONFLICT DO NOTHING");
 
-        return queryBuilder.deleteCharAt(queryBuilder.length() - 1).toString();
+        return queryBuilder.toString();
     }
 
     /**
