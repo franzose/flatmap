@@ -20,10 +20,10 @@ public interface WebsiteParser {
      * Utilizes the given HTTP connection to retrieve information about the properties.
      *
      * @param connection an HTTP connection to use for parsing
-     * @param pages number of pages to go through
+     * @param options parser options
      * @return a set of property details
      */
-    Set<PropertyDetails> parse(HttpConnection connection, int pages);
+    Set<PropertyDetails> parse(HttpConnection connection, ParserOptions options);
 
     /**
      * Checks whether this parser is able to parse the website with given ID.

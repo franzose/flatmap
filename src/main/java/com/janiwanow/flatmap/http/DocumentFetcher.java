@@ -5,8 +5,10 @@ import org.jsoup.nodes.Document;
 import java.net.URI;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.Random;
 import java.util.Set;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.TimeUnit;
 
 import static java.util.stream.Collectors.toSet;
 
@@ -18,11 +20,14 @@ import static java.util.stream.Collectors.toSet;
  */
 public final class DocumentFetcher {
     private final HttpConnection connection;
+    private final Delay delay;
 
-    public DocumentFetcher(HttpConnection connection) {
+    public DocumentFetcher(HttpConnection connection, Delay delay) {
         Objects.requireNonNull(connection, "HttpConnection must not be null.");
+        Objects.requireNonNull(delay, "Delay must not be null.");
 
         this.connection = connection;
+        this.delay = delay;
     }
 
     /**
@@ -34,7 +39,12 @@ public final class DocumentFetcher {
     public CompletableFuture<Optional<Document>> fetchAsync(URI url) {
         Objects.requireNonNull(url, "URL must not be null.");
 
-        return CompletableFuture.supplyAsync(() -> connection.fetch(url));
+        var executor = CompletableFuture.delayedExecutor(
+            Math.min(delay.max, delay.min + new Random().nextInt(delay.max)),
+            TimeUnit.MILLISECONDS
+        );
+
+        return CompletableFuture.supplyAsync(() -> connection.fetch(url), executor);
     }
 
     /**

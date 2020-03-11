@@ -1,8 +1,12 @@
 package com.janiwanow.flatmap.parser.impl.sakhcom;
 
 import com.janiwanow.flatmap.data.PropertyDetails;
+import com.janiwanow.flatmap.http.Delay;
+import com.janiwanow.flatmap.http.DocumentFetcher;
 import com.janiwanow.flatmap.http.HttpConnection;
 import com.janiwanow.flatmap.http.HttpConnectionBuilder;
+import com.janiwanow.flatmap.parser.ParserOptions;
+import com.janiwanow.flatmap.parser.PropertyDetailsExtractor;
 import com.janiwanow.flatmap.parser.PropertyDetailsFetcher;
 
 import java.net.URI;
@@ -19,29 +23,23 @@ import java.util.function.Function;
  * to switch to another city on sakh.com. This website detects the chosen city
  * by the session cookie thus we need to send it along with the request.
  */
-public final class SakhcomCityFetcher {
+final class SakhcomCityFetcher {
     private final HttpConnectionBuilder http;
     private final Set<URI> urls;
-    private final Function<HttpConnection, PropertyDetailsFetcher> function;
+    private final Delay delay;
 
     /**
      * @param urls this fetcher should process
      * @param http connection builder needed to setup a new {@link HttpConnection}
-     * @param function which takes a new HTTP connection built
-     *                 by the given builder and returns a new {@link PropertyDetailsFetcher}
-     *                 ready to fetch all the given urls
+     * @param delay a range of the delay between HTTP requests
      */
-    public SakhcomCityFetcher(
-        Set<URI> urls,
-        HttpConnectionBuilder http,
-        Function<HttpConnection, PropertyDetailsFetcher> function
-    ) {
+    SakhcomCityFetcher(Set<URI> urls, HttpConnectionBuilder http, Delay delay) {
         Objects.requireNonNull(urls, "URLs must not be null.");
         Objects.requireNonNull(http, "HttpConnectionBuilder must not be null.");
-        Objects.requireNonNull(function, "Fetcher function must not be null.");
+        Objects.requireNonNull(delay, "Delay must not be null.");
         this.urls = urls;
         this.http = http;
-        this.function = function;
+        this.delay = delay;
     }
 
     /**
@@ -52,6 +50,24 @@ public final class SakhcomCityFetcher {
      */
     public CompletableFuture<Set<PropertyDetails>> fetchFromCity(String city) {
         var conn = http.cookies(Map.of("city", city)).build();
-        return CompletableFuture.supplyAsync(() -> function.apply(conn).fetchAll(urls));
+        return CompletableFuture.supplyAsync(() -> getFetcher(conn).fetchAll(urls));
+    }
+
+    /**
+     * Builds a fetcher from the common and the custom components.
+     *
+     * @param connection an http connection instance
+     * @return fetcher which will do the job
+     */
+    private PropertyDetailsFetcher getFetcher(HttpConnection connection) {
+        return new PropertyDetailsFetcher(
+            new DocumentFetcher(connection, delay),
+            new PropertyDetailsExtractor(
+                AddressExtractor::extract,
+                AreaExtractor::extract,
+                PriceExtractor::extract
+            ),
+            ".offers > .item > .content > a"
+        );
     }
 }

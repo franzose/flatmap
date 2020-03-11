@@ -1,5 +1,6 @@
 package com.janiwanow.flatmap.http.document_fetcher;
 
+import com.janiwanow.flatmap.http.Delay;
 import com.janiwanow.flatmap.http.DocumentFetcher;
 import io.cucumber.datatable.DataTable;
 import io.cucumber.java.en.Given;
@@ -31,7 +32,7 @@ public class MultipleDocumentsSteps {
             .collect(toSet());
 
         var conn = new FakeHttpConnection(url -> Optional.of(map.get(url)));
-        future = new DocumentFetcher(conn).fetchAsync(urls);
+        future = new DocumentFetcher(conn, new Delay(1, 1)).fetchAsync(urls);
     }
 
     @Given("There are {int} URLs not responding")
@@ -50,7 +51,7 @@ public class MultipleDocumentsSteps {
         }
 
         var conn = new FakeHttpConnection(url -> Optional.ofNullable(map.get(url)));
-        future = new DocumentFetcher(conn).fetchAsync(urls);
+        future = new DocumentFetcher(conn, new Delay(1, 1)).fetchAsync(urls);
     }
 
     private static URI toURI(String url) {

@@ -3,6 +3,7 @@ package com.janiwanow.flatmap.parser.impl.n1;
 import com.janiwanow.flatmap.data.PropertyDetails;
 import com.janiwanow.flatmap.http.DocumentFetcher;
 import com.janiwanow.flatmap.http.HttpConnection;
+import com.janiwanow.flatmap.parser.ParserOptions;
 import com.janiwanow.flatmap.parser.PropertyDetailsExtractor;
 import com.janiwanow.flatmap.parser.PropertyDetailsFetcher;
 import com.janiwanow.flatmap.parser.WebsiteParser;
@@ -28,31 +29,16 @@ public final class N1Parser implements WebsiteParser {
      * Retrieves HTML from a bunch of URLs and parses it to a set of property details.
      *
      * @param connection an HTTP connection to use for parsing
-     * @param pages number of pages to go through
+     * @param options parser options
      * @return a set of property details
      */
     @Override
-    public Set<PropertyDetails> parse(HttpConnection connection, int pages) {
+    public Set<PropertyDetails> parse(HttpConnection connection, ParserOptions options) {
         Objects.requireNonNull(connection, "HTTP connection must not be null.");
         LOG.info("Starting to fetch properties from N1...");
 
-        var urls = new N1URLs(cities).getURLs(pages);
-        var details = getFetcher(connection).fetchAll(urls);
-
-        LOG.info("Finished fetching properties.");
-
-        return details;
-    }
-
-    /**
-     * Builds a fetcher from the common and the custom components.
-     *
-     * @param connection an http connection instance
-     * @return fetcher which will do the job
-     */
-    private PropertyDetailsFetcher getFetcher(HttpConnection connection) {
-        return new PropertyDetailsFetcher(
-            new DocumentFetcher(connection),
+        var fetcher = new PropertyDetailsFetcher(
+            new DocumentFetcher(connection, options.delay),
             new PropertyDetailsExtractor(
                 AddressExtractor::extract,
                 AreaExtractor::extract,
@@ -60,6 +46,13 @@ public final class N1Parser implements WebsiteParser {
             ),
             ".offers-search .card-title > a"
         );
+
+        var urls = new N1URLs(cities).getURLs(options.pages);
+        var details = fetcher.fetchAll(urls);
+
+        LOG.info("Finished fetching properties.");
+
+        return details;
     }
 
     @Override

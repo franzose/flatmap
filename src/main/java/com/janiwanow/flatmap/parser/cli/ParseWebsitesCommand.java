@@ -5,7 +5,9 @@ import com.beust.jcommander.Parameters;
 import com.janiwanow.flatmap.cli.Command;
 import com.janiwanow.flatmap.data.PropertyDetails;
 import com.janiwanow.flatmap.event.EventDispatcher;
+import com.janiwanow.flatmap.http.Delay;
 import com.janiwanow.flatmap.http.HttpConnectionBuilder;
+import com.janiwanow.flatmap.parser.ParserOptions;
 import com.janiwanow.flatmap.parser.WebsiteParser;
 
 import java.util.Set;
@@ -38,6 +40,12 @@ public final class ParseWebsitesCommand implements Command {
     @Parameter(names = {"--pages"})
     private int pages = Integer.parseInt(ENV.get("PAGES", "20"));
 
+    @Parameter(names = "--delay-min")
+    private int minDelay = Integer.parseInt(ENV.get("DELAY_MIN", String.valueOf(Delay.MIN_DEFAULT)));
+
+    @Parameter(names = "--delay-max")
+    private int maxDelay = Integer.parseInt(ENV.get("DELAY_MAX", String.valueOf(Delay.MAX_DEFAULT)));
+
     public ParseWebsitesCommand(
         EventDispatcher dispatcher,
         HttpConnectionBuilder http,
@@ -62,11 +70,12 @@ public final class ParseWebsitesCommand implements Command {
     @Override
     public void execute() {
         var conn = http.retries(retries).timeout(timeout).build();
+        var options = new ParserOptions(new Delay(minDelay, maxDelay), pages);
 
         parsers
             .stream()
             .filter(this::filterByWebsiteId)
-            .map(parser -> parser.parse(conn, pages))
+            .map(parser -> parser.parse(conn, options))
             .forEach(this::dispatchEvent);
     }
 

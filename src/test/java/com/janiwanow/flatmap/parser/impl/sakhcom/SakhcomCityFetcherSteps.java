@@ -3,16 +3,19 @@ package com.janiwanow.flatmap.parser.impl.sakhcom;
 import com.janiwanow.flatmap.data.Price;
 import com.janiwanow.flatmap.data.PropertyDetails;
 import com.janiwanow.flatmap.data.Area;
+import com.janiwanow.flatmap.http.Delay;
 import com.janiwanow.flatmap.http.DocumentFetcher;
 import com.janiwanow.flatmap.http.JsoupHttpConnection;
 import com.janiwanow.flatmap.parser.PropertyDetailsExtractor;
 import com.janiwanow.flatmap.parser.PropertyDetailsFetcher;
 import com.janiwanow.flatmap.util.Numbers;
+import com.janiwanow.flatmap.util.ResourceFile;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.jsoup.nodes.Document;
 
+import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Optional;
@@ -29,7 +32,7 @@ public class SakhcomCityFetcherSteps {
     private Set<PropertyDetails> propertyDetails;
 
     @Given("I want to get property details from {string}")
-    public void setUp(String city) throws URISyntaxException {
+    public void setUp(String city) throws URISyntaxException, IOException {
         this.city = city;
         this.url = toAbsoluteURL(PATH);
 
@@ -42,7 +45,12 @@ public class SakhcomCityFetcherSteps {
         var offers = document.appendElement("div").addClass("offers");
 
         for (var idx = 1; idx <= 4; idx++) {
-            offers.appendElement("a").attr("href", "/offer" + idx);
+            offers.appendElement("div")
+                .addClass("item")
+                .appendElement("div")
+                .addClass("content")
+                .appendElement("a")
+                .attr("href", "/offer" + idx);
         }
 
         stubFor(get(PATH)
@@ -54,26 +62,15 @@ public class SakhcomCityFetcherSteps {
         );
     }
 
-    private void prepareOfferPages() {
-        for (var idx = 1; idx <= 4; idx++) {
-            var path = "/offer" + idx;
-            var document = new Document(path);
-            // we don't need to repeat the original document structure
-            // since the purpose of the test is to check
-            // whether "city" cookie is applied properly
-            var offer = document.appendElement("div").attr("id", "offer");
-            offer.appendElement("div").addClass("address").text("Корсаков, ул. Советская, 26");
-            offer.appendElement("div").addClass("total-area").text("30");
-            offer.appendElement("div").addClass("living-space").text("20");
-            offer.appendElement("div").addClass("kitchen-area").text("10");
-            offer.appendElement("div").addClass("rooms").text("1");
-            offer.appendElement("div").addClass("price").text("1 000 000 руб.");
+    private void prepareOfferPages() throws IOException {
+        var content = ResourceFile.readToString("files/parser/impl/sakhcom/offer.html");
 
-            stubFor(get(path)
+        for (var idx = 1; idx <= 4; idx++) {
+            stubFor(get("/offer" + idx)
                 .withCookie("city", matching(city))
                 .willReturn(aResponse()
                     .withHeader("Content-Type", "text/html")
-                    .withBody(document.html())
+                    .withBody(content)
                 )
             );
         }
@@ -84,23 +81,7 @@ public class SakhcomCityFetcherSteps {
         var fetcher = new SakhcomCityFetcher(
             Set.of(url),
             JsoupHttpConnection.builder(),
-            connection -> new PropertyDetailsFetcher(
-                new DocumentFetcher(connection),
-                // we don't need to repeat the original document structure
-                // since the purpose of the test is to check
-                // whether "city" cookie is applied properly
-                new PropertyDetailsExtractor(
-                    document -> document.selectFirst("#offer .address").text(),
-                    document -> Optional.of(new Area(
-                        Numbers.parseDouble(document.selectFirst("#offer .total-area").text()),
-                        Numbers.parseDouble(document.selectFirst("#offer .living-space").text()),
-                        Numbers.parseDouble(document.selectFirst("#offer .kitchen-area").text()),
-                        Numbers.parseInt(document.selectFirst("#offer .rooms").text())
-                    )),
-                    document -> Price.inRubles(Numbers.parseDouble(document.selectFirst("#offer .price").text()))
-                ),
-                ".offers > a"
-            )
+            new Delay(1, 1)
         );
 
         propertyDetails = fetcher.fetchFromCity(city).join();
