@@ -42,3 +42,18 @@ configurations {
 test {
     useJUnitPlatform()
 }
+
+project.configurations.implementation.setCanBeResolved(true)
+
+jar {
+    manifest {
+        attributes(
+            'Main-Class': application.mainClassName,
+            'Class-Path': configurations.implementation.collect { it.absolutePath }.join(' '),
+            'Implementation-Title': project.name,
+            'Implementation-Version': archiveVersion
+        )
+    }
+
+    dependsOn 'dependencies'
+}
