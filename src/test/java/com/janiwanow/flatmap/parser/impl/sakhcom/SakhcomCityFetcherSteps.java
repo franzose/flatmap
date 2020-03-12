@@ -63,7 +63,7 @@ public class SakhcomCityFetcherSteps {
     }
 
     private void prepareOfferPages() throws IOException {
-        var content = ResourceFile.readToString("files/parser/impl/sakhcom/offer.html");
+        var content = ResourceFile.readToString(SakhcomCityFetcherSteps.class, "offer.html");
 
         for (var idx = 1; idx <= 4; idx++) {
             stubFor(get("/offer" + idx)

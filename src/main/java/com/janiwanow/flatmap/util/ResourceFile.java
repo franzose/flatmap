@@ -18,26 +18,26 @@ public final class ResourceFile {
     /**
      * Reads entire file at given path to {@link String}.
      *
+     * @param cls class for which to search a resource file
      * @param path relative path to a resource file
      * @return file contents
      * @throws FileNotFoundException if case the file at given path does not exist
      * @throws IOException if case of read errors
      */
-    public static String readToString(String path) throws IOException {
+    public static String readToString(Class<?> cls, String path) throws IOException {
         Objects.requireNonNull(path, "Resource file path must not be null.");
 
         LOG.info("Try reading a resource file at path \"{}\"...", path);
 
-        var resource = ResourceFile.class.getClassLoader().getResource(path);
+        var bytes = cls.getResourceAsStream(path).readAllBytes();
 
-        if (resource == null) {
+        if (bytes == null) {
             throw new FileNotFoundException(String.format(
                 "Resource file at path \"%s\" was not found.", path
             ));
         }
 
-        var file = new File(resource.getFile());
-        var contents = new String(Files.readAllBytes(file.toPath()));
+        var contents = new String(bytes);
 
         LOG.info("Resource file contents has been read.");
 

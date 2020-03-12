@@ -21,7 +21,7 @@ public class PurgeDatabaseCommand implements Command {
 
     static {
         try {
-            DROP_TABLES_QUERY = ResourceFile.readToString("drop_tables.sql");
+            DROP_TABLES_QUERY = ResourceFile.readToString(PurgeDatabaseCommand.class, "drop_tables.sql");
         } catch (IOException e) {
             throw new IllegalStateException("Could not read SQL query from file", e);
         }

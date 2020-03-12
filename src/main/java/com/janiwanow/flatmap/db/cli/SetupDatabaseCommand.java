@@ -21,7 +21,10 @@ public final class SetupDatabaseCommand implements Command {
 
     static {
         try {
-            CHECK_TABLES_QUERY = ResourceFile.readToString("check_required_tables.sql");
+            CHECK_TABLES_QUERY = ResourceFile.readToString(
+                SetupDatabaseCommand.class,
+                "check_required_tables.sql"
+            );
         } catch (IOException e) {
             throw new IllegalStateException("Could not read SQL query from file.", e);
         }
@@ -85,7 +88,10 @@ public final class SetupDatabaseCommand implements Command {
     private void createTables() throws SQLException, IOException {
         LOG.info("Start creating database tables...");
 
-        var queries = ResourceFile.readToString("setup_required_tables.sql").split(";");
+        var queries = ResourceFile.readToString(
+            SetupDatabaseCommand.class,
+            "setup_required_tables.sql"
+        ).split(";");
 
         try (var conn = factory.getConnection()) {
             for (var query : queries) {

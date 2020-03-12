@@ -18,7 +18,7 @@ public final class TruncateTablesCommand implements Command {
 
     static {
         try {
-            TRUNCATE_TABLES_QUERY = ResourceFile.readToString("truncate_tables.sql");
+            TRUNCATE_TABLES_QUERY = ResourceFile.readToString(TruncateTablesCommand.class, "truncate_tables.sql");
         } catch (IOException e) {
             throw new IllegalStateException("Could not read SQL query from file", e);
         }
