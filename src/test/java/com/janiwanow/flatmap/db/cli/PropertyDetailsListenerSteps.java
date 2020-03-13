@@ -15,7 +15,6 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.sql.SQLException;
 import java.util.Currency;
-import java.util.Objects;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
@@ -47,7 +46,7 @@ public final class PropertyDetailsListenerSteps {
         );
     }
 
-    @Given("I have already put the property details obtained from {string}")
+    @Given("database already contains property details from {string}")
     public void setUpPropertyDetails(String url) throws SQLException, URISyntaxException {
         this.url = url;
         insertFromURL(url);
@@ -117,20 +116,16 @@ public final class PropertyDetailsListenerSteps {
         assertEquals(expectedDetails, actualDetails);
     }
 
-    @Then("the database must ignore these property details")
-    public void ensurePropertyDetailsAreIgnored() throws SQLException {
-        var sql = "SELECT COUNT(*) FROM property";
-
+    @Then("^the database must still contain (\\d+) property details record(?:s)?$")
+    public void ensurePropertyDetailsAreIgnored(int records) throws SQLException {
         try (
             var conn = DATABASE.getConnection();
-            var stmt = conn.prepareStatement(sql);
+            var stmt = conn.prepareStatement("SELECT COUNT(*) FROM property");
             var result = stmt.executeQuery()
         ) {
-            if (!result.next()) {
-                fail("No results found in the property table.");
-            }
+            result.next();
 
-            assertEquals(1, result.getInt(1));
+            assertEquals(records, result.getInt(1));
         }
     }
 }

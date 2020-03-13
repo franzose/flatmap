@@ -32,7 +32,6 @@ public class PropertyDetailsListener {
     public void save(PropertyDetailsParsed event) throws SQLException {
         LOG.info("Start insertion of property details into the database...");
 
-        // TODO: exception handling
         try (
             var conn = factory.getConnection();
             var stmt = conn.prepareStatement(buildInsertQuery(event.items.length))
@@ -40,6 +39,11 @@ public class PropertyDetailsListener {
             prepareInsertStatement(stmt, event.items);
 
             LOG.info("{} properties have been inserted.", stmt.executeUpdate());
+        } catch (SQLException e) {
+            // 23514 is a check constraint failure
+            if (!e.getSQLState().equals("23514")) {
+                throw e;
+            }
         }
     }
 
