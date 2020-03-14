@@ -40,7 +40,7 @@ public final class ParseWebsitesCommand implements Command {
     @Parameter(names = "--timeout", description = "HTTP connection timeout")
     private int timeout = Integer.parseInt(ENV.get("HTTP_CONNECTION_TIMEOUT", "5000"));
 
-    @Parameter(names = {"--pages"}, description = "Number of pages of the offer lists to traverse")
+    @Parameter(names = "--pages", description = "Number of pages of the offer lists to traverse")
     private int pages = Integer.parseInt(ENV.get("PAGES", "20"));
 
     @Parameter(names = "--delay-min", description = "Minimum delay between HTTP connections")
