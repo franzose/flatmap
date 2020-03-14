@@ -47,7 +47,7 @@ public final class N1Parser implements WebsiteParser {
             ".offers-search .card-title > a"
         );
 
-        var urls = new N1URLs(cities).getURLs(options.pages);
+        var urls = new N1URLs(cities).getURLs(options.pagination);
         var details = fetcher.fetchAll(urls);
 
         LOG.info("Finished fetching properties.");

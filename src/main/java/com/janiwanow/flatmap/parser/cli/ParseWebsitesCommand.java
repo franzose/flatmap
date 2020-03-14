@@ -7,6 +7,7 @@ import com.janiwanow.flatmap.data.PropertyDetails;
 import com.janiwanow.flatmap.event.EventDispatcher;
 import com.janiwanow.flatmap.http.Delay;
 import com.janiwanow.flatmap.http.HttpConnectionBuilder;
+import com.janiwanow.flatmap.parser.Pagination;
 import com.janiwanow.flatmap.parser.ParserOptions;
 import com.janiwanow.flatmap.parser.WebsiteParser;
 
@@ -43,6 +44,9 @@ public final class ParseWebsitesCommand implements Command {
     @Parameter(names = "--pages", description = "Number of the offer list pages to traverse")
     private int pages = Integer.parseInt(ENV.get("PAGES", "20"));
 
+    @Parameter(names = "--start-from", description = "Initial page number to start parsing from")
+    private int startFrom = Integer.parseInt(ENV.get("START_FROM", "1"));
+
     @Parameter(names = "--delay-min", description = "Minimum delay between HTTP connections")
     private int minDelay = Integer.parseInt(ENV.get("DELAY_MIN", String.valueOf(Delay.MIN_DEFAULT)));
 
@@ -73,7 +77,10 @@ public final class ParseWebsitesCommand implements Command {
     @Override
     public void execute() {
         var conn = http.retries(retries).timeout(timeout).build();
-        var options = new ParserOptions(new Delay(minDelay, maxDelay), pages);
+        var options = new ParserOptions(
+            new Delay(minDelay, maxDelay),
+            new Pagination(startFrom, pages)
+        );
 
         parsers
             .stream()

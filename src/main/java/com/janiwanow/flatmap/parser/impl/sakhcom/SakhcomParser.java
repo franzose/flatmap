@@ -36,7 +36,7 @@ public final class SakhcomParser implements WebsiteParser {
         LOG.info("Starting to fetch apartment information from sakh.com...");
 
         var fetcher = new SakhcomCityFetcher(
-            new SakhcomURLs().getURLs(options.pages),
+            new SakhcomURLs().getURLs(options.pagination),
             connection.newBuilder(),
             options.delay
         );

@@ -9,11 +9,12 @@ import java.util.Objects;
  */
 public final class ParserOptions {
     public final Delay delay;
-    public final int pages;
+    public final Pagination pagination;
 
-    public ParserOptions(Delay delay, int pages) {
+    public ParserOptions(Delay delay, Pagination pagination) {
         Objects.requireNonNull(delay, "Delay must not be null.");
+        Objects.requireNonNull(pagination, "Pagination must not be null.");
         this.delay = delay;
-        this.pages = Math.max(1, pages);
+        this.pagination = pagination;
     }
 }

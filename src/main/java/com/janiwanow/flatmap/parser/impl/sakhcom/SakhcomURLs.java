@@ -1,5 +1,7 @@
 package com.janiwanow.flatmap.parser.impl.sakhcom;
 
+import com.janiwanow.flatmap.parser.Pagination;
+
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.HashSet;
@@ -40,14 +42,12 @@ public final class SakhcomURLs {
         "house" // houses, villas, cottages
     );
 
-    public Set<URI> getURLs(int pages) {
-        pages = Math.max(1, pages);
-
+    public Set<URI> getURLs(Pagination pagination) {
         Set<URI> urls = new HashSet<>();
 
         for (var property : PROPERTY_TYPES) {
             for (var offer : OFFER_TYPES) {
-                for (var page = 1; page <= pages; page++) {
+                for (var page = pagination.startFrom; page <= pagination.end; page++) {
                     try {
                         var path = String.format(PATTERN, property, offer, page);
 

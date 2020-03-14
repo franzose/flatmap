@@ -1,5 +1,7 @@
 package com.janiwanow.flatmap.parser.impl.n1;
 
+import com.janiwanow.flatmap.parser.Pagination;
+
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.HashSet;
@@ -52,18 +54,16 @@ public final class N1URLs {
     /**
      * Builds a bunch of N1 URLs.
      *
-     * @param pages number of pages for the parser to go through
+     * @param pagination pagination options
      * @return a set of valid N1 URLs ready to be parsed
      */
-    public Set<URI> getURLs(int pages) {
-        pages = Math.max(1, pages);
-
+    public Set<URI> getURLs(Pagination pagination) {
         Set<URI> urls = new HashSet<>();
 
         for (var city : cities) {
             for (var offer : OFFER_TYPES) {
                 for (var property : PROPERTY_TYPES) {
-                    for (var page = 1; page <= pages; page++) {
+                    for (var page = pagination.startFrom; page <= pagination.end; page++) {
                         try {
                             urls.add(new URI(String.format(PATTERN, city, offer, property, page)));
                         } catch (URISyntaxException e) {
