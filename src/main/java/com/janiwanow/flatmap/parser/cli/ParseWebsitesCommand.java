@@ -28,22 +28,25 @@ public final class ParseWebsitesCommand implements Command {
      *
      * @see WebsiteParser#supports(String)
      */
-    @Parameter()
+    @Parameter(description = "ID of the website to parse. Study the com.janiwanow.flatmap.parser.WebsiteParser interface for more information")
     private String websiteId = "";
 
-    @Parameter(names = {"--attempts", "--retries"})
+    @Parameter(
+        names = {"--attempts", "--retries"},
+        description = "How many times parser should try to reconnect in case of a failure"
+    )
     private int retries = Integer.parseInt(ENV.get("HTTP_CONNECTION_RETRIES", "3"));
 
-    @Parameter(names = "--timeout")
+    @Parameter(names = "--timeout", description = "HTTP connection timeout")
     private int timeout = Integer.parseInt(ENV.get("HTTP_CONNECTION_TIMEOUT", "5000"));
 
-    @Parameter(names = {"--pages"})
+    @Parameter(names = {"--pages"}, description = "Number of pages of the offer lists to traverse")
     private int pages = Integer.parseInt(ENV.get("PAGES", "20"));
 
-    @Parameter(names = "--delay-min")
+    @Parameter(names = "--delay-min", description = "Minimum delay between HTTP connections")
     private int minDelay = Integer.parseInt(ENV.get("DELAY_MIN", String.valueOf(Delay.MIN_DEFAULT)));
 
-    @Parameter(names = "--delay-max")
+    @Parameter(names = "--delay-max", description = "Maximum delay between HTTP connections")
     private int maxDelay = Integer.parseInt(ENV.get("DELAY_MAX", String.valueOf(Delay.MAX_DEFAULT)));
 
     public ParseWebsitesCommand(
