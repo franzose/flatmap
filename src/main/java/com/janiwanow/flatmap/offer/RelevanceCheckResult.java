@@ -1,7 +1,6 @@
 package com.janiwanow.flatmap.offer;
 
 import java.net.URI;
-import java.time.LocalDateTime;
 import java.util.Objects;
 
 /**
@@ -9,23 +8,21 @@ import java.util.Objects;
  */
 public final class RelevanceCheckResult {
     public final URI url;
-    public final LocalDateTime checkedAt;
     public final boolean isRelevant;
     public final boolean isObsolete;
 
     public static RelevanceCheckResult relevant(URI url) {
         Objects.requireNonNull(url, "URI must not be null.");
-        return new RelevanceCheckResult(url, LocalDateTime.now(), true);
+        return new RelevanceCheckResult(url, true);
     }
 
     public static RelevanceCheckResult obsolete(URI url) {
         Objects.requireNonNull(url, "URI must not be null.");
-        return new RelevanceCheckResult(url, LocalDateTime.now(), false);
+        return new RelevanceCheckResult(url, false);
     }
 
-    private RelevanceCheckResult(URI url, LocalDateTime checkedAt, boolean isRelevant) {
+    private RelevanceCheckResult(URI url, boolean isRelevant) {
         this.url = url;
-        this.checkedAt = checkedAt;
         this.isRelevant = isRelevant;
         this.isObsolete = !isRelevant;
     }
