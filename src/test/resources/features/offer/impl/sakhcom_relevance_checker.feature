@@ -1,4 +1,7 @@
 Feature: Sakh.com offer relevance checker
+  In order to hide obsolete property offers from the map
+  As a Developer
+  I should be able to check their relevance
 
   Scenario: Relevant property offer
     Given I got an active Sakh.com property offer
