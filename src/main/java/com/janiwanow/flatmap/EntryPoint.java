@@ -2,6 +2,7 @@ package com.janiwanow.flatmap;
 
 import com.janiwanow.flatmap.cli.Application;
 import com.janiwanow.flatmap.cli.CommandNotFoundException;
+import com.janiwanow.flatmap.db.ConnectionFactory;
 import com.janiwanow.flatmap.db.HikariConnectionFactory;
 import com.janiwanow.flatmap.db.cli.PropertyDetailsListener;
 import com.janiwanow.flatmap.db.cli.PurgeDatabaseCommand;
@@ -9,6 +10,11 @@ import com.janiwanow.flatmap.db.cli.SetupDatabaseCommand;
 import com.janiwanow.flatmap.event.EventDispatcher;
 import com.janiwanow.flatmap.event.GreenRobotEventDispatcher;
 import com.janiwanow.flatmap.http.JsoupHttpConnection;
+import com.janiwanow.flatmap.offer.cli.CheckRelevanceCommand;
+import com.janiwanow.flatmap.offer.db.FetchURLsByChunks;
+import com.janiwanow.flatmap.offer.db.MarkObsolete;
+import com.janiwanow.flatmap.offer.impl.N1RelevanceChecker;
+import com.janiwanow.flatmap.offer.impl.SakhcomRelevanceChecker;
 import com.janiwanow.flatmap.parser.cli.ParseWebsitesCommand;
 import com.janiwanow.flatmap.parser.impl.n1.N1Parser;
 import com.janiwanow.flatmap.parser.impl.sakhcom.SakhcomParser;
@@ -27,7 +33,8 @@ public final class EntryPoint {
         var app = new Application(Set.of(
             new SetupDatabaseCommand(db),
             new PurgeDatabaseCommand(db),
-            setUpParsingCommand()
+            setUpParsingCommand(),
+            setUpCheckRelevanceCommand(db)
         ));
 
         app.run(args);
@@ -42,6 +49,17 @@ public final class EntryPoint {
             Set.of(
                 new N1Parser(Set.of(ENV.get("N1_CITIES", "novosibirsk").split(separator))),
                 new SakhcomParser(Set.of(ENV.get("SAKHCOM_CITIES", "ys").split(separator)))
+            )
+        );
+    }
+
+    private static CheckRelevanceCommand setUpCheckRelevanceCommand(ConnectionFactory db) {
+        return new CheckRelevanceCommand(
+            new FetchURLsByChunks(db),
+            new MarkObsolete(db),
+            Set.of(
+                N1RelevanceChecker.getDefault(JsoupHttpConnection.builder().build()),
+                SakhcomRelevanceChecker.getDefault(JsoupHttpConnection.builder().build())
             )
         );
     }

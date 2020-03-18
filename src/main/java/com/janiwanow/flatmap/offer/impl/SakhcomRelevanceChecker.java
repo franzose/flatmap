@@ -4,6 +4,9 @@ import com.janiwanow.flatmap.http.HttpConnection;
 import com.janiwanow.flatmap.offer.RelevanceCheckResult;
 import com.janiwanow.flatmap.offer.RelevanceChecker;
 import com.janiwanow.flatmap.parser.PropertyDetailsExtractor;
+import com.janiwanow.flatmap.parser.impl.sakhcom.AddressExtractor;
+import com.janiwanow.flatmap.parser.impl.sakhcom.AreaExtractor;
+import com.janiwanow.flatmap.parser.impl.sakhcom.PriceExtractor;
 
 import java.net.URI;
 import java.util.Objects;
@@ -20,6 +23,15 @@ public final class SakhcomRelevanceChecker implements RelevanceChecker {
         Objects.requireNonNull(extractor, "Extractor must not be null.");
         this.connection = connection;
         this.extractor = extractor;
+    }
+
+    public static SakhcomRelevanceChecker getDefault(HttpConnection connection) {
+        Objects.requireNonNull(connection, "Connection must not be null.");
+        return new SakhcomRelevanceChecker(connection, new PropertyDetailsExtractor(
+            AddressExtractor::extract,
+            AreaExtractor::extract,
+            PriceExtractor::extract
+        ));
     }
 
     @Override
