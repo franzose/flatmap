@@ -39,7 +39,11 @@ public final class MarkObsolete implements Function<List<URI>, Integer> {
                 stmt.setString(idx, urls.get(idx - 1).toString());
             }
 
-            return stmt.executeUpdate();
+            var result = stmt.executeUpdate();
+
+            LOG.info("Number of obsolete URLs: {}", result);
+
+            return result;
         } catch (SQLException e) {
             LOG.error("Could not mark properties obsolete.", e);
             throw new RuntimeException(e);
