@@ -23,10 +23,10 @@ import static com.janiwanow.flatmap.util.Env.ENV;
  */
 public final class EntryPoint {
     public static void main(String[] args) throws CommandNotFoundException {
-        var dbConnectionFactory = HikariConnectionFactory.getInstance();
+        var db = HikariConnectionFactory.INSTANCE;
         var app = new Application(Set.of(
-            new SetupDatabaseCommand(dbConnectionFactory),
-            new PurgeDatabaseCommand(dbConnectionFactory),
+            new SetupDatabaseCommand(db),
+            new PurgeDatabaseCommand(db),
             setUpParsingCommand()
         ));
 
@@ -49,7 +49,7 @@ public final class EntryPoint {
     private static EventDispatcher setUpEventDispatcher() {
         var eventBus = EventBus.getDefault();
 
-        eventBus.register(new PropertyDetailsListener(HikariConnectionFactory.getInstance()));
+        eventBus.register(new PropertyDetailsListener(HikariConnectionFactory.INSTANCE));
 
         return new GreenRobotEventDispatcher(eventBus);
     }

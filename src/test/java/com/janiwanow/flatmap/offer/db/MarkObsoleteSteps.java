@@ -16,7 +16,7 @@ public final class MarkObsoleteSteps {
 
     @When("I mark those property details obsolete")
     public void markObsolete() {
-        affectedRows = new MarkObsolete(TestConnectionFactory.getInstance()).apply(context.getUrls());
+        affectedRows = new MarkObsolete(TestConnectionFactory.INSTANCE).apply(context.getUrls());
     }
 
     @Then("{int} properties must be marked obsolete")

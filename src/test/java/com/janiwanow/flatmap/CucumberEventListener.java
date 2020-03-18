@@ -9,7 +9,6 @@ import io.cucumber.plugin.ConcurrentEventListener;
 import io.cucumber.plugin.event.*;
 
 public class CucumberEventListener implements ConcurrentEventListener {
-    private static final TestConnectionFactory DATABASE = TestConnectionFactory.getInstance();
     private WireMockServer server = new WireMockServer();
 
     @Override
@@ -27,12 +26,12 @@ public class CucumberEventListener implements ConcurrentEventListener {
     private void setUp(TestRunStarted event) {
         server.start();
 
-        new SetupDatabaseCommand(DATABASE).execute();
+        new SetupDatabaseCommand(TestConnectionFactory.INSTANCE).execute();
     }
 
     private void tearDown(TestRunFinished event) {
         server.stop();
 
-        new PurgeDatabaseCommand(DATABASE).execute();
+        new PurgeDatabaseCommand(TestConnectionFactory.INSTANCE).execute();
     }
 }

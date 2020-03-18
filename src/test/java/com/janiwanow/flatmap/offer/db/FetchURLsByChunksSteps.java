@@ -24,7 +24,7 @@ public final class FetchURLsByChunksSteps {
     @When("I fetch URLs from the database by {int} items in a chunk")
     public void fetch(int chunkSize) {
         this.chunkSize = chunkSize;
-        query = new FetchURLsByChunks(TestConnectionFactory.getInstance());
+        query = new FetchURLsByChunks(TestConnectionFactory.INSTANCE);
         consumer = urls -> {};
     }
 

@@ -12,10 +12,12 @@ import static com.janiwanow.flatmap.util.Env.ENV;
 /**
  * A database connection factory utilizing Hikari connection pool under the hood.
  */
-public final class HikariConnectionFactory implements ConnectionFactory {
-    private static final HikariConnectionFactory INSTANCE;
+public enum HikariConnectionFactory implements ConnectionFactory {
+    INSTANCE;
 
-    static {
+    private final HikariDataSource dataSource;
+
+    HikariConnectionFactory() {
         // TODO: fine-tuning
         Properties props = new Properties();
         props.setProperty("dataSourceClassName", "org.postgresql.ds.PGSimpleDataSource");
@@ -24,17 +26,7 @@ public final class HikariConnectionFactory implements ConnectionFactory {
         props.setProperty("dataSource.password", ENV.get("DB_PASSWORD"));
         props.setProperty("dataSource.databaseName", ENV.get("DB_NAME"));
 
-        INSTANCE = new HikariConnectionFactory(new HikariDataSource(new HikariConfig(props)));
-    }
-
-    private final HikariDataSource dataSource;
-
-    private HikariConnectionFactory(HikariDataSource dataSource) {
-        this.dataSource = dataSource;
-    }
-
-    public static HikariConnectionFactory getInstance() {
-        return INSTANCE;
+        dataSource = new HikariDataSource(new HikariConfig(props));
     }
 
     @Override

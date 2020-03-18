@@ -20,7 +20,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
 
 public final class PropertyDetailsListenerSteps {
-    private static final TestConnectionFactory DATABASE = TestConnectionFactory.getInstance();
+    private static final TestConnectionFactory DATABASE = TestConnectionFactory.INSTANCE;
     private PropertyDetails expectedDetails;
     private PropertyDetails actualDetails;
     private PropertyDetailsListener listener = new PropertyDetailsListener(DATABASE);

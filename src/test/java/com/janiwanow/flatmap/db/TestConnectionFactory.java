@@ -11,10 +11,12 @@ import java.util.Set;
 
 import static com.janiwanow.flatmap.util.Env.ENV;
 
-public final class TestConnectionFactory implements ConnectionFactory {
-    private static final TestConnectionFactory INSTANCE;
+public enum TestConnectionFactory implements ConnectionFactory {
+    INSTANCE;
 
-    static {
+    private final HikariDataSource dataSource;
+
+    TestConnectionFactory() {
         Env.ensureVarsAreSet(Set.of(
             "TEST_DB_PORT",
             "TEST_DB_USER",
@@ -29,17 +31,7 @@ public final class TestConnectionFactory implements ConnectionFactory {
         props.setProperty("dataSource.password", ENV.get("TEST_DB_PASSWORD"));
         props.setProperty("dataSource.databaseName", ENV.get("TEST_DB_NAME"));
 
-        INSTANCE = new TestConnectionFactory(new HikariDataSource(new HikariConfig(props)));
-    }
-
-    private final HikariDataSource dataSource;
-
-    private TestConnectionFactory(HikariDataSource dataSource) {
-        this.dataSource = dataSource;
-    }
-
-    public static TestConnectionFactory getInstance() {
-        return INSTANCE;
+        dataSource = new HikariDataSource(new HikariConfig(props));
     }
 
     @Override

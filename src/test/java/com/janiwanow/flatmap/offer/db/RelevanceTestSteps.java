@@ -28,9 +28,7 @@ public final class RelevanceTestSteps {
     public void setUpDatabase(DataTable data) throws SQLException {
         urls = getUrlsFromDataTable(data);
 
-        var db = TestConnectionFactory.getInstance();
-
-        insertRows(db, urls);
+        insertRows(TestConnectionFactory.INSTANCE, urls);
     }
 
     private static List<URI> getUrlsFromDataTable(DataTable data) {

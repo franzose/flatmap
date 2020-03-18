@@ -8,7 +8,7 @@ import io.cucumber.java.Scenario;
 public final class DatabaseSteps {
     @Before("@db")
     public void resetDatabase() {
-        new TruncateTablesCommand(TestConnectionFactory.getInstance()).execute();
+        new TruncateTablesCommand(TestConnectionFactory.INSTANCE).execute();
     }
 
     @BeforeStep
