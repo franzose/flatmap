@@ -55,8 +55,8 @@ public final class MarkObsolete implements Function<List<URI>, Integer> {
         placeholders = placeholders.substring(0, placeholders.length() - 1);
 
         return
-            "UPDATE property SET invalidated_at = NOW()::timestamp " +
-            "last_checked_at = NOW()::timestamp" +
+            "UPDATE property SET invalidated_at = NOW()::timestamp, " +
+            "last_checked_at = NOW()::timestamp " +
             "WHERE offer_url IN (" + placeholders + ")";
     }
 }
