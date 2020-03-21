@@ -4,7 +4,7 @@ import com.beust.jcommander.Parameter;
 import com.beust.jcommander.Parameters;
 import com.janiwanow.flatmap.console.event.PropertyDetailsParsed;
 import com.janiwanow.flatmap.data.PropertyDetails;
-import com.janiwanow.flatmap.http.Delay;
+import com.janiwanow.flatmap.http.DelayRange;
 import com.janiwanow.flatmap.http.HttpConnectionBuilder;
 import com.janiwanow.flatmap.internal.console.Command;
 import com.janiwanow.flatmap.internal.eventbus.EventDispatcher;
@@ -49,10 +49,10 @@ public final class ParseWebsitesCommand implements Command {
     private int startFrom = Integer.parseInt(ENV.get("START_FROM", "1"));
 
     @Parameter(names = "--delay-min", description = "Minimum delay between HTTP connections")
-    private int minDelay = Integer.parseInt(ENV.get("DELAY_MIN", String.valueOf(Delay.MIN_DEFAULT)));
+    private int minDelay = Integer.parseInt(ENV.get("DELAY_MIN", String.valueOf(DelayRange.MIN_DEFAULT)));
 
     @Parameter(names = "--delay-max", description = "Maximum delay between HTTP connections")
-    private int maxDelay = Integer.parseInt(ENV.get("DELAY_MAX", String.valueOf(Delay.MAX_DEFAULT)));
+    private int maxDelay = Integer.parseInt(ENV.get("DELAY_MAX", String.valueOf(DelayRange.MAX_DEFAULT)));
 
     public ParseWebsitesCommand(
         EventDispatcher dispatcher,
@@ -79,7 +79,7 @@ public final class ParseWebsitesCommand implements Command {
     public void execute() {
         var conn = http.retries(retries).timeout(timeout).build();
         var options = new ParserOptions(
-            new Delay(minDelay, maxDelay),
+            new DelayRange(minDelay, maxDelay),
             new Pagination(startFrom, pages)
         );
 

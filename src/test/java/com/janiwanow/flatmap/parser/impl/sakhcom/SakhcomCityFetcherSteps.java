@@ -1,14 +1,8 @@
 package com.janiwanow.flatmap.parser.impl.sakhcom;
 
-import com.janiwanow.flatmap.data.Price;
 import com.janiwanow.flatmap.data.PropertyDetails;
-import com.janiwanow.flatmap.data.Area;
-import com.janiwanow.flatmap.http.Delay;
-import com.janiwanow.flatmap.http.DocumentFetcher;
+import com.janiwanow.flatmap.http.DelayRange;
 import com.janiwanow.flatmap.http.JsoupHttpConnection;
-import com.janiwanow.flatmap.parser.PropertyDetailsExtractor;
-import com.janiwanow.flatmap.parser.PropertyDetailsFetcher;
-import com.janiwanow.flatmap.util.Numbers;
 import com.janiwanow.flatmap.util.ResourceFile;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -18,7 +12,6 @@ import org.jsoup.nodes.Document;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.Optional;
 import java.util.Set;
 
 import static com.github.tomakehurst.wiremock.client.WireMock.*;
@@ -81,7 +74,7 @@ public class SakhcomCityFetcherSteps {
         var fetcher = new SakhcomCityFetcher(
             Set.of(url),
             JsoupHttpConnection.builder(),
-            new Delay(1, 1)
+            new DelayRange(1, 1)
         );
 
         propertyDetails = fetcher.fetchFromCity(city).join();

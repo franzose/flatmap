@@ -1,6 +1,6 @@
 package com.janiwanow.flatmap.util;
 
-import com.janiwanow.flatmap.http.Delay;
+import com.janiwanow.flatmap.http.DelayRange;
 
 import java.util.Random;
 import java.util.concurrent.CompletableFuture;
@@ -17,7 +17,7 @@ public final class Executors {
      * @param delay a delay range between HTTP requests
      * @return a delayed executor
      */
-    public static Executor randomlyDelayed(Delay delay) {
+    public static Executor randomlyDelayed(DelayRange delay) {
         return CompletableFuture.delayedExecutor(
             Math.min(delay.max, delay.min + new Random().nextInt(delay.max)),
             TimeUnit.MILLISECONDS

@@ -19,11 +19,11 @@ import static java.util.stream.Collectors.toSet;
  */
 public final class DocumentFetcher {
     private final HttpConnection connection;
-    private final Delay delay;
+    private final DelayRange delay;
 
-    public DocumentFetcher(HttpConnection connection, Delay delay) {
+    public DocumentFetcher(HttpConnection connection, DelayRange delay) {
         Objects.requireNonNull(connection, "HttpConnection must not be null.");
-        Objects.requireNonNull(delay, "Delay must not be null.");
+        Objects.requireNonNull(delay, "DelayRange must not be null.");
 
         this.connection = connection;
         this.delay = delay;

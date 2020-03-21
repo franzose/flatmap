@@ -1,11 +1,10 @@
 package com.janiwanow.flatmap.parser.impl.sakhcom;
 
 import com.janiwanow.flatmap.data.PropertyDetails;
-import com.janiwanow.flatmap.http.Delay;
+import com.janiwanow.flatmap.http.DelayRange;
 import com.janiwanow.flatmap.http.DocumentFetcher;
 import com.janiwanow.flatmap.http.HttpConnection;
 import com.janiwanow.flatmap.http.HttpConnectionBuilder;
-import com.janiwanow.flatmap.parser.ParserOptions;
 import com.janiwanow.flatmap.parser.PropertyDetailsExtractor;
 import com.janiwanow.flatmap.parser.PropertyDetailsFetcher;
 
@@ -14,7 +13,6 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.CompletableFuture;
-import java.util.function.Function;
 
 /**
  * A service to fetch property details from different cities on sakh.com.
@@ -26,17 +24,17 @@ import java.util.function.Function;
 final class SakhcomCityFetcher {
     private final HttpConnectionBuilder http;
     private final Set<URI> urls;
-    private final Delay delay;
+    private final DelayRange delay;
 
     /**
      * @param urls this fetcher should process
      * @param http connection builder needed to setup a new {@link HttpConnection}
      * @param delay a range of the delay between HTTP requests
      */
-    SakhcomCityFetcher(Set<URI> urls, HttpConnectionBuilder http, Delay delay) {
+    SakhcomCityFetcher(Set<URI> urls, HttpConnectionBuilder http, DelayRange delay) {
         Objects.requireNonNull(urls, "URLs must not be null.");
         Objects.requireNonNull(http, "HttpConnectionBuilder must not be null.");
-        Objects.requireNonNull(delay, "Delay must not be null.");
+        Objects.requireNonNull(delay, "DelayRange must not be null.");
         this.urls = urls;
         this.http = http;
         this.delay = delay;
