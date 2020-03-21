@@ -1,7 +1,7 @@
-package com.janiwanow.flatmap.db.cli;
+package com.janiwanow.flatmap.console;
 
 import com.beust.jcommander.Parameters;
-import com.janiwanow.flatmap.cli.Command;
+import com.janiwanow.flatmap.internal.console.Command;
 import com.janiwanow.flatmap.db.ConnectionFactory;
 import com.janiwanow.flatmap.util.ResourceFile;
 import org.slf4j.Logger;

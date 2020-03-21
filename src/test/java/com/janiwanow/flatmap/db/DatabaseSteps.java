@@ -1,6 +1,6 @@
 package com.janiwanow.flatmap.db;
 
-import com.janiwanow.flatmap.db.cli.TruncateTablesCommand;
+import com.janiwanow.flatmap.console.TruncateTablesCommand;
 import io.cucumber.java.Before;
 import io.cucumber.java.BeforeStep;
 import io.cucumber.java.Scenario;

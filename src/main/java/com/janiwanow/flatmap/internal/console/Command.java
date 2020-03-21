@@ -1,4 +1,4 @@
-package com.janiwanow.flatmap.cli;
+package com.janiwanow.flatmap.internal.console;
 
 /**
  * A common interface for all console commands.

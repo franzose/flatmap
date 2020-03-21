@@ -4,7 +4,7 @@ import com.janiwanow.flatmap.data.Area;
 import com.janiwanow.flatmap.data.Price;
 import com.janiwanow.flatmap.data.PropertyDetails;
 import com.janiwanow.flatmap.db.TestConnectionFactory;
-import com.janiwanow.flatmap.parser.cli.PropertyDetailsParsed;
+import com.janiwanow.flatmap.console.event.PropertyDetailsParsed;
 import io.cucumber.datatable.DataTable;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;

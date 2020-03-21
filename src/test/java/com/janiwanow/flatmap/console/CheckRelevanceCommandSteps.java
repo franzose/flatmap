@@ -1,4 +1,4 @@
-package com.janiwanow.flatmap.offer.cli;
+package com.janiwanow.flatmap.console;
 
 import com.janiwanow.flatmap.db.TestConnectionFactory;
 import com.janiwanow.flatmap.offer.RelevanceCheckResult;

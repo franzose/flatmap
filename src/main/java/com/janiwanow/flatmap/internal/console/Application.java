@@ -1,4 +1,4 @@
-package com.janiwanow.flatmap.cli;
+package com.janiwanow.flatmap.internal.console;
 
 import com.beust.jcommander.JCommander;
 import com.beust.jcommander.MissingCommandException;
@@ -35,6 +35,10 @@ public final class Application {
             System.out.println("Running the application without arguments is not supported.");
             commander.usage();
             return;
+        }
+
+        if (commander.getCommands().isEmpty()) {
+            throw new CommandNotFoundException(args);
         }
 
         try {

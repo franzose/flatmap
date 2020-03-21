@@ -2,7 +2,7 @@ package com.janiwanow.flatmap.db.cli;
 
 import com.janiwanow.flatmap.data.PropertyDetails;
 import com.janiwanow.flatmap.db.ConnectionFactory;
-import com.janiwanow.flatmap.parser.cli.PropertyDetailsParsed;
+import com.janiwanow.flatmap.console.event.PropertyDetailsParsed;
 import org.greenrobot.eventbus.Subscribe;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

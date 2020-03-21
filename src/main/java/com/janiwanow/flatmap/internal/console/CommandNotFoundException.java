@@ -1,4 +1,4 @@
-package com.janiwanow.flatmap.cli;
+package com.janiwanow.flatmap.internal.console;
 
 import com.beust.jcommander.MissingCommandException;
 
@@ -11,5 +11,12 @@ public class CommandNotFoundException extends Exception {
      */
     public CommandNotFoundException(MissingCommandException cause) {
         super(String.format("Console command \"%s\" not found.", cause.getUnknownCommand()), cause);
+    }
+
+    /**
+     * @param args raw command arguments
+     */
+    public CommandNotFoundException(String... args) {
+        super(String.format("Console command not found. Arguments were: %s", String.join(",", args)));
     }
 }

@@ -1,5 +1,6 @@
-package com.janiwanow.flatmap.parser.cli;
+package com.janiwanow.flatmap.console.event;
 
+import com.janiwanow.flatmap.console.ParseWebsitesCommand;
 import com.janiwanow.flatmap.data.PropertyDetails;
 import com.janiwanow.flatmap.event.Event;
 

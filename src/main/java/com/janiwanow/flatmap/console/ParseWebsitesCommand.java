@@ -1,8 +1,8 @@
-package com.janiwanow.flatmap.parser.cli;
+package com.janiwanow.flatmap.console;
 
 import com.beust.jcommander.Parameter;
 import com.beust.jcommander.Parameters;
-import com.janiwanow.flatmap.cli.Command;
+import com.janiwanow.flatmap.internal.console.Command;
 import com.janiwanow.flatmap.data.PropertyDetails;
 import com.janiwanow.flatmap.event.EventDispatcher;
 import com.janiwanow.flatmap.http.Delay;
@@ -10,6 +10,7 @@ import com.janiwanow.flatmap.http.HttpConnectionBuilder;
 import com.janiwanow.flatmap.parser.Pagination;
 import com.janiwanow.flatmap.parser.ParserOptions;
 import com.janiwanow.flatmap.parser.WebsiteParser;
+import com.janiwanow.flatmap.console.event.PropertyDetailsParsed;
 
 import java.util.Set;
 

@@ -3,8 +3,8 @@ package com.janiwanow.flatmap;
 import com.github.tomakehurst.wiremock.WireMockServer;
 import com.github.tomakehurst.wiremock.client.WireMock;
 import com.janiwanow.flatmap.db.TestConnectionFactory;
-import com.janiwanow.flatmap.db.cli.PurgeDatabaseCommand;
-import com.janiwanow.flatmap.db.cli.SetupDatabaseCommand;
+import com.janiwanow.flatmap.console.PurgeDatabaseCommand;
+import com.janiwanow.flatmap.console.SetupDatabaseCommand;
 import io.cucumber.plugin.ConcurrentEventListener;
 import io.cucumber.plugin.event.*;
 

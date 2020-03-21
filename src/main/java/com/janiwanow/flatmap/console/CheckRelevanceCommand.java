@@ -1,8 +1,8 @@
-package com.janiwanow.flatmap.offer.cli;
+package com.janiwanow.flatmap.console;
 
 import com.beust.jcommander.Parameter;
 import com.beust.jcommander.Parameters;
-import com.janiwanow.flatmap.cli.Command;
+import com.janiwanow.flatmap.internal.console.Command;
 import com.janiwanow.flatmap.http.Delay;
 import com.janiwanow.flatmap.offer.RelevanceCheckResult;
 import com.janiwanow.flatmap.offer.RelevanceChecker;
