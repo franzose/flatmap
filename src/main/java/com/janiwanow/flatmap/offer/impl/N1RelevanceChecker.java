@@ -1,6 +1,6 @@
 package com.janiwanow.flatmap.offer.impl;
 
-import com.janiwanow.flatmap.http.HttpConnection;
+import com.janiwanow.flatmap.internal.http.HttpConnection;
 import com.janiwanow.flatmap.offer.RelevanceCheckResult;
 import com.janiwanow.flatmap.offer.RelevanceChecker;
 import com.janiwanow.flatmap.parser.PropertyDetailsExtractor;

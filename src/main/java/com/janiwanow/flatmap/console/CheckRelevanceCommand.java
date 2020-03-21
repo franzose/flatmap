@@ -2,7 +2,7 @@ package com.janiwanow.flatmap.console;
 
 import com.beust.jcommander.Parameter;
 import com.beust.jcommander.Parameters;
-import com.janiwanow.flatmap.http.DelayRange;
+import com.janiwanow.flatmap.internal.http.DelayRange;
 import com.janiwanow.flatmap.internal.console.Command;
 import com.janiwanow.flatmap.offer.RelevanceCheckResult;
 import com.janiwanow.flatmap.offer.RelevanceChecker;

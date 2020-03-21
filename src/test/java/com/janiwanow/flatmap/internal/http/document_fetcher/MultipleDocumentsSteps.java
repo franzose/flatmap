@@ -1,7 +1,7 @@
-package com.janiwanow.flatmap.http.document_fetcher;
+package com.janiwanow.flatmap.internal.http.document_fetcher;
 
-import com.janiwanow.flatmap.http.DelayRange;
-import com.janiwanow.flatmap.http.DocumentFetcher;
+import com.janiwanow.flatmap.internal.http.DelayRange;
+import com.janiwanow.flatmap.internal.http.DocumentFetcher;
 import io.cucumber.datatable.DataTable;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;

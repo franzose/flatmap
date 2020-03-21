@@ -2,7 +2,7 @@ package com.janiwanow.flatmap.offer.impl;
 
 import com.janiwanow.flatmap.data.Area;
 import com.janiwanow.flatmap.data.Price;
-import com.janiwanow.flatmap.http.document_fetcher.FakeHttpConnection;
+import com.janiwanow.flatmap.internal.http.document_fetcher.FakeHttpConnection;
 import com.janiwanow.flatmap.offer.RelevanceCheckResult;
 import com.janiwanow.flatmap.parser.PropertyDetailsExtractor;
 import io.cucumber.java.en.Given;

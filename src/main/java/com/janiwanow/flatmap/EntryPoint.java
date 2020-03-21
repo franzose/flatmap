@@ -4,7 +4,7 @@ import com.janiwanow.flatmap.console.CheckRelevanceCommand;
 import com.janiwanow.flatmap.console.ParseWebsitesCommand;
 import com.janiwanow.flatmap.console.PurgeDatabaseCommand;
 import com.janiwanow.flatmap.console.SetupDatabaseCommand;
-import com.janiwanow.flatmap.http.JsoupHttpConnection;
+import com.janiwanow.flatmap.internal.http.JsoupHttpConnection;
 import com.janiwanow.flatmap.internal.console.Application;
 import com.janiwanow.flatmap.internal.console.CommandNotFoundException;
 import com.janiwanow.flatmap.internal.eventbus.EventDispatcher;

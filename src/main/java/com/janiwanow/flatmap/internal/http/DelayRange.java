@@ -1,4 +1,4 @@
-package com.janiwanow.flatmap.http;
+package com.janiwanow.flatmap.internal.http;
 
 /**
  * Range of delays in milliseconds between HTTP requests.

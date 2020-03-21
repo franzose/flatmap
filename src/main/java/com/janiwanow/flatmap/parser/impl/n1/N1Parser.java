@@ -1,8 +1,8 @@
 package com.janiwanow.flatmap.parser.impl.n1;
 
 import com.janiwanow.flatmap.data.PropertyDetails;
-import com.janiwanow.flatmap.http.DocumentFetcher;
-import com.janiwanow.flatmap.http.HttpConnection;
+import com.janiwanow.flatmap.internal.http.DocumentFetcher;
+import com.janiwanow.flatmap.internal.http.HttpConnection;
 import com.janiwanow.flatmap.parser.ParserOptions;
 import com.janiwanow.flatmap.parser.PropertyDetailsExtractor;
 import com.janiwanow.flatmap.parser.PropertyDetailsFetcher;

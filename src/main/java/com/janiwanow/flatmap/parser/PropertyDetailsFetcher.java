@@ -1,7 +1,7 @@
 package com.janiwanow.flatmap.parser;
 
 import com.janiwanow.flatmap.data.PropertyDetails;
-import com.janiwanow.flatmap.http.DocumentFetcher;
+import com.janiwanow.flatmap.internal.http.DocumentFetcher;
 import org.jsoup.nodes.Document;
 
 import java.net.URI;

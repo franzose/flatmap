@@ -1,7 +1,7 @@
 package com.janiwanow.flatmap.parser.impl.sakhcom;
 
 import com.janiwanow.flatmap.data.PropertyDetails;
-import com.janiwanow.flatmap.http.HttpConnection;
+import com.janiwanow.flatmap.internal.http.HttpConnection;
 import com.janiwanow.flatmap.parser.ParserOptions;
 import com.janiwanow.flatmap.parser.WebsiteParser;
 import org.slf4j.Logger;

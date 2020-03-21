@@ -1,7 +1,7 @@
 package com.janiwanow.flatmap.parser;
 
 import com.janiwanow.flatmap.data.PropertyDetails;
-import com.janiwanow.flatmap.http.HttpConnection;
+import com.janiwanow.flatmap.internal.http.HttpConnection;
 
 import java.util.Set;
 

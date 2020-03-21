@@ -1,10 +1,10 @@
 package com.janiwanow.flatmap.parser.impl.sakhcom;
 
 import com.janiwanow.flatmap.data.PropertyDetails;
-import com.janiwanow.flatmap.http.DelayRange;
-import com.janiwanow.flatmap.http.DocumentFetcher;
-import com.janiwanow.flatmap.http.HttpConnection;
-import com.janiwanow.flatmap.http.HttpConnectionBuilder;
+import com.janiwanow.flatmap.internal.http.DelayRange;
+import com.janiwanow.flatmap.internal.http.DocumentFetcher;
+import com.janiwanow.flatmap.internal.http.HttpConnection;
+import com.janiwanow.flatmap.internal.http.HttpConnectionBuilder;
 import com.janiwanow.flatmap.parser.PropertyDetailsExtractor;
 import com.janiwanow.flatmap.parser.PropertyDetailsFetcher;
 

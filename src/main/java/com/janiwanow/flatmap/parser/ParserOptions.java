@@ -1,6 +1,6 @@
 package com.janiwanow.flatmap.parser;
 
-import com.janiwanow.flatmap.http.DelayRange;
+import com.janiwanow.flatmap.internal.http.DelayRange;
 
 import java.util.Objects;
 

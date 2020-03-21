@@ -1,4 +1,4 @@
-package com.janiwanow.flatmap.http;
+package com.janiwanow.flatmap.internal.http;
 
 import org.jsoup.HttpStatusException;
 import org.jsoup.Jsoup;

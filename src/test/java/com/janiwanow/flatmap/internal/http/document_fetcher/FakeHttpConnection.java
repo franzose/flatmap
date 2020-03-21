@@ -1,7 +1,7 @@
-package com.janiwanow.flatmap.http.document_fetcher;
+package com.janiwanow.flatmap.internal.http.document_fetcher;
 
-import com.janiwanow.flatmap.http.HttpConnection;
-import com.janiwanow.flatmap.http.HttpConnectionBuilder;
+import com.janiwanow.flatmap.internal.http.HttpConnection;
+import com.janiwanow.flatmap.internal.http.HttpConnectionBuilder;
 import org.jsoup.nodes.Document;
 
 import java.net.URI;
