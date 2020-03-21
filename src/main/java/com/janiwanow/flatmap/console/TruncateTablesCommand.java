@@ -2,7 +2,7 @@ package com.janiwanow.flatmap.console;
 
 import com.beust.jcommander.Parameters;
 import com.janiwanow.flatmap.internal.console.Command;
-import com.janiwanow.flatmap.db.ConnectionFactory;
+import com.janiwanow.flatmap.internal.sql.DbConnectionFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -12,9 +12,9 @@ import java.util.Objects;
 @Parameters(commandNames = "db:truncate", commandDescription = "Used to truncate all database tables")
 public final class TruncateTablesCommand implements Command {
     private static final Logger LOG = LoggerFactory.getLogger(TruncateTablesCommand.class);
-    private final ConnectionFactory factory;
+    private final DbConnectionFactory factory;
 
-    public TruncateTablesCommand(ConnectionFactory factory) {
+    public TruncateTablesCommand(DbConnectionFactory factory) {
         Objects.requireNonNull(factory, "SQL connection factory must not be null");
         this.factory = factory;
     }

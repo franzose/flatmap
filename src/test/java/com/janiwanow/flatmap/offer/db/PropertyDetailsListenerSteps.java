@@ -1,10 +1,11 @@
-package com.janiwanow.flatmap.db.cli;
+package com.janiwanow.flatmap.offer.db;
 
 import com.janiwanow.flatmap.data.Area;
 import com.janiwanow.flatmap.data.Price;
 import com.janiwanow.flatmap.data.PropertyDetails;
-import com.janiwanow.flatmap.db.TestConnectionFactory;
+import com.janiwanow.flatmap.internal.sql.TestDbConnectionFactory;
 import com.janiwanow.flatmap.console.event.PropertyDetailsParsed;
+import com.janiwanow.flatmap.offer.db.PropertyDetailsListener;
 import io.cucumber.datatable.DataTable;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
@@ -20,7 +21,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
 
 public final class PropertyDetailsListenerSteps {
-    private static final TestConnectionFactory DATABASE = TestConnectionFactory.INSTANCE;
+    private static final TestDbConnectionFactory DATABASE = TestDbConnectionFactory.INSTANCE;
     private PropertyDetails expectedDetails;
     private PropertyDetails actualDetails;
     private PropertyDetailsListener listener = new PropertyDetailsListener(DATABASE);

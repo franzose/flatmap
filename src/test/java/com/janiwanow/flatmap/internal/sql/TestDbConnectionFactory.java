@@ -1,4 +1,4 @@
-package com.janiwanow.flatmap.db;
+package com.janiwanow.flatmap.internal.sql;
 
 import com.janiwanow.flatmap.util.Env;
 import com.zaxxer.hikari.HikariConfig;
@@ -11,12 +11,12 @@ import java.util.Set;
 
 import static com.janiwanow.flatmap.util.Env.ENV;
 
-public enum TestConnectionFactory implements ConnectionFactory {
+public enum TestDbConnectionFactory implements DbConnectionFactory {
     INSTANCE;
 
     private final HikariDataSource dataSource;
 
-    TestConnectionFactory() {
+    TestDbConnectionFactory() {
         Env.ensureVarsAreSet(Set.of(
             "TEST_DB_PORT",
             "TEST_DB_USER",

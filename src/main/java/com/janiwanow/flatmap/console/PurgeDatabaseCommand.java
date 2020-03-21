@@ -2,11 +2,10 @@ package com.janiwanow.flatmap.console;
 
 import com.beust.jcommander.Parameters;
 import com.janiwanow.flatmap.internal.console.Command;
-import com.janiwanow.flatmap.db.ConnectionFactory;
+import com.janiwanow.flatmap.internal.sql.DbConnectionFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Objects;
 
@@ -16,9 +15,9 @@ import java.util.Objects;
 @Parameters(commandNames = "db:purge", commandDescription = "Used to drop all database tables")
 public class PurgeDatabaseCommand implements Command {
     private static final Logger LOG = LoggerFactory.getLogger(PurgeDatabaseCommand.class);
-    private final ConnectionFactory factory;
+    private final DbConnectionFactory factory;
 
-    public PurgeDatabaseCommand(ConnectionFactory factory) {
+    public PurgeDatabaseCommand(DbConnectionFactory factory) {
         Objects.requireNonNull(factory, "SQL connection factory must not be null.");
         this.factory = factory;
     }

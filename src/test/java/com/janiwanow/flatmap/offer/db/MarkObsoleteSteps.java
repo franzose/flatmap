@@ -1,6 +1,6 @@
 package com.janiwanow.flatmap.offer.db;
 
-import com.janiwanow.flatmap.db.TestConnectionFactory;
+import com.janiwanow.flatmap.internal.sql.TestDbConnectionFactory;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
@@ -16,7 +16,7 @@ public final class MarkObsoleteSteps {
 
     @When("I mark those property details obsolete")
     public void markObsolete() {
-        affectedRows = new MarkObsolete(TestConnectionFactory.INSTANCE).apply(context.getUrls());
+        affectedRows = new MarkObsolete(TestDbConnectionFactory.INSTANCE).apply(context.getUrls());
     }
 
     @Then("{int} properties must be marked obsolete")

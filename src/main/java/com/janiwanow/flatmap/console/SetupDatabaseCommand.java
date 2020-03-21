@@ -2,7 +2,7 @@ package com.janiwanow.flatmap.console;
 
 import com.beust.jcommander.Parameters;
 import com.janiwanow.flatmap.internal.console.Command;
-import com.janiwanow.flatmap.db.ConnectionFactory;
+import com.janiwanow.flatmap.internal.sql.DbConnectionFactory;
 import com.janiwanow.flatmap.util.ResourceFile;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,9 +30,9 @@ public final class SetupDatabaseCommand implements Command {
         }
     }
 
-    private final ConnectionFactory factory;
+    private final DbConnectionFactory factory;
 
-    public SetupDatabaseCommand(ConnectionFactory factory) {
+    public SetupDatabaseCommand(DbConnectionFactory factory) {
         Objects.requireNonNull(factory, "SQL connection factory must not be null.");
         this.factory = factory;
     }

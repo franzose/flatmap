@@ -3,6 +3,7 @@ Feature: Purging database
   As a Developer
   I should be able to drop all its tables at once
 
+  @db_purger
   Scenario: Purging database
     Given the database had the following tables
       | foo |

@@ -2,9 +2,9 @@ package com.janiwanow.flatmap;
 
 import com.janiwanow.flatmap.internal.console.Application;
 import com.janiwanow.flatmap.internal.console.CommandNotFoundException;
-import com.janiwanow.flatmap.db.ConnectionFactory;
-import com.janiwanow.flatmap.db.HikariConnectionFactory;
-import com.janiwanow.flatmap.db.cli.PropertyDetailsListener;
+import com.janiwanow.flatmap.internal.sql.DbConnectionFactory;
+import com.janiwanow.flatmap.internal.sql.HikariDbConnectionFactory;
+import com.janiwanow.flatmap.offer.db.PropertyDetailsListener;
 import com.janiwanow.flatmap.console.PurgeDatabaseCommand;
 import com.janiwanow.flatmap.console.SetupDatabaseCommand;
 import com.janiwanow.flatmap.event.EventDispatcher;
@@ -29,7 +29,7 @@ import static com.janiwanow.flatmap.util.Env.ENV;
  */
 public final class EntryPoint {
     public static void main(String[] args) throws CommandNotFoundException {
-        var db = HikariConnectionFactory.INSTANCE;
+        var db = HikariDbConnectionFactory.INSTANCE;
         var app = new Application(Set.of(
             new SetupDatabaseCommand(db),
             new PurgeDatabaseCommand(db),
@@ -53,7 +53,7 @@ public final class EntryPoint {
         );
     }
 
-    private static CheckRelevanceCommand setUpCheckRelevanceCommand(ConnectionFactory db) {
+    private static CheckRelevanceCommand setUpCheckRelevanceCommand(DbConnectionFactory db) {
         return new CheckRelevanceCommand(
             new FetchURLsByChunks(db),
             new MarkObsolete(db),
@@ -67,7 +67,7 @@ public final class EntryPoint {
     private static EventDispatcher setUpEventDispatcher() {
         var eventBus = EventBus.getDefault();
 
-        eventBus.register(new PropertyDetailsListener(HikariConnectionFactory.INSTANCE));
+        eventBus.register(new PropertyDetailsListener(HikariDbConnectionFactory.INSTANCE));
 
         return new GreenRobotEventDispatcher(eventBus);
     }

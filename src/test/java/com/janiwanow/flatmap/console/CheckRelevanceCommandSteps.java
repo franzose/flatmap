@@ -1,6 +1,6 @@
 package com.janiwanow.flatmap.console;
 
-import com.janiwanow.flatmap.db.TestConnectionFactory;
+import com.janiwanow.flatmap.internal.sql.TestDbConnectionFactory;
 import com.janiwanow.flatmap.offer.RelevanceCheckResult;
 import com.janiwanow.flatmap.offer.RelevanceChecker;
 import com.janiwanow.flatmap.offer.db.FetchURLsByChunks;
@@ -30,8 +30,8 @@ public final class CheckRelevanceCommandSteps {
     public void runCommand() {
         // TODO: refactor this to a reusable "run ... command" step
         new CheckRelevanceCommand(
-            new FetchURLsByChunks(TestConnectionFactory.INSTANCE),
-            new MarkObsolete(TestConnectionFactory.INSTANCE),
+            new FetchURLsByChunks(TestDbConnectionFactory.INSTANCE),
+            new MarkObsolete(TestDbConnectionFactory.INSTANCE),
             Set.of(new RelevanceChecker() {
                 @Override
                 public RelevanceCheckResult check(URI url) {
@@ -67,7 +67,7 @@ public final class CheckRelevanceCommandSteps {
         var sql = "SELECT * FROM property WHERE offer_url IN (" + generatePlaceholders(urls.size()) + ")";
 
         try (
-            var conn = TestConnectionFactory.INSTANCE.getConnection();
+            var conn = TestDbConnectionFactory.INSTANCE.getConnection();
             var stmt = conn.prepareStatement(sql)
         ) {
             for (var idx = 1; idx <= urls.size(); idx++) {

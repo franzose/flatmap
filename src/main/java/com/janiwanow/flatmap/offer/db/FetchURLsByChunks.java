@@ -1,6 +1,6 @@
 package com.janiwanow.flatmap.offer.db;
 
-import com.janiwanow.flatmap.db.ConnectionFactory;
+import com.janiwanow.flatmap.internal.sql.DbConnectionFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -29,12 +29,12 @@ public final class FetchURLsByChunks implements BiConsumer<Integer, Consumer<Lis
             "AND offer_url < ? " +
             "ORDER BY offer_url DESC LIMIT ?";
 
-    private final ConnectionFactory db;
+    private final DbConnectionFactory db;
     private Connection connection;
     private int chunkSize;
     private String lastURL;
 
-    public FetchURLsByChunks(ConnectionFactory db) {
+    public FetchURLsByChunks(DbConnectionFactory db) {
         Objects.requireNonNull(db, "DB connection factory must not be null.");
         this.db = db;
     }

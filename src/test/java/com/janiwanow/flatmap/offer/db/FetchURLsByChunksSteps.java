@@ -1,6 +1,6 @@
 package com.janiwanow.flatmap.offer.db;
 
-import com.janiwanow.flatmap.db.TestConnectionFactory;
+import com.janiwanow.flatmap.internal.sql.TestDbConnectionFactory;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
@@ -24,7 +24,7 @@ public final class FetchURLsByChunksSteps {
     @When("I fetch URLs from the database by {int} items in a chunk")
     public void fetch(int chunkSize) {
         this.chunkSize = chunkSize;
-        query = new FetchURLsByChunks(TestConnectionFactory.INSTANCE);
+        query = new FetchURLsByChunks(TestDbConnectionFactory.INSTANCE);
         consumer = urls -> {};
     }
 

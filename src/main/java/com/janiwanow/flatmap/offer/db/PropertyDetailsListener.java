@@ -1,7 +1,7 @@
-package com.janiwanow.flatmap.db.cli;
+package com.janiwanow.flatmap.offer.db;
 
 import com.janiwanow.flatmap.data.PropertyDetails;
-import com.janiwanow.flatmap.db.ConnectionFactory;
+import com.janiwanow.flatmap.internal.sql.DbConnectionFactory;
 import com.janiwanow.flatmap.console.event.PropertyDetailsParsed;
 import org.greenrobot.eventbus.Subscribe;
 import org.slf4j.Logger;
@@ -16,9 +16,9 @@ import java.util.UUID;
  */
 public class PropertyDetailsListener {
     private static final Logger LOG = LoggerFactory.getLogger(PropertyDetailsListener.class);
-    private final ConnectionFactory factory;
+    private final DbConnectionFactory factory;
 
-    public PropertyDetailsListener(ConnectionFactory factory) {
+    public PropertyDetailsListener(DbConnectionFactory factory) {
         this.factory = factory;
     }
 

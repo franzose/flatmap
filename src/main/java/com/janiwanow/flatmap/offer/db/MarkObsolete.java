@@ -1,6 +1,6 @@
 package com.janiwanow.flatmap.offer.db;
 
-import com.janiwanow.flatmap.db.ConnectionFactory;
+import com.janiwanow.flatmap.internal.sql.DbConnectionFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -16,9 +16,9 @@ import java.util.function.Function;
  */
 public final class MarkObsolete implements Function<List<URI>, Integer> {
     private static final Logger LOG = LoggerFactory.getLogger(MarkObsolete.class);
-    private final ConnectionFactory db;
+    private final DbConnectionFactory db;
 
-    public MarkObsolete(ConnectionFactory db) {
+    public MarkObsolete(DbConnectionFactory db) {
         Objects.requireNonNull(db, "DB connection factory must not be null.");
         this.db = db;
     }

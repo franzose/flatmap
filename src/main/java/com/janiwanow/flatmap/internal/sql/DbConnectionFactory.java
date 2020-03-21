@@ -1,4 +1,4 @@
-package com.janiwanow.flatmap.db;
+package com.janiwanow.flatmap.internal.sql;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -6,7 +6,7 @@ import java.sql.SQLException;
 /**
  * Interface for the database connection factory implementations.
  */
-public interface ConnectionFactory {
+public interface DbConnectionFactory {
     /**
      * Attempts to connect to a database.
      *

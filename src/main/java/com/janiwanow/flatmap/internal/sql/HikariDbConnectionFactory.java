@@ -1,4 +1,4 @@
-package com.janiwanow.flatmap.db;
+package com.janiwanow.flatmap.internal.sql;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
@@ -12,12 +12,12 @@ import static com.janiwanow.flatmap.util.Env.ENV;
 /**
  * A database connection factory utilizing Hikari connection pool under the hood.
  */
-public enum HikariConnectionFactory implements ConnectionFactory {
+public enum HikariDbConnectionFactory implements DbConnectionFactory {
     INSTANCE;
 
     private final HikariDataSource dataSource;
 
-    HikariConnectionFactory() {
+    HikariDbConnectionFactory() {
         // TODO: fine-tuning
         Properties props = new Properties();
         props.setProperty("dataSourceClassName", "org.postgresql.ds.PGSimpleDataSource");

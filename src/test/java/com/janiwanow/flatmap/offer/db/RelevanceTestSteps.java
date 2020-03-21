@@ -1,7 +1,7 @@
 package com.janiwanow.flatmap.offer.db;
 
-import com.janiwanow.flatmap.db.ConnectionFactory;
-import com.janiwanow.flatmap.db.TestConnectionFactory;
+import com.janiwanow.flatmap.internal.sql.DbConnectionFactory;
+import com.janiwanow.flatmap.internal.sql.TestDbConnectionFactory;
 import io.cucumber.datatable.DataTable;
 import io.cucumber.java.en.Given;
 
@@ -28,7 +28,7 @@ public final class RelevanceTestSteps {
     public void setUpDatabase(DataTable data) throws SQLException {
         urls = getUrlsFromDataTable(data);
 
-        insertRows(TestConnectionFactory.INSTANCE, urls);
+        insertRows(TestDbConnectionFactory.INSTANCE, urls);
     }
 
     private static List<URI> getUrlsFromDataTable(DataTable data) {
@@ -44,7 +44,7 @@ public final class RelevanceTestSteps {
             .collect(toList());
     }
 
-    private static void insertRows(ConnectionFactory db, List<URI> urls) throws SQLException {
+    private static void insertRows(DbConnectionFactory db, List<URI> urls) throws SQLException {
         try (
             var conn = db.getConnection();
         ) {
