@@ -1,4 +1,4 @@
-package com.janiwanow.flatmap.event;
+package com.janiwanow.flatmap.internal.eventbus;
 
 /**
  * Event dispatcher.
