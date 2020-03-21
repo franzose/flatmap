@@ -8,7 +8,7 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 
-import static com.janiwanow.flatmap.util.Executors.randomlyDelayed;
+import static com.janiwanow.flatmap.internal.util.Executors.randomlyDelayed;
 import static java.util.stream.Collectors.toSet;
 
 /**

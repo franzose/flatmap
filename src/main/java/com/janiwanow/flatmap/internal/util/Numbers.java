@@ -1,4 +1,4 @@
-package com.janiwanow.flatmap.util;
+package com.janiwanow.flatmap.internal.util;
 
 import java.util.Objects;
 

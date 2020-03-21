@@ -14,8 +14,8 @@ import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
-import static com.janiwanow.flatmap.util.Env.ENV;
-import static com.janiwanow.flatmap.util.Executors.randomlyDelayed;
+import static com.janiwanow.flatmap.internal.util.Env.ENV;
+import static com.janiwanow.flatmap.internal.util.Executors.randomlyDelayed;
 import static java.util.stream.Collectors.*;
 
 @Parameters(commandNames = "check-relevance")

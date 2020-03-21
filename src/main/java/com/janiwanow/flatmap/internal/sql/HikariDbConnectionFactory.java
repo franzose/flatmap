@@ -7,7 +7,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Properties;
 
-import static com.janiwanow.flatmap.util.Env.ENV;
+import static com.janiwanow.flatmap.internal.util.Env.ENV;
 
 /**
  * A database connection factory utilizing Hikari connection pool under the hood.

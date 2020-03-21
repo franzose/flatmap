@@ -1,6 +1,6 @@
 package com.janiwanow.flatmap.internal.sql;
 
-import com.janiwanow.flatmap.util.Env;
+import com.janiwanow.flatmap.internal.util.Env;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 
@@ -9,7 +9,7 @@ import java.sql.SQLException;
 import java.util.Properties;
 import java.util.Set;
 
-import static com.janiwanow.flatmap.util.Env.ENV;
+import static com.janiwanow.flatmap.internal.util.Env.ENV;
 
 public enum TestDbConnectionFactory implements DbConnectionFactory {
     INSTANCE;

@@ -14,7 +14,7 @@ import com.janiwanow.flatmap.parser.WebsiteParser;
 
 import java.util.Set;
 
-import static com.janiwanow.flatmap.util.Env.ENV;
+import static com.janiwanow.flatmap.internal.util.Env.ENV;
 
 /**
  * Console command to parse websites and get property details from them.

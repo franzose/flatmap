@@ -1,7 +1,7 @@
 package com.janiwanow.flatmap.parser.impl.n1;
 
 import com.janiwanow.flatmap.data.Area;
-import com.janiwanow.flatmap.util.Numbers;
+import com.janiwanow.flatmap.internal.util.Numbers;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;

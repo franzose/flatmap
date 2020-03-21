@@ -3,7 +3,7 @@ package com.janiwanow.flatmap.console;
 import com.beust.jcommander.Parameters;
 import com.janiwanow.flatmap.internal.console.Command;
 import com.janiwanow.flatmap.internal.sql.DbConnectionFactory;
-import com.janiwanow.flatmap.util.ResourceFile;
+import com.janiwanow.flatmap.internal.util.ResourceFile;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

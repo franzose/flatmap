@@ -1,4 +1,4 @@
-package com.janiwanow.flatmap.util;
+package com.janiwanow.flatmap.internal.util;
 
 import io.github.cdimascio.dotenv.Dotenv;
 import io.github.cdimascio.dotenv.DotenvEntry;

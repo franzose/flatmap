@@ -1,12 +1,10 @@
-package com.janiwanow.flatmap.util;
+package com.janiwanow.flatmap.internal.util;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.nio.file.Files;
 import java.util.Objects;
 
 /**

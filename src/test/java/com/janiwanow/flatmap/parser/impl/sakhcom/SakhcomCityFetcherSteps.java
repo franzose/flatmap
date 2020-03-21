@@ -3,7 +3,7 @@ package com.janiwanow.flatmap.parser.impl.sakhcom;
 import com.janiwanow.flatmap.data.PropertyDetails;
 import com.janiwanow.flatmap.internal.http.DelayRange;
 import com.janiwanow.flatmap.internal.http.JsoupHttpConnection;
-import com.janiwanow.flatmap.util.ResourceFile;
+import com.janiwanow.flatmap.internal.util.ResourceFile;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;

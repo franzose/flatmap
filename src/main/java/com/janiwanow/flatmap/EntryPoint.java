@@ -22,7 +22,7 @@ import org.greenrobot.eventbus.EventBus;
 
 import java.util.Set;
 
-import static com.janiwanow.flatmap.util.Env.ENV;
+import static com.janiwanow.flatmap.internal.util.Env.ENV;
 
 /**
  * The entry point of the console application.
