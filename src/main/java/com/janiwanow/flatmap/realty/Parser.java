@@ -32,7 +32,7 @@ public interface Parser {
      * if the user wants to parse a particular website.
      *
      * <p>While any valid string can act as an identifier, it is recommended to use
-     * the name of the sub-package inside {@link com.janiwanow.flatmap.parser}.
+     * the name of the sub-package inside {@link com.janiwanow.flatmap.realty.provider}.
      *
      * @param websiteId a string representing a particular website
      * @return "true" if the parser supports the website, "false" otherwise
