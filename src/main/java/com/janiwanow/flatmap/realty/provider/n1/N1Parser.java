@@ -40,9 +40,9 @@ public final class N1Parser implements Parser {
         var fetcher = new PropertyDetailsFetcher(
             new DocumentFetcher(connection, options.delay),
             new PropertyDetailsExtractor(
-                AddressExtractor::extract,
-                AreaExtractor::extract,
-                PriceExtractor::extract
+                new AddressExtractor(),
+                new AreaExtractor(),
+                new PriceExtractor()
             ),
             ".offers-search .card-title > a"
         );

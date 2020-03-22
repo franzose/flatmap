@@ -25,9 +25,9 @@ public final class SakhcomRelevanceChecker implements RelevanceChecker {
     public static SakhcomRelevanceChecker getDefault(HttpConnection connection) {
         Objects.requireNonNull(connection, "Connection must not be null.");
         return new SakhcomRelevanceChecker(connection, new PropertyDetailsExtractor(
-            AddressExtractor::extract,
-            AreaExtractor::extract,
-            PriceExtractor::extract
+            new AddressExtractor(),
+            new AreaExtractor(),
+            new PriceExtractor()
         ));
     }
 

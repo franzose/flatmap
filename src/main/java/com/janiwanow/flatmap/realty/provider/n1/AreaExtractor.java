@@ -13,15 +13,16 @@ import java.util.function.Function;
 /**
  * Property area details extractor.
  */
-public final class AreaExtractor {
+public final class AreaExtractor implements Function<Document, Optional<Area>> {
     /**
      * Extracts property area details and uses the default rooms extractor.
      *
      * @param document N1 offer page like https://novosibirsk.n1.ru/view/33016674/
      * @return extracted area details under the title "Area"
      */
-    public static Optional<Area> extract(Document document) {
-        return extract(document, RoomsExtractor::extract);
+    @Override
+    public Optional<Area> apply(Document document) {
+        return apply(document, new RoomsExtractor());
     }
 
     /**
@@ -31,7 +32,7 @@ public final class AreaExtractor {
      * @param roomsExtractor An implementation of the extractor
      * @return extracted area details under the title "Area"
      */
-    public static Optional<Area> extract(Document document, Function<Document, Integer> roomsExtractor) {
+    public Optional<Area> apply(Document document, Function<Document, Integer> roomsExtractor) {
         Objects.requireNonNull(document, "Document must not be null.");
         Objects.requireNonNull(roomsExtractor, "Rooms extractor must not be null.");
 

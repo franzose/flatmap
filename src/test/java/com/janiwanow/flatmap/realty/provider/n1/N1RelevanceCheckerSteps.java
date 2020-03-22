@@ -20,7 +20,7 @@ public final class N1RelevanceCheckerSteps {
     private PropertyDetailsExtractor extractor = new PropertyDetailsExtractor(
         d -> "foo bar",
         d -> Optional.of(new Area(10, 5, 5, 1)),
-        d -> Price.inRubles(1_000_000)
+        d -> Optional.of(Price.inRubles(1_000_000))
     );
 
     private N1RelevanceChecker checker;

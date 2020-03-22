@@ -28,7 +28,7 @@ public class AddressExtractorSteps {
 
     @When("I pass the document to the N1 address extractor")
     public void extractAddress() {
-        actualAddress = AddressExtractor.extract(document);
+        actualAddress = new AddressExtractor().apply(document);
     }
 
     @Then("I must get {string} as the N1 property address")

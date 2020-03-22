@@ -26,7 +26,7 @@ public class PropertyDetailsExtractorSteps {
         extractor = new PropertyDetailsExtractor(
             document -> ADDRESS,
             document -> Optional.of(AREA),
-            document -> PRICE
+            document -> Optional.of(PRICE)
         );
     }
 
@@ -37,7 +37,7 @@ public class PropertyDetailsExtractorSteps {
         extractor = new PropertyDetailsExtractor(
             document -> { throw new NullPointerException(); },
             document -> Optional.of(AREA),
-            document -> PRICE
+            document -> Optional.of(PRICE)
         );
     }
 

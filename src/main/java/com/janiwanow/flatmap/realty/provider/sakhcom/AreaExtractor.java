@@ -12,7 +12,7 @@ import java.util.regex.Pattern;
 /**
  * Property area details extractor.
  */
-public final class AreaExtractor {
+public final class AreaExtractor implements Function<Document, Optional<Area>> {
     private static final Pattern PATTERN = Pattern.compile("((?:П|п)лощадь:\\s*\\d+)|(жилая:\\s*\\d+)|(кухня:\\s*\\d+)");
 
     /**
@@ -21,8 +21,9 @@ public final class AreaExtractor {
      * @param document offer page like https://dom.sakh.com/flat/sell/546472
      * @return extracted area details under the title "Area"
      */
-    public static Optional<Area> extract(Document document) {
-        return extract(document, RoomsExtractor::extract);
+    @Override
+    public Optional<Area> apply(Document document) {
+        return apply(document, new RoomsExtractor());
     }
 
     /**
@@ -32,7 +33,7 @@ public final class AreaExtractor {
      * @param roomsExtractor An implementation of the extractor
      * @return extracted area details under the title "Area"
      */
-    public static Optional<Area> extract(Document document, Function<Document, Integer> roomsExtractor) {
+    public Optional<Area> apply(Document document, Function<Document, Integer> roomsExtractor) {
         Objects.requireNonNull(document, "Document must not be null.");
         Objects.requireNonNull(roomsExtractor, "Rooms extractor must not be null.");
 

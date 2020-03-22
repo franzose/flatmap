@@ -36,7 +36,7 @@ public class RoomsExtractorSteps {
 
     @When("I pass the document to the N1 rooms extractor")
     public void extractTheNumberOfRooms() {
-        actualNumberOfRooms = RoomsExtractor.extract(document);
+        actualNumberOfRooms = new RoomsExtractor().apply(document);
     }
 
     @Then("I must get {int} rooms for N1 property details")

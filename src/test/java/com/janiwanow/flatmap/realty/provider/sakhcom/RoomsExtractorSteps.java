@@ -37,7 +37,7 @@ public class RoomsExtractorSteps {
 
     @When("I pass the document to the Sakh.com rooms extractor")
     public void extractTheNumberOfRooms() {
-        actual = RoomsExtractor.extract(document);
+        actual = new RoomsExtractor().apply(document);
     }
 
     @Then("I must get {int} as the number of rooms of the Sakh.com offer")

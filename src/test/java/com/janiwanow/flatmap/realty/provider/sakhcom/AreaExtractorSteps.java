@@ -26,7 +26,7 @@ public class AreaExtractorSteps {
 
     @When("I pass the document to the Sakh.com area extractor")
     public void extractSpace() {
-        actualArea = AreaExtractor.extract(document, d -> 4).get();
+        actualArea = new AreaExtractor().apply(document, d -> 4).get();
     }
 
     @Then("I must get {double} square meters of the total area from Sakh.com")

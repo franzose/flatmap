@@ -27,7 +27,7 @@ public class PriceExtractorSteps {
 
     @When("I pass the document to the Sakh.com price extractor")
     public void extractPrice() {
-        actualPrice = PriceExtractor.extract(document);
+        actualPrice = new PriceExtractor().apply(document).get();
     }
 
     @Then("I must get {double} as the Sakh.com property price")

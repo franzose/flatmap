@@ -49,7 +49,7 @@ public class AreaExtractorSteps {
 
     @When("I pass the document to the N1 area extractor")
     public void extractAreaInformation() {
-        area = AreaExtractor.extract(document, document -> 4).get();
+        area = new AreaExtractor().apply(document, document -> 4).get();
     }
 
     @Then("I must get {int} square meters of the total area")

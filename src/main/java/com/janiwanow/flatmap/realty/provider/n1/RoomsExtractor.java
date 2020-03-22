@@ -7,18 +7,20 @@ import org.jsoup.select.Elements;
 
 import java.util.Objects;
 import java.util.Optional;
+import java.util.function.Function;
 
 /**
  * Apartment rooms extractor.
  */
-public final class RoomsExtractor {
+public final class RoomsExtractor implements Function<Document, Integer> {
     /**
      * Extracts the number of rooms of the apartment.
      *
      * @param document N1 offer page like https://novosibirsk.n1.ru/view/33016674/
      * @return extracted number of rooms
      */
-    public static int extract(Document document) {
+    @Override
+    public Integer apply(Document document) {
         Objects.requireNonNull(document, "Document must not be null.");
 
         try {

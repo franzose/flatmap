@@ -29,9 +29,9 @@ import static java.util.stream.Collectors.toSet;
  * <pre>
  * <code>
  *     var extractor = new PropertyDetailsExtractor(
- *         AddressExtractor::extract,
- *         AreaExtractor::extract,
- *         PriceExtractor::extract
+ *         new AddressExtractor(),
+ *         new AreaExtractor(),
+ *         new PriceExtractor()
  *     );
  * </code>
  * </pre>
@@ -40,12 +40,12 @@ public final class PropertyDetailsExtractor {
     private static final Logger LOG = LoggerFactory.getLogger(PropertyDetailsExtractor.class);
     private final Function<Document, String> addressExtractor;
     private final Function<Document, Optional<Area>> areaExtractor;
-    private final Function<Document, Price> priceExtractor;
+    private final Function<Document, Optional<Price>> priceExtractor;
 
     public PropertyDetailsExtractor(
         Function<Document, String> addressExtractor,
         Function<Document, Optional<Area>> areaExtractor,
-        Function<Document, Price> priceExtractor
+        Function<Document, Optional<Price>> priceExtractor
     ) {
         this.addressExtractor = addressExtractor;
         this.areaExtractor = areaExtractor;
@@ -78,11 +78,19 @@ public final class PropertyDetailsExtractor {
                 return Optional.empty();
             }
 
+            // We don't need property details without price
+            var price = priceExtractor.apply(document);
+
+            if (price.isEmpty()) {
+                LOG.info("Could not extract price from {}, skipping...", document.baseUri());
+                return Optional.empty();
+            }
+
             return Optional.of(new PropertyDetails(
                 new URI(document.baseUri()),
                 addressExtractor.apply(document),
                 area.get(),
-                priceExtractor.apply(document)
+                price.get()
             ));
         } catch (URISyntaxException e) {
             throw new RuntimeException(e);

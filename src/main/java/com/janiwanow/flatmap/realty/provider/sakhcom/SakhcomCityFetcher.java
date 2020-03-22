@@ -61,9 +61,9 @@ final class SakhcomCityFetcher {
         return new PropertyDetailsFetcher(
             new DocumentFetcher(connection, delay),
             new PropertyDetailsExtractor(
-                AddressExtractor::extract,
-                AreaExtractor::extract,
-                PriceExtractor::extract
+                new AddressExtractor(),
+                new AreaExtractor(),
+                new PriceExtractor()
             ),
             ".offers > .item > .content > a"
         );

@@ -43,7 +43,7 @@ public class AddressExtractorSteps {
 
     @When("I pass the document to the Sakh.com address extractor")
     public void extractAddress() {
-        actualAddress = AddressExtractor.extract(document);
+        actualAddress = new AddressExtractor().apply(document);
     }
 
     @Then("I must get that very Sakh.com property address")

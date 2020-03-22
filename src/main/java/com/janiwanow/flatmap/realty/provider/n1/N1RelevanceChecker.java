@@ -27,9 +27,9 @@ public final class N1RelevanceChecker implements RelevanceChecker {
     public static N1RelevanceChecker getDefault(HttpConnection connection) {
         Objects.requireNonNull(connection, "Connection must not be null.");
         return new N1RelevanceChecker(connection, new PropertyDetailsExtractor(
-            AddressExtractor::extract,
-            AreaExtractor::extract,
-            PriceExtractor::extract
+            new AddressExtractor(),
+            new AreaExtractor(),
+            new PriceExtractor()
         ));
     }
 
