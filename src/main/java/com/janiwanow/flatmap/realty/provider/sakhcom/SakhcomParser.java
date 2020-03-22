@@ -3,7 +3,7 @@ package com.janiwanow.flatmap.realty.provider.sakhcom;
 import com.janiwanow.flatmap.internal.http.HttpConnection;
 import com.janiwanow.flatmap.realty.Parser;
 import com.janiwanow.flatmap.realty.ParserOptions;
-import com.janiwanow.flatmap.realty.data.PropertyDetails;
+import com.janiwanow.flatmap.realty.property.PropertyDetails;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

@@ -1,6 +1,6 @@
 package com.janiwanow.flatmap.realty.provider.sakhcom;
 
-import com.janiwanow.flatmap.realty.data.Area;
+import com.janiwanow.flatmap.realty.property.Area;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;

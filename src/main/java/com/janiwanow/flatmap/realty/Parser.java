@@ -1,7 +1,7 @@
 package com.janiwanow.flatmap.realty;
 
 import com.janiwanow.flatmap.internal.http.HttpConnection;
-import com.janiwanow.flatmap.realty.data.PropertyDetails;
+import com.janiwanow.flatmap.realty.property.PropertyDetails;
 
 import java.util.Set;
 

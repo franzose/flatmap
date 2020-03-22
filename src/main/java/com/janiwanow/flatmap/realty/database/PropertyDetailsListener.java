@@ -2,7 +2,7 @@ package com.janiwanow.flatmap.realty.database;
 
 import com.janiwanow.flatmap.console.event.PropertyDetailsParsed;
 import com.janiwanow.flatmap.internal.sql.DbConnectionFactory;
-import com.janiwanow.flatmap.realty.data.PropertyDetails;
+import com.janiwanow.flatmap.realty.property.PropertyDetails;
 import org.greenrobot.eventbus.Subscribe;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

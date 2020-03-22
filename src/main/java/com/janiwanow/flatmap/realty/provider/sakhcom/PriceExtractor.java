@@ -1,7 +1,7 @@
 package com.janiwanow.flatmap.realty.provider.sakhcom;
 
 import com.janiwanow.flatmap.internal.util.Numbers;
-import com.janiwanow.flatmap.realty.data.Price;
+import com.janiwanow.flatmap.realty.property.Price;
 import org.jsoup.nodes.Document;
 
 import java.util.Objects;

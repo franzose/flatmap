@@ -1,8 +1,8 @@
 package com.janiwanow.flatmap.realty;
 
-import com.janiwanow.flatmap.realty.data.Area;
-import com.janiwanow.flatmap.realty.data.Price;
-import com.janiwanow.flatmap.realty.data.PropertyDetails;
+import com.janiwanow.flatmap.realty.property.Area;
+import com.janiwanow.flatmap.realty.property.Price;
+import com.janiwanow.flatmap.realty.property.PropertyDetails;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;

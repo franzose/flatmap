@@ -10,7 +10,7 @@ import com.janiwanow.flatmap.internal.http.HttpConnectionBuilder;
 import com.janiwanow.flatmap.realty.Pagination;
 import com.janiwanow.flatmap.realty.Parser;
 import com.janiwanow.flatmap.realty.ParserOptions;
-import com.janiwanow.flatmap.realty.data.PropertyDetails;
+import com.janiwanow.flatmap.realty.property.PropertyDetails;
 
 import java.util.Set;
 

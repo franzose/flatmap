@@ -2,7 +2,7 @@ package com.janiwanow.flatmap.console.event;
 
 import com.janiwanow.flatmap.console.ParseWebsitesCommand;
 import com.janiwanow.flatmap.internal.eventbus.Event;
-import com.janiwanow.flatmap.realty.data.PropertyDetails;
+import com.janiwanow.flatmap.realty.property.PropertyDetails;
 
 /**
  * An event raised when {@link ParseWebsitesCommand} finished parsing

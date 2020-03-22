@@ -1,7 +1,7 @@
 package com.janiwanow.flatmap.realty.provider.n1;
 
 import com.janiwanow.flatmap.internal.util.Numbers;
-import com.janiwanow.flatmap.realty.data.Area;
+import com.janiwanow.flatmap.realty.property.Area;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;

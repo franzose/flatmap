@@ -6,7 +6,7 @@ import com.janiwanow.flatmap.internal.http.HttpConnection;
 import com.janiwanow.flatmap.internal.http.HttpConnectionBuilder;
 import com.janiwanow.flatmap.realty.PropertyDetailsExtractor;
 import com.janiwanow.flatmap.realty.PropertyDetailsFetcher;
-import com.janiwanow.flatmap.realty.data.PropertyDetails;
+import com.janiwanow.flatmap.realty.property.PropertyDetails;
 
 import java.net.URI;
 import java.util.Map;

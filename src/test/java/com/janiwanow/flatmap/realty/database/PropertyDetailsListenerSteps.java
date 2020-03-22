@@ -2,9 +2,9 @@ package com.janiwanow.flatmap.realty.database;
 
 import com.janiwanow.flatmap.console.event.PropertyDetailsParsed;
 import com.janiwanow.flatmap.internal.sql.TestDbConnectionFactory;
-import com.janiwanow.flatmap.realty.data.Area;
-import com.janiwanow.flatmap.realty.data.Price;
-import com.janiwanow.flatmap.realty.data.PropertyDetails;
+import com.janiwanow.flatmap.realty.property.Area;
+import com.janiwanow.flatmap.realty.property.Price;
+import com.janiwanow.flatmap.realty.property.PropertyDetails;
 import io.cucumber.datatable.DataTable;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;

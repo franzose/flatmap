@@ -1,6 +1,6 @@
 package com.janiwanow.flatmap.realty.provider.sakhcom;
 
-import com.janiwanow.flatmap.realty.data.Price;
+import com.janiwanow.flatmap.realty.property.Price;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;

@@ -6,7 +6,7 @@ import com.janiwanow.flatmap.realty.Parser;
 import com.janiwanow.flatmap.realty.ParserOptions;
 import com.janiwanow.flatmap.realty.PropertyDetailsExtractor;
 import com.janiwanow.flatmap.realty.PropertyDetailsFetcher;
-import com.janiwanow.flatmap.realty.data.PropertyDetails;
+import com.janiwanow.flatmap.realty.property.PropertyDetails;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

@@ -1,4 +1,4 @@
-package com.janiwanow.flatmap.realty.data;
+package com.janiwanow.flatmap.realty.property;
 
 import java.net.URI;
 import java.util.Objects;
