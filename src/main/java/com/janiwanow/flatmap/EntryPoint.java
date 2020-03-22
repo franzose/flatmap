@@ -9,7 +9,6 @@ import com.janiwanow.flatmap.internal.console.CommandNotFoundException;
 import com.janiwanow.flatmap.internal.eventbus.EventDispatcher;
 import com.janiwanow.flatmap.internal.eventbus.GreenRobotEventDispatcher;
 import com.janiwanow.flatmap.internal.http.JsoupHttpConnection;
-import com.janiwanow.flatmap.internal.sql.DbConnectionFactory;
 import com.janiwanow.flatmap.internal.sql.HikariDbConnectionFactory;
 import com.janiwanow.flatmap.realty.database.FetchURLsByChunks;
 import com.janiwanow.flatmap.realty.database.MarkObsolete;
@@ -34,7 +33,7 @@ public final class EntryPoint {
             new SetupDatabaseCommand(db),
             new PurgeDatabaseCommand(db),
             setUpParsingCommand(),
-            setUpCheckRelevanceCommand(db)
+            setUpCheckRelevanceCommand()
         ));
 
         app.run(args);
@@ -53,13 +52,15 @@ public final class EntryPoint {
         );
     }
 
-    private static CheckRelevanceCommand setUpCheckRelevanceCommand(DbConnectionFactory db) {
+    private static CheckRelevanceCommand setUpCheckRelevanceCommand() {
+        var http = JsoupHttpConnection.builder().build();
+
         return new CheckRelevanceCommand(
-            new FetchURLsByChunks(db),
-            new MarkObsolete(db),
+            new FetchURLsByChunks(HikariDbConnectionFactory.INSTANCE),
+            new MarkObsolete(HikariDbConnectionFactory.INSTANCE),
             Set.of(
-                N1RelevanceChecker.getDefault(JsoupHttpConnection.builder().build()),
-                SakhcomRelevanceChecker.getDefault(JsoupHttpConnection.builder().build())
+                N1RelevanceChecker.getDefault(http),
+                SakhcomRelevanceChecker.getDefault(http)
             )
         );
     }
