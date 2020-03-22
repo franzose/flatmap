@@ -1,9 +1,8 @@
 package com.janiwanow.flatmap.console;
 
-import com.janiwanow.flatmap.internal.sql.TestDbConnectionFactory;
 import com.janiwanow.flatmap.internal.console.ApplicationContext;
+import com.janiwanow.flatmap.internal.sql.TestDbConnectionFactory;
 import io.cucumber.datatable.DataTable;
-import io.cucumber.java.After;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;

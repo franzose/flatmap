@@ -2,13 +2,16 @@ package com.janiwanow.flatmap.console;
 
 import com.beust.jcommander.Parameter;
 import com.beust.jcommander.Parameters;
-import com.janiwanow.flatmap.internal.http.DelayRange;
 import com.janiwanow.flatmap.internal.console.Command;
-import com.janiwanow.flatmap.offer.RelevanceCheckResult;
-import com.janiwanow.flatmap.offer.RelevanceChecker;
+import com.janiwanow.flatmap.internal.http.DelayRange;
+import com.janiwanow.flatmap.realty.RelevanceCheckResult;
+import com.janiwanow.flatmap.realty.RelevanceChecker;
 
 import java.net.URI;
-import java.util.*;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Objects;
+import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
@@ -16,7 +19,7 @@ import java.util.function.Function;
 
 import static com.janiwanow.flatmap.internal.util.Env.ENV;
 import static com.janiwanow.flatmap.internal.util.Executors.randomlyDelayed;
-import static java.util.stream.Collectors.*;
+import static java.util.stream.Collectors.toList;
 
 @Parameters(commandNames = "check-relevance")
 public final class CheckRelevanceCommand implements Command {

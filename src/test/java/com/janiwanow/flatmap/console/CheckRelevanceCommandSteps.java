@@ -1,10 +1,10 @@
 package com.janiwanow.flatmap.console;
 
 import com.janiwanow.flatmap.internal.sql.TestDbConnectionFactory;
-import com.janiwanow.flatmap.offer.RelevanceCheckResult;
-import com.janiwanow.flatmap.offer.RelevanceChecker;
-import com.janiwanow.flatmap.offer.db.FetchURLsByChunks;
-import com.janiwanow.flatmap.offer.db.MarkObsolete;
+import com.janiwanow.flatmap.realty.RelevanceCheckResult;
+import com.janiwanow.flatmap.realty.RelevanceChecker;
+import com.janiwanow.flatmap.realty.database.FetchURLsByChunks;
+import com.janiwanow.flatmap.realty.database.MarkObsolete;
 import io.cucumber.datatable.DataTable;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;

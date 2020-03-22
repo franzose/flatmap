@@ -3,14 +3,14 @@ package com.janiwanow.flatmap.console;
 import com.beust.jcommander.Parameter;
 import com.beust.jcommander.Parameters;
 import com.janiwanow.flatmap.console.event.PropertyDetailsParsed;
-import com.janiwanow.flatmap.data.PropertyDetails;
-import com.janiwanow.flatmap.internal.http.DelayRange;
-import com.janiwanow.flatmap.internal.http.HttpConnectionBuilder;
 import com.janiwanow.flatmap.internal.console.Command;
 import com.janiwanow.flatmap.internal.eventbus.EventDispatcher;
-import com.janiwanow.flatmap.parser.Pagination;
-import com.janiwanow.flatmap.parser.ParserOptions;
-import com.janiwanow.flatmap.parser.WebsiteParser;
+import com.janiwanow.flatmap.internal.http.DelayRange;
+import com.janiwanow.flatmap.internal.http.HttpConnectionBuilder;
+import com.janiwanow.flatmap.realty.Pagination;
+import com.janiwanow.flatmap.realty.Parser;
+import com.janiwanow.flatmap.realty.ParserOptions;
+import com.janiwanow.flatmap.realty.data.PropertyDetails;
 
 import java.util.Set;
 
@@ -23,14 +23,14 @@ import static com.janiwanow.flatmap.internal.util.Env.ENV;
 public final class ParseWebsitesCommand implements Command {
     private final EventDispatcher dispatcher;
     private final HttpConnectionBuilder http;
-    private final Set<WebsiteParser> parsers;
+    private final Set<Parser> parsers;
 
     /**
      * websiteId is used to allow users to parse specific websites and not everything.
      *
-     * @see WebsiteParser#supports(String)
+     * @see Parser#supports(String)
      */
-    @Parameter(description = "ID of the website to parse. Study the com.janiwanow.flatmap.parser.WebsiteParser interface for more information")
+    @Parameter(description = "ID of the website to parse. Study the com.janiwanow.flatmap.realty.Parser interface for more information")
     private String websiteId = "";
 
     @Parameter(
@@ -57,7 +57,7 @@ public final class ParseWebsitesCommand implements Command {
     public ParseWebsitesCommand(
         EventDispatcher dispatcher,
         HttpConnectionBuilder http,
-        Set<WebsiteParser> parsers
+        Set<Parser> parsers
     ) {
         this.dispatcher = dispatcher;
         this.http = http;
@@ -94,7 +94,7 @@ public final class ParseWebsitesCommand implements Command {
      * Decides whether the given parser can be used.
      *
      * <p>By default, websiteId is empty which means that the command
-     * should use all available {@link WebsiteParser} implementations.
+     * should use all available {@link Parser} implementations.
      *
      * <p>If websiteId is present, i.e. the user wants to parse a particular website,
      * we should make sure the given parser supports this website.
@@ -102,7 +102,7 @@ public final class ParseWebsitesCommand implements Command {
      * @param parser a parser in the list
      * @return "true" if the parser is supported, "false" otherwise
      */
-    private boolean filterByWebsiteId(WebsiteParser parser) {
+    private boolean filterByWebsiteId(Parser parser) {
         return (
             websiteId.isEmpty() ||
             websiteId.isBlank() ||

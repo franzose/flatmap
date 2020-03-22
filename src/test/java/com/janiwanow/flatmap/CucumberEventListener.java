@@ -2,11 +2,14 @@ package com.janiwanow.flatmap;
 
 import com.github.tomakehurst.wiremock.WireMockServer;
 import com.github.tomakehurst.wiremock.client.WireMock;
-import com.janiwanow.flatmap.internal.sql.TestDbConnectionFactory;
 import com.janiwanow.flatmap.console.PurgeDatabaseCommand;
 import com.janiwanow.flatmap.console.SetupDatabaseCommand;
+import com.janiwanow.flatmap.internal.sql.TestDbConnectionFactory;
 import io.cucumber.plugin.ConcurrentEventListener;
-import io.cucumber.plugin.event.*;
+import io.cucumber.plugin.event.EventPublisher;
+import io.cucumber.plugin.event.TestCaseFinished;
+import io.cucumber.plugin.event.TestRunFinished;
+import io.cucumber.plugin.event.TestRunStarted;
 
 public class CucumberEventListener implements ConcurrentEventListener {
     private WireMockServer server = new WireMockServer();

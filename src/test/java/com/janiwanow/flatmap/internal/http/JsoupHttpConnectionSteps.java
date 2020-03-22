@@ -1,9 +1,6 @@
 package com.janiwanow.flatmap.internal.http;
 
 import com.github.tomakehurst.wiremock.http.Fault;
-import com.janiwanow.flatmap.internal.http.HttpConnection;
-import com.janiwanow.flatmap.internal.http.HttpConnectionBuilder;
-import com.janiwanow.flatmap.internal.http.JsoupHttpConnection;
 import io.cucumber.datatable.DataTable;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
